@@ -44,7 +44,7 @@ public:
   PostProcessPlugin(const std::string& name, const ParameterSet& params);
   PostProcessPlugin(const std::string& name);
 
-  bool isUnique() const final;
+  bool isUnique() const; // final;
 
   virtual void postProcessStep(const msgs::Step& left, const msgs::Step& right, msgs::Step& swing, msgs::StepPlan& step_plan) const;
   virtual void postProcess(msgs::StepPlan step_plan) const;

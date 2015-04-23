@@ -27,7 +27,7 @@ void CollisionCheckGridMapPlugin::reset()
 
 bool CollisionCheckGridMapPlugin::isCollisionCheckAvailable() const
 {
-  return CollisionCheckPlugin::isCollisionCheckAvailable() && occupancy_grid_map != nullptr;
+  return CollisionCheckPlugin::isCollisionCheckAvailable() && occupancy_grid_map != NULL; // nullptr;
 }
 
 bool CollisionCheckGridMapPlugin::isAccessible(const State& s) const

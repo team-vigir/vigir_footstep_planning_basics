@@ -45,7 +45,7 @@ public:
   StepCostEstimatorPlugin(const std::string& name);
   virtual ~StepCostEstimatorPlugin();
 
-  bool isUnique() const final;
+  bool isUnique() const; // final;
 
   virtual bool getCost(const State& left_foot, const State& right_foot, const State& swing_foot, double& cost, double& risk) const = 0;
 

@@ -45,7 +45,7 @@ public:
   ReachabilityPlugin(const std::string& name);
   virtual ~ReachabilityPlugin();
 
-  bool isUnique() const final;
+  bool isUnique() const; // final;
 
   virtual bool isReachable(const State& current, const State& next) const = 0;
 

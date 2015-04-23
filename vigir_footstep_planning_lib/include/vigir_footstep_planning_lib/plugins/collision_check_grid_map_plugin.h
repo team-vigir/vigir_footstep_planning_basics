@@ -50,11 +50,11 @@ public:
   CollisionCheckGridMapPlugin(const std::string& name, const ParameterSet& params, unsigned int collision_check_flag, ros::NodeHandle& nh, const std::string& topic, unsigned char thresh = 70);
   CollisionCheckGridMapPlugin(const std::string& name, unsigned int collision_check_flag, ros::NodeHandle& nh, const std::string& topic, unsigned char thresh = 70);
 
-  void reset() override;
-  bool isCollisionCheckAvailable() const override;
+  void reset(); // override;
+  bool isCollisionCheckAvailable() const; // override;
 
-  bool isAccessible(const State& s) const override;
-  bool isAccessible(const State& next, const State& /*current*/) const override;
+  bool isAccessible(const State& s) const; // override;
+  bool isAccessible(const State& next, const State& /*current*/) const; // override;
 
   void setOccupancyThreshold(unsigned char thresh);
 

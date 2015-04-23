@@ -34,8 +34,18 @@ State::State(double x, double y, double z, double roll, double pitch, double yaw
 }
 
 State::State(const geometry_msgs::Vector3& position, double roll, double pitch, double yaw, double swing_height, double step_duration, Leg leg)
-  : State(position.x, position.y, position.z, roll, pitch, yaw, swing_height, step_duration, leg)
+  : ivRoll(roll)
+  , ivPitch(pitch)
+  , ivYaw(yaw)
+  , ivSwingHeight(swing_height)
+  , ivStepDuration(step_duration)
+  , ivLeg(leg)
+  , ivGroundContactSupport(1.0)
 {
+  ivPose.setOrigin(tf::Vector3(position.x, position.y, position.z));
+  ivPose.getBasis().setRPY(ivRoll, ivPitch, ivYaw);
+
+  recomputeNormal();
 }
 
 State::State(const geometry_msgs::Vector3& position, const geometry_msgs::Vector3& normal, double yaw, double swing_height, double step_duration, Leg leg)
@@ -75,13 +85,27 @@ State::State(const tf::Transform& t, double swing_height, double step_duration, 
 }
 
 State::State(const msgs::Foot foot, double swing_height, double step_duration)
-  : State(foot.pose, swing_height, step_duration, foot.foot_index == msgs::Foot::LEFT ? LEFT : RIGHT)
+  : ivSwingHeight(swing_height)
+  , ivStepDuration(step_duration)
+  , ivLeg(foot.foot_index == msgs::Foot::LEFT ? LEFT : RIGHT)
+  , ivGroundContactSupport(1.0)
 {
+  tf::poseMsgToTF(foot.pose, ivPose);
+  ivPose.getBasis().getRPY(ivRoll, ivPitch, ivYaw);
+
+  recomputeNormal();
 }
 
 State::State(const msgs::Step step)
-  : State(step.foot, step.swing_height, step.step_duration)
+  : ivSwingHeight(step.swing_height)
+  , ivStepDuration(step.step_duration)
+  , ivLeg(step.foot.foot_index == msgs::Foot::LEFT ? LEFT : RIGHT)
+  , ivGroundContactSupport(1.0)
 {
+  tf::poseMsgToTF(step.foot.pose, ivPose);
+  ivPose.getBasis().getRPY(ivRoll, ivPitch, ivYaw);
+
+  recomputeNormal();
 }
 
 State::~State()

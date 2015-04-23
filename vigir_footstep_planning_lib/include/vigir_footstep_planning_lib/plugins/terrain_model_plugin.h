@@ -49,7 +49,7 @@ public:
   TerrainModelPlugin(const std::string& name, const ParameterSet& params, unsigned int collision_check_flag);
   TerrainModelPlugin(const std::string& name, unsigned int collision_check_flag);
 
-  bool isUnique() const final;
+  bool isUnique() const; // final;
 
   virtual bool isTerrainModelAvailable() const = 0;
 

@@ -56,9 +56,9 @@ public:
 
   virtual void reset();
 
-  void loadParams(const ParameterSet& params) override;
+  void loadParams(const ParameterSet& params); // override;
 
-  bool isUnique() const override;
+  bool isUnique() const; // override;
   virtual bool isCollisionCheckAvailable() const;
 
   virtual bool isAccessible(const State& s) const = 0;

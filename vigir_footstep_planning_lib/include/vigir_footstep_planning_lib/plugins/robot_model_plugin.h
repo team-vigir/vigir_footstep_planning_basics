@@ -46,7 +46,7 @@ public:
   RobotModelPlugin(const ParameterSet& params, ros::NodeHandle &nh);
   RobotModelPlugin(ros::NodeHandle &nh);
 
-  bool isUnique() const final;
+  bool isUnique() const; // final;
 
   const geometry_msgs::Vector3& getFootSize() const;
   const geometry_msgs::Vector3& getUpperBodySize() const;
