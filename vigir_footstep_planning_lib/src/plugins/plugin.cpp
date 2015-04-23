@@ -10,8 +10,10 @@ Plugin::Plugin(const std::string& name, const std::string& type_id, const Parame
 }
 
 Plugin::Plugin(const std::string& name, const std::string& type_id)
-  : Plugin(name, type_id, ParameterManager::getActive())
+  : name(name)
+  , type_id(type_id)
 {
+  loadParams(ParameterManager::getActive());
 }
 
 Plugin::~Plugin()
