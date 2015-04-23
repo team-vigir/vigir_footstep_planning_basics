@@ -54,7 +54,7 @@ public:
   bool isCollisionCheckAvailable() const; // override;
 
   bool isAccessible(const State& s) const; // override;
-  bool isAccessible(const State& next, const State& /*current*/) const; // override;
+  bool isAccessible(const State& next, const State& current) const; // override;
 
   void setOccupancyThreshold(unsigned char thresh);
 

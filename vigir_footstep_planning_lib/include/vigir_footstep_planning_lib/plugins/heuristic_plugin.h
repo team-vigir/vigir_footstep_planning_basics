@@ -45,7 +45,7 @@ public:
   HeuristicPlugin(const std::string& name);
   virtual ~HeuristicPlugin();
 
-  bool isUnique() const final;
+  bool isUnique() const; // final;
 
   virtual double getHeuristicValue(const State& from, const State& to) const = 0;
 
