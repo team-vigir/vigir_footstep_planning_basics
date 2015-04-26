@@ -177,6 +177,13 @@ class StepInterfaceWidget(QObject):
         self.pitch = generate_q_double_spin_box(0.0, -30.0, 30.0, 0, 1.0)
         add_widget_with_frame(right_settings_vbox, self.pitch, "Pitch (deg):")
 
+        # use terrain model
+        self.use_terrain_model_checkbox = QCheckBox()
+        self.use_terrain_model_checkbox.setText("Use Terrain Model")
+        self.use_terrain_model_checkbox.setChecked(False)
+        self.use_terrain_model_checkbox.stateChanged.connect(self.use_terrain_model_changed)
+        right_settings_vbox.addWidget(self.use_terrain_model_checkbox)
+
         # override mode
         self.override_checkbox = QCheckBox()
         self.override_checkbox.setText("Override 3D")
@@ -186,8 +193,8 @@ class StepInterfaceWidget(QObject):
         right_settings_vbox.addStretch()
 
         # delta z
-        self.goal_height = generate_q_double_spin_box(0.0, -0.5, 0.5, 2, 0.01)
-        add_widget_with_frame(right_settings_vbox, self.goal_height, "delta z per step (m):")
+        self.dz = generate_q_double_spin_box(0.0, -0.5, 0.5, 2, 0.01)
+        add_widget_with_frame(right_settings_vbox, self.dz, "delta z per step (m):")
 
         # end right column
         settings_hbox.addLayout(right_settings_vbox, 1)
@@ -244,14 +251,15 @@ class StepInterfaceWidget(QObject):
     # message publisher
     def _publish_step_plan_request(self, walk_command):
         params = PatternParameters()
-        params.steps = self.step_number.value()
-        params.mode             = walk_command
-        params.close_step       = self.close_step_checkbox.isChecked()
-        params.extra_seperation = self.extra_seperation_checkbox.isChecked()
-        params.override         = self.override_checkbox.isChecked()
-        params.roll             = math.radians(self.roll.value())
-        params.pitch            = math.radians(self.pitch.value())
-        params.dz           = self.goal_height.value()
+        params.steps                = self.step_number.value()
+        params.mode                 = walk_command
+        params.close_step           = self.close_step_checkbox.isChecked()
+        params.extra_seperation     = self.extra_seperation_checkbox.isChecked()
+        params.use_terrain_model    = self.use_terrain_model_checkbox.isChecked()
+        params.override             = self.override_checkbox.isChecked()
+        params.roll                 = math.radians(self.roll.value())
+        params.pitch                = math.radians(self.pitch.value())
+        params.dz                   = self.dz.value()
 
         params.step_distance_forward   = self.step_distance.value()
         params.step_distance_sideward  = self.side_step.value()
@@ -316,4 +324,14 @@ class StepInterfaceWidget(QObject):
     @Slot(str)
     def param_selected(self, name):
         self.commands_set_enabled(True)
+
+    @Slot(int)
+    def use_terrain_model_changed(self, state):
+        enable_override = True
+        if state == Qt.Checked:
+            enable_override = False
+        self.roll.setEnabled(enable_override)
+        self.pitch.setEnabled(enable_override)
+        self.override_checkbox.setEnabled(enable_override)
+        self.dz.setEnabled(enable_override)
 
