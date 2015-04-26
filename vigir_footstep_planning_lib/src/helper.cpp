@@ -9,7 +9,7 @@ msgs::ErrorStatus determineStartFeetPose(msgs::Feet& start_feet, ros::ServiceCli
   // get start feet pose
   msgs::GenerateFeetPoseService feet_pose_service;
   feet_pose_service.request.request.header = header;
-  feet_pose_service.request.request.flags = msgs::FeetPoseRequest::FLAG_CURRENT;
+  feet_pose_service.request.request.flags = msgs::FeetPoseRequest::FLAG_CURRENT | msgs::FeetPoseRequest::FLAG_3D;
 
   if (!generate_feet_pose_client.call(feet_pose_service.request, feet_pose_service.response))
     return ErrorStatusError(msgs::ErrorStatus::ERR_UNKNOWN, "determineStartFeetPose", "Can't call 'FeetPoseGenerator'!");
