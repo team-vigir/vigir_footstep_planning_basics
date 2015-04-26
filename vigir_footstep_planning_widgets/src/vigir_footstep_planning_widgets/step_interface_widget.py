@@ -256,7 +256,7 @@ class StepInterfaceWidget(QObject):
         params.close_step           = self.close_step_checkbox.isChecked()
         params.extra_seperation     = self.extra_seperation_checkbox.isChecked()
         params.use_terrain_model    = self.use_terrain_model_checkbox.isChecked()
-        params.override             = self.override_checkbox.isChecked()
+        params.override             = self.override_checkbox.isChecked() and not self.use_terrain_model_checkbox.isChecked()
         params.roll                 = math.radians(self.roll.value())
         params.pitch                = math.radians(self.pitch.value())
         params.dz                   = self.dz.value()
