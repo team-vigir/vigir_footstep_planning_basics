@@ -146,8 +146,8 @@ bool getUpperBodyOriginShift(ros::NodeHandle &nh, geometry_msgs::Vector3& upper_
 
 bool getGridMapCoords(const nav_msgs::OccupancyGrid& map, double x, double y, int& map_x, int& map_y)
 {
-  map_x = floor((x-map.info.origin.position.x)/map.info.resolution);
-  map_y = floor((y-map.info.origin.position.y)/map.info.resolution);
+  map_x = round((x-map.info.origin.position.x)/map.info.resolution);
+  map_y = round((y-map.info.origin.position.y)/map.info.resolution);
 
   if (map_x < 0 || (int) map.info.width  <= map_x ||
       map_y < 0 || (int) map.info.height <= map_y)
