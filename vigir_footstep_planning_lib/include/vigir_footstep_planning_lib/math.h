@@ -121,9 +121,19 @@ inline double grid_cost(int x1, int y1, int x2, int y2, float cell_size)
 }
 
 
-inline double roundPrec(double val, double prec)
+inline double pround(double x, double prec)
 {
-  return round(val*(1.0/prec))*prec;
+  return ::round(x/prec)*prec;
+}
+
+inline double pceil(double x, double prec)
+{
+  return ::ceil(x/prec)*prec;
+}
+
+inline double pfloor(double x, double prec)
+{
+  return ::floor(x/prec)*prec;
 }
 
 
