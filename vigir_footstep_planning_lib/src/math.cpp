@@ -7,14 +7,18 @@ bool pointWithinPolygon(int x, int y, const std::vector<std::pair<int, int> >& e
   int cn = 0;
 
   // loop through all edges of the polygon
-  for(unsigned int i = 0; i < edges.size() - 1; ++i)
+  for(unsigned int i = 0; i < edges.size(); ++i)
   {
-    if ((edges[i].second <= y && edges[i + 1].second > y) ||
-        (edges[i].second > y && edges[i + 1].second <= y))
+    unsigned int i_plus = (i + 1) % edges.size();
+    if ((edges[i].second <= y && edges[i_plus].second > y) ||
+        (edges[i].second > y && edges[i_plus].second <= y))
     {
-      float vt = (float)(y - edges[i].second) / (edges[i + 1].second - edges[i].second);
-      if (x < edges[i].first + vt * (edges[i + 1].first - edges[i].first))
-        cn++;
+      if (fabs(edges[i_plus].second - edges[i].second) > FLOAT_CMP_THR)
+      {
+        float vt = (float)(y - edges[i].second) / (edges[i_plus].second - edges[i].second);
+        if (x < edges[i].first + vt * (edges[i_plus].first - edges[i].first))
+          cn++;
+      }
     }
   }
   return cn & 1;
