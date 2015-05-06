@@ -10,6 +10,8 @@ State::State()
   , ivStepDuration(0.0)
   , ivLeg(NOLEG)
   , ivGroundContactSupport(0.0)
+  , cost(0.0)
+  , risk(0.0)
 {
   ivPose = tf::Pose();
 
@@ -26,6 +28,8 @@ State::State(double x, double y, double z, double roll, double pitch, double yaw
   , ivStepDuration(step_duration)
   , ivLeg(leg)
   , ivGroundContactSupport(1.0)
+  , cost(0.0)
+  , risk(0.0)
 {
   ivPose.setOrigin(tf::Vector3(x, y, z));
   ivPose.getBasis().setRPY(ivRoll, ivPitch, ivYaw);
@@ -44,6 +48,8 @@ State::State(const geometry_msgs::Vector3& position, const geometry_msgs::Vector
   , ivStepDuration(step_duration)
   , ivLeg(leg)
   , ivGroundContactSupport(1.0)
+  , cost(0.0)
+  , risk(0.0)
 {
   ivPose.setOrigin(tf::Vector3(position.x, position.y, position.z));
 
@@ -55,6 +61,8 @@ State::State(const geometry_msgs::Pose& pose, double swing_height, double step_d
   , ivStepDuration(step_duration)
   , ivLeg(leg)
   , ivGroundContactSupport(1.0)
+  , cost(0.0)
+  , risk(0.0)
 {
   tf::poseMsgToTF(pose, ivPose);
   ivPose.getBasis().getRPY(ivRoll, ivPitch, ivYaw);
@@ -67,6 +75,8 @@ State::State(const tf::Transform& t, double swing_height, double step_duration, 
   , ivStepDuration(step_duration)
   , ivLeg(leg)
   , ivGroundContactSupport(1.0)
+  , cost(0.0)
+  , risk(0.0)
 {
   ivPose = t;
   ivPose.getBasis().getRPY(ivRoll, ivPitch, ivYaw);
