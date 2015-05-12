@@ -50,7 +50,7 @@ public:
   {
   }
 
-  ~Queue()
+  virtual ~Queue()
   {
   }
 

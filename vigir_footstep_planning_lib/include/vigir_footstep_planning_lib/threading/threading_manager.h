@@ -54,20 +54,43 @@ public:
   virtual ~ThreadingManager()
   {
     ROS_INFO("[Manager] Destruct");
-    for (typename std::list<boost::shared_ptr<Worker<T> > >::iterator itr = workers.begin(); itr != workers.end(); itr++)
-    {
-      ROS_INFO("[Manager] Wait for thread termination...");
-      (*itr)->stop();
-      ROS_INFO("[Manager] Wait for thread termination...Done!");
-    }
   }
 
   void addJob(boost::shared_ptr<T>& job) { queue.queueJob(job); }
   void addJobs(std::list<boost::shared_ptr<T> >& jobs) { queue.queueJobs(jobs); }
+
+  void stopJobs()
+  {
+    ROS_INFO("[Manager] Wait for thread termination...");
+    for (typename std::list<boost::shared_ptr<Worker<T> > >::iterator itr = workers.begin(); itr != workers.end(); itr++)
+      (*itr)->stop();
+    ROS_INFO("[Manager] Wait for thread termination...Done!");
+  }
+
+  void interruptJobs()
+  {
+    ROS_INFO("[Manager] Interrupt jobs...");
+    for (typename std::list<boost::shared_ptr<Worker<T> > >::iterator itr = workers.begin(); itr != workers.end(); itr++)
+      (*itr)->interruptJobs();
+    ROS_INFO("[Manager] Interrupt jobs...Done!");
+  }
+
   void deleteJobs() { queue.clear(); }
 
   bool hasJobsFinished() { !queue.hasOpenJobs(); }
-  void waitUntilJobsFinished() { queue.waitUntilJobsProcessed(); }
+  void waitUntilJobsFinished()
+  {
+    try
+    {
+      queue.waitUntilJobsProcessed();
+    }
+    catch(boost::thread_interrupted& interrupt)
+    {
+      ROS_INFO("[Manager] Catched boost::interruption");
+      interruptJobs();
+      throw(interrupt);
+    }
+  }
 
   // typedefs
   typedef boost::shared_ptr<ThreadingManager> Ptr;

@@ -54,7 +54,7 @@ public:
       start();
   }
 
-  ~Worker()
+  virtual ~Worker()
   {
     ROS_INFO_STREAM("[Worker (" << boost::this_thread::get_id() <<")] Destruct");
     stop();
@@ -70,12 +70,23 @@ public:
   void stop()
   {
     ROS_INFO_STREAM("[Worker (" << boost::this_thread::get_id() <<")] Stop request");
+
+    // soft stop
+    interruptJobs();
     exit = true;
+
+    // hard stop
     if (thread.joinable())
     {
       thread.interrupt();
       thread.join();
     }
+  }
+
+  void interruptJobs()
+  {
+    boost::mutex::scoped_lock lock(run_jobs_mutex);
+    run_jobs = false;
   }
 
 protected:
@@ -86,20 +97,31 @@ protected:
     while (!exit)
     {
       queue.waitAndDequeueJobs(jobs, n);
+      {
+        boost::mutex::scoped_lock lock(run_jobs_mutex);
+        run_jobs = true;
+      }
 
       ROS_DEBUG_STREAM("[Worker (" << boost::this_thread::get_id() <<")] Deqeued " << jobs.size() << " jobs.");
-      for (size_t i = 0; i < jobs.size(); i++)
+      for (size_t i = 0; i < jobs.size() && run_jobs; i++)
+      {
+        boost::this_thread::interruption_point();
         jobs[i]->run();
+      }
 
-      queue.justFinishedJobs(jobs.size());
+      if (run_jobs)
+        queue.justFinishedJobs(jobs.size());
     }
     ROS_INFO_STREAM("[Worker (" << boost::this_thread::get_id() <<")] Stopped!");
   }
 
   boost::thread thread;
+  mutable boost::mutex run_jobs_mutex;
+
   Queue<T>& queue;
   unsigned int jobs_per_thread;
   bool exit;
+  bool run_jobs;
 };
 }
 }
