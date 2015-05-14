@@ -128,8 +128,8 @@ public:
       boost::shared_ptr<T> plugin = boost::dynamic_pointer_cast<T>(itr->second);
       if (plugin)
       {
-        Instance()->plugins_by_name.erase(itr);
         ROS_INFO("[PluginManager] Removed plugin '%s' with type_id '%s'", itr->second->getName().c_str(), itr->second->getTypeId().c_str());
+        Instance()->plugins_by_name.erase(itr);
       }
     }
   }
