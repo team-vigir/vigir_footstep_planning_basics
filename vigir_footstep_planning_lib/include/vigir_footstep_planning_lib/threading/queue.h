@@ -59,6 +59,7 @@ public:
     boost::mutex::scoped_lock lock(queued_jobs_mutex);
     queued_jobs = typename std::queue<boost::shared_ptr<T> >();
     job_counter = 0;
+    jobs_finished_condition.notify_all();
   }
 
   void queueJob(boost::shared_ptr<T>& job)

@@ -64,6 +64,7 @@ public:
     ROS_INFO("[Manager] Wait for thread termination...");
     for (typename std::list<boost::shared_ptr<Worker<T> > >::iterator itr = workers.begin(); itr != workers.end(); itr++)
       (*itr)->stop();
+    deleteJobs();
     ROS_INFO("[Manager] Wait for thread termination...Done!");
   }
 
@@ -72,6 +73,7 @@ public:
     ROS_INFO("[Manager] Interrupt jobs...");
     for (typename std::list<boost::shared_ptr<Worker<T> > >::iterator itr = workers.begin(); itr != workers.end(); itr++)
       (*itr)->interruptJobs();
+    deleteJobs();
     ROS_INFO("[Manager] Interrupt jobs...Done!");
   }
 
