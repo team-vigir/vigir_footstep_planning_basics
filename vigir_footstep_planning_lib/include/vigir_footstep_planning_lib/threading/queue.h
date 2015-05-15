@@ -148,12 +148,9 @@ public:
   {
     boost::mutex::scoped_lock lock(queued_jobs_mutex);
 
-    while(!queued_jobs.empty() || job_counter != 0)
-    {
-      ROS_DEBUG("[Queue] Waiting for Jobs getting finished...");
-      jobs_finished_condition.wait(lock);
-      ROS_DEBUG("[Queue] Waiting for Jobs getting finished...Done!");
-    }
+    ROS_DEBUG("[Queue] Waiting for Jobs getting finished...");
+    jobs_finished_condition.wait(lock);
+    ROS_DEBUG("[Queue] Waiting for Jobs getting finished...Done!");
   }
 
 protected:
