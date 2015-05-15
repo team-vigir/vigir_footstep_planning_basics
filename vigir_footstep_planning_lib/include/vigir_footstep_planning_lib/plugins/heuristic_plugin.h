@@ -47,7 +47,7 @@ public:
 
   bool isUnique() const final;
 
-  virtual double getHeuristicValue(const State& from, const State& to) const = 0;
+  virtual double getHeuristicValue(const State& from, const State& to, const State& start, const State& goal) const = 0;
 
   // typedefs
   typedef boost::shared_ptr<HeuristicPlugin> Ptr;
