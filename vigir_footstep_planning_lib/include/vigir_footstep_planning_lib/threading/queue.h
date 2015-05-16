@@ -85,7 +85,7 @@ public:
   {
     boost::mutex::scoped_lock lock(queued_jobs_mutex);
 
-    while (queued_jobs.empty())
+    if (queued_jobs.empty())
     {
       ROS_DEBUG("[Queue] Waiting for Job getting queued...");
       queued_jobs_condition.wait(lock);
@@ -104,7 +104,7 @@ public:
   {
     boost::mutex::scoped_lock lock(queued_jobs_mutex);
 
-    while (queued_jobs.empty())
+    if (queued_jobs.empty())
     {
       ROS_DEBUG("[Queue] Waiting for Job getting queued...");
       queued_jobs_condition.wait(lock);
@@ -148,9 +148,12 @@ public:
   {
     boost::mutex::scoped_lock lock(queued_jobs_mutex);
 
-    ROS_DEBUG("[Queue] Waiting for Jobs getting finished...");
-    jobs_finished_condition.wait(lock);
-    ROS_DEBUG("[Queue] Waiting for Jobs getting finished...Done!");
+    if (!queued_jobs.empty())
+    {
+      ROS_DEBUG("[Queue] Waiting for Jobs getting finished...");
+      jobs_finished_condition.wait(lock);
+      ROS_DEBUG("[Queue] Waiting for Jobs getting finished...Done!");
+    }
   }
 
 protected:
