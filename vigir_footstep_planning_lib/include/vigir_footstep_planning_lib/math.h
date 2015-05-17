@@ -108,6 +108,11 @@ inline double euclidean_distance(double x1, double y1, double z1, double x2, dou
   return sqrt(euclidean_distance_sq(x1, y1, z1, x2, y2, z2));
 }
 
+inline double parabol(double x, double y, double a_inv, double b_inv)
+{
+  return x*x*a_inv + y*y*b_inv;
+}
+
 /// @return The distance of two neighbored cell.
 inline double grid_cost(int x1, int y1, int x2, int y2, float cell_size)
 {
