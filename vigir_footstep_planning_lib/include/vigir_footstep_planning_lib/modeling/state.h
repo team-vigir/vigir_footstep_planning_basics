@@ -50,12 +50,12 @@ class State
 {
 public:
   State();
-  State(double x, double y, double z, double roll, double pitch, double yaw, double swing_height, double step_duration, Leg leg);
-  State(const geometry_msgs::Vector3& position, double roll, double pitch, double yaw, double swing_height, double step_duration, Leg leg);
-  State(const geometry_msgs::Vector3& position, const geometry_msgs::Vector3& normal, double yaw, double swing_height, double step_duration, Leg leg);
-  State(const geometry_msgs::Pose& pose, double swing_height, double step_duration, Leg leg);
-  State(const tf::Transform& t, double swing_height, double step_duration, Leg leg);
-  State(const msgs::Foot foot, double swing_height, double step_duration);
+  State(double x, double y, double z, double roll, double pitch, double yaw, double swing_height, double sway_duration, double step_duration, Leg leg);
+  State(const geometry_msgs::Vector3& position, double roll, double pitch, double yaw, double swing_height, double sway_duration, double step_duration, Leg leg);
+  State(const geometry_msgs::Vector3& position, const geometry_msgs::Vector3& normal, double yaw, double swing_height, double sway_duration, double step_duration, Leg leg);
+  State(const geometry_msgs::Pose& pose, double swing_height, double sway_duration, double step_duration, Leg leg);
+  State(const tf::Transform& t, double swing_height, double sway_duration, double step_duration, Leg leg);
+  State(const msgs::Foot foot, double swing_height, double sway_duration, double step_duration);
   State(const msgs::Step step);
 
   ~State();
@@ -100,13 +100,14 @@ public:
   double getNormalX() const { return ivNormal.x; }
   double getNormalY() const { return ivNormal.y; }
   double getNormalZ() const { return ivNormal.z; }
+
   double getSwingHeight() const { return ivSwingHeight; }
+  double getSwayDuration() const { return ivSwayDuration; }
   double getStepDuration() const { return ivStepDuration; }
   Leg getLeg() const { return ivLeg; }
   double getGroundContactSupport() const { return ivGroundContactSupport; }
   double getCost() { return cost; }
   double getRisk() { return risk; }
-
 
   const tf::Pose &getPose() const { return ivPose; }
   tf::Pose &getPose() { return ivPose; }
@@ -118,6 +119,9 @@ private:
 
   tf::Pose ivPose;
 
+  /// The robot's supporting leg.
+  Leg ivLeg;
+
   /// The robot's orientation.
   double ivRoll;
   double ivPitch;
@@ -125,12 +129,10 @@ private:
   /// The normal of foot in world.
   geometry_msgs::Vector3 ivNormal;
   double ivSwingHeight;
+  double ivSwayDuration;
   double ivStepDuration;
-  /// The robot's supporting leg.
-  Leg ivLeg;
 
-  /// leg's knee nominal
-  double ivKneeNominal;
+
 
   /// percentage of ground contact support (0.0 - 1.0 = 100%)
   double ivGroundContactSupport;

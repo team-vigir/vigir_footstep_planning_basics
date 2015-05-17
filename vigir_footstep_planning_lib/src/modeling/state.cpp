@@ -3,12 +3,13 @@
 namespace vigir_footstep_planning
 {
 State::State()
-  : ivRoll(0.0)
+  : ivLeg(NOLEG)
+  , ivRoll(0.0)
   , ivPitch(0.0)
   , ivYaw(0.0)
   , ivSwingHeight(0.0)
+  , ivSwayDuration(0.0)
   , ivStepDuration(0.0)
-  , ivLeg(NOLEG)
   , ivGroundContactSupport(0.0)
   , cost(0.0)
   , risk(0.0)
@@ -20,13 +21,14 @@ State::State()
   ivNormal.z = 1.0;
 }
 
-State::State(double x, double y, double z, double roll, double pitch, double yaw, double swing_height, double step_duration, Leg leg)
-  : ivRoll(roll)
+State::State(double x, double y, double z, double roll, double pitch, double yaw, double swing_height, double sway_duration, double step_duration, Leg leg)
+  : ivLeg(leg)
+  , ivRoll(roll)
   , ivPitch(pitch)
   , ivYaw(yaw)
   , ivSwingHeight(swing_height)
+  , ivSwayDuration(sway_duration)
   , ivStepDuration(step_duration)
-  , ivLeg(leg)
   , ivGroundContactSupport(1.0)
   , cost(0.0)
   , risk(0.0)
@@ -37,16 +39,17 @@ State::State(double x, double y, double z, double roll, double pitch, double yaw
   recomputeNormal();
 }
 
-State::State(const geometry_msgs::Vector3& position, double roll, double pitch, double yaw, double swing_height, double step_duration, Leg leg)
-  : State(position.x, position.y, position.z, roll, pitch, yaw, swing_height, step_duration, leg)
+State::State(const geometry_msgs::Vector3& position, double roll, double pitch, double yaw, double swing_height, double sway_duration, double step_duration, Leg leg)
+  : State(position.x, position.y, position.z, roll, pitch, yaw, swing_height, sway_duration, step_duration, leg)
 {
 }
 
-State::State(const geometry_msgs::Vector3& position, const geometry_msgs::Vector3& normal, double yaw, double swing_height, double step_duration, Leg leg)
-  : ivYaw(yaw)
+State::State(const geometry_msgs::Vector3& position, const geometry_msgs::Vector3& normal, double yaw, double swing_height, double sway_duration, double step_duration, Leg leg)
+  : ivLeg(leg)
+  , ivYaw(yaw)
   , ivSwingHeight(swing_height)
+  , ivSwayDuration(sway_duration)
   , ivStepDuration(step_duration)
-  , ivLeg(leg)
   , ivGroundContactSupport(1.0)
   , cost(0.0)
   , risk(0.0)
@@ -56,10 +59,11 @@ State::State(const geometry_msgs::Vector3& position, const geometry_msgs::Vector
   setNormal(normal);
 }
 
-State::State(const geometry_msgs::Pose& pose, double swing_height, double step_duration, Leg leg)
-  : ivSwingHeight(swing_height)
+State::State(const geometry_msgs::Pose& pose, double swing_height, double sway_duration, double step_duration, Leg leg)
+  : ivLeg(leg)
+  , ivSwingHeight(swing_height)
+  , ivSwayDuration(sway_duration)
   , ivStepDuration(step_duration)
-  , ivLeg(leg)
   , ivGroundContactSupport(1.0)
   , cost(0.0)
   , risk(0.0)
@@ -70,10 +74,11 @@ State::State(const geometry_msgs::Pose& pose, double swing_height, double step_d
   recomputeNormal();
 }
 
-State::State(const tf::Transform& t, double swing_height, double step_duration, Leg leg)
-  : ivSwingHeight(swing_height)
+State::State(const tf::Transform& t, double swing_height, double sway_duration, double step_duration, Leg leg)
+  : ivLeg(leg)
+  , ivSwingHeight(swing_height)
+  , ivSwayDuration(sway_duration)
   , ivStepDuration(step_duration)
-  , ivLeg(leg)
   , ivGroundContactSupport(1.0)
   , cost(0.0)
   , risk(0.0)
@@ -84,13 +89,13 @@ State::State(const tf::Transform& t, double swing_height, double step_duration, 
   recomputeNormal();
 }
 
-State::State(const msgs::Foot foot, double swing_height, double step_duration)
-  : State(foot.pose, swing_height, step_duration, foot.foot_index == msgs::Foot::LEFT ? LEFT : RIGHT)
+State::State(const msgs::Foot foot, double swing_height, double sway_duration, double step_duration)
+  : State(foot.pose, swing_height, sway_duration, step_duration, foot.foot_index == msgs::Foot::LEFT ? LEFT : RIGHT)
 {
 }
 
 State::State(const msgs::Step step)
-  : State(step.foot, step.swing_height, step.step_duration)
+  : State(step.foot, step.swing_height, step.sway_duration, step.step_duration)
 {
 }
 
@@ -174,6 +179,7 @@ void State::getStep(msgs::Step &step) const
   step.step_index = 0;
   step.foot.foot_index = ivLeg;
   getFoot(step.foot);
+  step.sway_duration = ivSwayDuration;
   step.step_duration = ivStepDuration;
   step.swing_height = ivSwingHeight;
   step.cost = cost;
