@@ -109,8 +109,11 @@ protected:
         jobs[i]->run();
       }
 
-      if (run_jobs)
-        queue.justFinishedJobs(jobs.size());
+      {
+        boost::mutex::scoped_lock lock(run_jobs_mutex);
+        if (run_jobs)
+          queue.justFinishedJobs(jobs.size());
+      }
     }
     ROS_INFO_STREAM("[Worker (" << boost::this_thread::get_id() <<")] Stopped!");
   }
