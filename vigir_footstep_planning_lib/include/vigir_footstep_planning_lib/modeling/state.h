@@ -87,6 +87,7 @@ public:
   void setStepDuration(double step_duration) { ivStepDuration = step_duration; }
   void setLeg(Leg leg) { ivLeg = leg; }
   void setGroundContactSupport(double ground_contact_support) { ivGroundContactSupport = ground_contact_support; }
+  void setBodyVelocity(double v_body) { this->v_body = v_body; }
   void setCost(double cost) { this->cost = cost; }
   void setRisk(double risk) { this->risk = risk; }
 
@@ -106,6 +107,7 @@ public:
   double getStepDuration() const { return ivStepDuration; }
   Leg getLeg() const { return ivLeg; }
   double getGroundContactSupport() const { return ivGroundContactSupport; }
+  double getBodyVelocity() { return v_body; }
   double getCost() { return cost; }
   double getRisk() { return risk; }
 
@@ -136,6 +138,8 @@ private:
 
   /// percentage of ground contact support (0.0 - 1.0 = 100%)
   double ivGroundContactSupport;
+
+  double v_body;
 
   double cost;
   double risk;

@@ -11,6 +11,7 @@ State::State()
   , ivSwayDuration(0.0)
   , ivStepDuration(0.0)
   , ivGroundContactSupport(0.0)
+  , v_body(0.0)
   , cost(0.0)
   , risk(0.0)
 {
@@ -30,6 +31,7 @@ State::State(double x, double y, double z, double roll, double pitch, double yaw
   , ivSwayDuration(sway_duration)
   , ivStepDuration(step_duration)
   , ivGroundContactSupport(1.0)
+  , v_body(0.0)
   , cost(0.0)
   , risk(0.0)
 {
@@ -51,6 +53,7 @@ State::State(const geometry_msgs::Vector3& position, const geometry_msgs::Vector
   , ivSwayDuration(sway_duration)
   , ivStepDuration(step_duration)
   , ivGroundContactSupport(1.0)
+  , v_body(0.0)
   , cost(0.0)
   , risk(0.0)
 {
@@ -65,6 +68,7 @@ State::State(const geometry_msgs::Pose& pose, double swing_height, double sway_d
   , ivSwayDuration(sway_duration)
   , ivStepDuration(step_duration)
   , ivGroundContactSupport(1.0)
+  , v_body(0.0)
   , cost(0.0)
   , risk(0.0)
 {
@@ -80,6 +84,7 @@ State::State(const tf::Transform& t, double swing_height, double sway_duration, 
   , ivSwayDuration(sway_duration)
   , ivStepDuration(step_duration)
   , ivGroundContactSupport(1.0)
+  , v_body(0.0)
   , cost(0.0)
   , risk(0.0)
 {
