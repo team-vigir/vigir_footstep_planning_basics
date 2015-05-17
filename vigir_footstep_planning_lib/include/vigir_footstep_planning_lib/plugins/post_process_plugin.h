@@ -31,6 +31,7 @@
 
 #include <ros/ros.h>
 
+#include <vigir_footstep_planning_lib/modeling/state.h>
 #include <vigir_footstep_planning_lib/plugins/plugin.h>
 
 
@@ -46,6 +47,11 @@ public:
 
   bool isUnique() const final;
 
+  /// Post-Processing directly after state generation
+  virtual void postProcessStepForward(const State& left, const State& right, State& swing) const;
+  virtual void postProcessStepBackward(const State& left, const State& right, State& swing) const;
+
+  /// Post-Processing after footstep planning was done
   virtual void postProcessStep(const msgs::Step& left, const msgs::Step& right, msgs::Step& swing, msgs::StepPlan& step_plan) const;
   virtual void postProcess(msgs::StepPlan step_plan) const;
 

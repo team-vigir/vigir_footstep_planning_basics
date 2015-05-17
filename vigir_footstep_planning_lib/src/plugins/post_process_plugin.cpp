@@ -14,12 +14,19 @@ PostProcessPlugin::PostProcessPlugin(const std::string& name)
 
 bool PostProcessPlugin::isUnique() const
 {
-  return true;
+  return false;
+}
+
+void PostProcessPlugin::postProcessStepForward(const State& /*left*/, const State& /*right*/, State& /*swing*/) const
+{
+}
+
+void PostProcessPlugin::postProcessStepBackward(const State& /*left*/, const State& /*right*/, State& /*swing*/) const
+{
 }
 
 void PostProcessPlugin::postProcessStep(const msgs::Step& /*left*/, const msgs::Step& /*right*/, msgs::Step& /*swing*/, msgs::StepPlan& /*step_plan*/) const
 {
-  ROS_ERROR_ONCE("[PostProcessPlugin] postProcessStep shouldn't be called without any implementation. Fix it immediatly!");
 }
 
 void PostProcessPlugin::postProcess(msgs::StepPlan step_plan) const
