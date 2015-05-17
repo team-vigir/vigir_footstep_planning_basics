@@ -16,6 +16,10 @@ HeuristicPlugin::~HeuristicPlugin()
 {
 }
 
+void HeuristicPlugin::reset()
+{
+}
+
 bool HeuristicPlugin::isUnique() const
 {
   return false;
