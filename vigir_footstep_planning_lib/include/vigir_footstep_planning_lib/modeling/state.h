@@ -50,12 +50,12 @@ class State
 {
 public:
   State();
-  State(double x, double y, double z, double roll, double pitch, double yaw, double swing_height, double sway_duration, double step_duration, Leg leg);
-  State(const geometry_msgs::Vector3& position, double roll, double pitch, double yaw, double swing_height, double sway_duration, double step_duration, Leg leg);
-  State(const geometry_msgs::Vector3& position, const geometry_msgs::Vector3& normal, double yaw, double swing_height, double sway_duration, double step_duration, Leg leg);
-  State(const geometry_msgs::Pose& pose, double swing_height, double sway_duration, double step_duration, Leg leg);
-  State(const tf::Transform& t, double swing_height, double sway_duration, double step_duration, Leg leg);
-  State(const msgs::Foot foot, double swing_height, double sway_duration, double step_duration);
+  State(double x, double y, double z, double roll, double pitch, double yaw, Leg leg);
+  State(const geometry_msgs::Vector3& position, double roll, double pitch, double yaw, Leg leg);
+  State(const geometry_msgs::Vector3& position, const geometry_msgs::Vector3& normal, double yaw, Leg leg);
+  State(const geometry_msgs::Pose& pose, Leg leg);
+  State(const tf::Transform& t, Leg leg);
+  State(const msgs::Foot foot);
   State(const msgs::Step step);
 
   ~State();
@@ -84,10 +84,13 @@ public:
   void setNormal(const geometry_msgs::Vector3 &normal);
   void setNormal(double x, double y, double z);
   void setSwingHeight(double swing_height) { ivSwingHeight = swing_height; }
+  void setSwayDuration(double sway_duration) { ivSwayDuration = sway_duration; }
   void setStepDuration(double step_duration) { ivStepDuration = step_duration; }
+  void setSwayDistance(double sway_distance) { this->sway_distance = sway_distance; }
+  void setSwingDistance(double swing_distance) { this->swing_distance = swing_distance; }
   void setLeg(Leg leg) { ivLeg = leg; }
   void setGroundContactSupport(double ground_contact_support) { ivGroundContactSupport = ground_contact_support; }
-  void setBodyVelocity(double v_body) { this->v_body = v_body; }
+  void setBodyVelocity(const geometry_msgs::Vector3& body_vel) { this->body_vel = body_vel; }
   void setCost(double cost) { this->cost = cost; }
   void setRisk(double risk) { this->risk = risk; }
 
@@ -101,15 +104,16 @@ public:
   double getNormalX() const { return ivNormal.x; }
   double getNormalY() const { return ivNormal.y; }
   double getNormalZ() const { return ivNormal.z; }
-
   double getSwingHeight() const { return ivSwingHeight; }
   double getSwayDuration() const { return ivSwayDuration; }
   double getStepDuration() const { return ivStepDuration; }
+  double getSwayDistance() const { return sway_distance; }
+  double getSwingDistance() const { return swing_distance; }
   Leg getLeg() const { return ivLeg; }
   double getGroundContactSupport() const { return ivGroundContactSupport; }
-  double getBodyVelocity() { return v_body; }
-  double getCost() { return cost; }
-  double getRisk() { return risk; }
+  const geometry_msgs::Vector3& getBodyVelocity() const { return body_vel; }
+  double getCost() const { return cost; }
+  double getRisk() const { return risk; }
 
   const tf::Pose &getPose() const { return ivPose; }
   tf::Pose &getPose() { return ivPose; }
@@ -134,12 +138,13 @@ private:
   double ivSwayDuration;
   double ivStepDuration;
 
-
-
   /// percentage of ground contact support (0.0 - 1.0 = 100%)
   double ivGroundContactSupport;
 
-  double v_body;
+  double sway_distance;
+  double swing_distance;
+
+  geometry_msgs::Vector3 body_vel;
 
   double cost;
   double risk;
