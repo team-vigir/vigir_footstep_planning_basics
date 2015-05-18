@@ -49,11 +49,16 @@ public:
 
   bool isUnique() const final;
 
+  void loadParams(const ParameterSet& params) override;
+
   virtual double getHeuristicValue(const State& from, const State& to, const State& start, const State& goal) const = 0;
 
   // typedefs
   typedef boost::shared_ptr<HeuristicPlugin> Ptr;
   typedef boost::shared_ptr<const HeuristicPlugin> ConstPtr;
+
+protected:
+  double max_heuristic_value;
 };
 }
 

@@ -24,4 +24,9 @@ bool HeuristicPlugin::isUnique() const
 {
   return false;
 }
+
+void HeuristicPlugin::loadParams(const ParameterSet& params)
+{
+  params.getParam("max_heuristic_value", max_heuristic_value);
+}
 }
