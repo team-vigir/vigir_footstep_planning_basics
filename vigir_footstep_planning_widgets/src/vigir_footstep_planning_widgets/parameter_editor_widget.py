@@ -67,6 +67,7 @@ class ParameterEditorWidget(QObject):
         #context.add_widget(widget)
 
         # init parameter editor
+        self.parameter_set_widget.topic_changed_signal.connect(parameter_editor_widget.set_get_parameter_set_topic_name)
         self.parameter_set_widget.param_changed_signal.connect(parameter_editor_widget.load_parameters)
         self.parameter_set_widget.param_cleared_signal.connect(parameter_editor_widget.clear)
 
@@ -116,19 +117,26 @@ class QParameterEditorWidget(QWidgetWithLogger):
         # end widget
         self.setLayout(vbox)
 
-        # init action client
-        # TODO: Namespace lookup
-        self.get_parameter_set_client = actionlib.SimpleActionClient('params/get_parameter_set', GetParameterSetAction)
-
         # init
         self.clear()
         send_parameter_topic_widget.emit_topic_name()
 
     @Slot(str)
+    def _init_get_parameter_set_client(self, topic_name):
+        self.get_parameter_set_client = actionlib.SimpleActionClient(topic_name, GetParameterSetAction)
+        print "Parameter set topic changed: " + topic_name
+
+    @Slot(str)
     def _init_upload_paramater_set_client(self, topic_name):
         if (len(topic_name) > 0):
-            print "Topic changed: " + topic_name
+            print "Upload parameter set topic changed: " + topic_name
             self.upload_parameter_set_client = actionlib.SimpleActionClient(topic_name, SetParameterSetAction)
+
+    @Slot(str)
+    def set_get_parameter_set_topic_name(self, topic_name):
+        # assume that there are no topic remaps
+        if (len(topic_name) > 0):
+            self._init_get_parameter_set_client(topic_name[:-6])
 
     # clear current vis
     @Slot()

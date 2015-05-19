@@ -118,11 +118,13 @@ void ParameterManager::loadParameterSets(const std::string& path)
 void ParameterManager::updateParameterSet(const ParameterSet& params)
 {
   Instance()->param_sets[params.getName()] = params;
+  ROS_INFO("Updated parameter set '%s'.", params.getName().c_str());
 }
 
 void ParameterManager::updateParameterSet(const msgs::ParameterSet& params)
 {
   Instance()->param_sets[params.name.data].fromMsg(params);
+  ROS_INFO("Updated parameter set '%s'.", params.name.data.c_str());
 }
 
 bool ParameterManager::getParameterSet(const std::string& name, ParameterSet& params)

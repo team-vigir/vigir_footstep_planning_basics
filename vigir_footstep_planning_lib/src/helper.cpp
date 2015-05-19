@@ -103,7 +103,7 @@ bool getXYZ(ros::NodeHandle &nh, const std::string name, geometry_msgs::Vector3&
 {
   if (!nh.hasParam(name+"/x") || !nh.hasParam(name+"/y") || !nh.hasParam(name+"/z"))
   {
-    ROS_ERROR("Couldn't retrieve parameter '%s' as Vector3", name.c_str());
+    ROS_ERROR("Couldn't retrieve parameter '%s' as Vector3", (nh.getNamespace()+name).c_str());
     return false;
   }
 
@@ -117,7 +117,7 @@ bool getRPY(ros::NodeHandle &nh, const std::string name, geometry_msgs::Vector3&
 {
   if (!nh.hasParam(name+"/roll") || !nh.hasParam(name+"/pitch") || !nh.hasParam(name+"/yaw"))
   {
-    ROS_ERROR("Couldn't retrieve parameter '%s' as RPY orienation", name.c_str());
+    ROS_ERROR("Couldn't retrieve parameter '%s' as RPY orienation", (nh.getNamespace()+name).c_str());
     return false;
   }
 

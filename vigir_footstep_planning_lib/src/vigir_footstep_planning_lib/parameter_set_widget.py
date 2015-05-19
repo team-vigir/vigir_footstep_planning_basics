@@ -15,6 +15,7 @@ from vigir_footstep_planning_lib.topic_widget import *
 # widget for parameter set selection
 class QParameterSetWidget(QWidgetWithLogger):
 
+    topic_changed_signal = Signal(str)
     param_cleared_signal = Signal()
     param_changed_signal = Signal(str)
 
@@ -34,6 +35,7 @@ class QParameterSetWidget(QWidgetWithLogger):
         self.parameter_set_selection_widget = QParameterSetSelectionWidget(self, logger)
         self.parameter_set_selection_widget.param_cleared_signal.connect(self.param_cleared)
         self.parameter_set_selection_widget.param_changed_signal.connect(self.param_changed)
+        topic_widget.topic_changed_signal.connect(self.topic_changed)
         topic_widget.topic_changed_signal.connect(self.parameter_set_selection_widget.set_topic_name)
         vbox.addWidget(self.parameter_set_selection_widget)
 
@@ -45,6 +47,10 @@ class QParameterSetWidget(QWidgetWithLogger):
 
     def current_parameter_set_name(self):
         return self.parameter_set_selection_widget.current_parameter_set_name()
+
+    @Slot(str)
+    def topic_changed(self, name):
+        self.topic_changed_signal.emit(name)
 
     @Slot()
     def param_cleared(self):
@@ -155,5 +161,5 @@ class QParameterSetSelectionWidget(QWidgetWithLogger):
                 self.reset_parameter_set_selection()
         else:
             self.logger.log_error("Can't connect to footstep planner parameter action server!")
-            self.reset_parameter_set_selection()
+            self.reset_parameter_set_selection()        
 
