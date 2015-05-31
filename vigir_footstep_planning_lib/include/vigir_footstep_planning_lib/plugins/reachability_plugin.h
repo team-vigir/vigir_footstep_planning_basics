@@ -48,6 +48,7 @@ public:
   bool isUnique() const final;
 
   virtual bool isReachable(const State& current, const State& next) const = 0;
+  virtual bool isReachable(const State& left_foot, const State& right_foot, const State& swing_foot) const;
 
   // typedefs
   typedef boost::shared_ptr<ReachabilityPlugin> Ptr;
