@@ -37,7 +37,7 @@ void getDeltaStep(const msgs::Foot& current, const msgs::Foot& next, geometry_ms
   tf::poseTFToMsg(dstep_tf, dstep);
 
   // adjust for the left foot
-  if (current.foot_index == msgs::Foot::LEFT)
+  if (current.foot_index != next.foot_index && current.foot_index == msgs::Foot::LEFT)
   {
     dstep.position.y = -dstep.position.y;
 

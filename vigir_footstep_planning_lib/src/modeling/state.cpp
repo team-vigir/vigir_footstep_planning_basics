@@ -195,7 +195,6 @@ void State::setNormal(double x, double y, double z)
 void State::getStep(msgs::Step &step) const
 {
   step.step_index = 0;
-  step.foot.foot_index = ivLeg;
   getFoot(step.foot);
   step.sway_duration = ivSwayDuration;
   step.step_duration = ivStepDuration;
@@ -206,6 +205,7 @@ void State::getStep(msgs::Step &step) const
 
 void State::getFoot(msgs::Foot& foot) const
 {
+  foot.foot_index = ivLeg == LEFT ? static_cast<uint8_t>(msgs::Foot::LEFT) : static_cast<uint8_t>(msgs::Foot::RIGHT);
   foot.pose.position.x = getX();
   foot.pose.position.y = getY();
   foot.pose.position.z = getZ();
