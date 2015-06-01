@@ -123,14 +123,16 @@ public:
   template<typename T>
   static void removePluginsByType()
   {
-    for (std::map<std::string, Plugin::Ptr>::iterator itr = Instance()->plugins_by_name.begin(); itr != Instance()->plugins_by_name.end(); itr++)
+    for (std::map<std::string, Plugin::Ptr>::iterator itr = Instance()->plugins_by_name.begin(); itr != Instance()->plugins_by_name.end();)
     {
       boost::shared_ptr<T> plugin = boost::dynamic_pointer_cast<T>(itr->second);
       if (plugin)
       {
         ROS_INFO("[PluginManager] Removed plugin '%s' with type_id '%s'", itr->second->getName().c_str(), itr->second->getTypeId().c_str());
-        Instance()->plugins_by_name.erase(itr);
+        Instance()->plugins_by_name.erase(itr++);
       }
+      else
+        itr++;
     }
   }
   static void removePluginsByTypeId(const std::string& type_id);

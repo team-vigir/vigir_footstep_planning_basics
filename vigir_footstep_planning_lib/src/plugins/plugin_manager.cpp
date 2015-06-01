@@ -103,13 +103,15 @@ void PluginManager::removePluginByName(const std::string& name)
 
 void PluginManager::removePluginsByTypeId(const std::string& type_id)
 {
-  for (std::map<std::string, Plugin::Ptr>::iterator itr = Instance()->plugins_by_name.begin(); itr != Instance()->plugins_by_name.end(); itr++)
+  for (std::map<std::string, Plugin::Ptr>::iterator itr = Instance()->plugins_by_name.begin(); itr != Instance()->plugins_by_name.end();)
   {
     if (itr->second->getTypeId() == type_id)
     {
       ROS_INFO("[PluginManager] Removed plugin '%s' with type_id '%s'", itr->second->getName().c_str(), itr->second->getTypeId().c_str());
-      Instance()->plugins_by_name.erase(itr);
+      Instance()->plugins_by_name.erase(itr++);
     }
+    else
+      itr++;
   }
 }
 
