@@ -5,6 +5,10 @@ namespace vigir_footstep_planning
 PluginManager::Ptr PluginManager::singelton = PluginManager::Ptr();
 
 PluginManager::PluginManager()
+  : reachability_loader("vigir_footstep_planner", "vigir_footstep_planning::ReachabilityPlugin")
+  , step_cost_estimator_loader("vigir_footstep_planner", "vigir_footstep_planning::StepCostEstimatorPlugin")
+  , heuristic_loader("vigir_footstep_planner", "vigir_footstep_planning::HeuristicPlugin")
+  , post_process_loader("vigir_footstep_planner", "vigir_footstep_planning::PostProcessPlugin")
 {
 }
 
@@ -15,7 +19,7 @@ PluginManager::Ptr& PluginManager::Instance()
    return singelton;
 }
 
-void PluginManager::addPlugin(Plugin::Ptr& plugin)
+void PluginManager::addPlugin(Plugin::Ptr plugin)
 {
   if (!plugin)
   {
@@ -43,6 +47,36 @@ void PluginManager::addPlugin(Plugin* plugin)
 {
   Plugin::Ptr plugin_ptr(plugin);
   addPlugin(plugin_ptr);
+}
+
+bool PluginManager::addPlugin(const std::string type)
+{
+  boost::shared_ptr<vigir_footstep_planning::Plugin> p;
+
+  try
+  {
+    if (Instance()->reachability_loader.isClassAvailable(type))
+      p = Instance()->reachability_loader.createInstance(type);
+    else if (Instance()->step_cost_estimator_loader.isClassAvailable(type))
+      p = Instance()->step_cost_estimator_loader.createInstance(type);
+    else if (Instance()->heuristic_loader.isClassAvailable(type))
+      p = Instance()->heuristic_loader.createInstance(type);
+    else if (Instance()->post_process_loader.isClassAvailable(type))
+      p = Instance()->post_process_loader.createInstance(type);
+    else
+    {
+      ROS_ERROR("[PluginManager] Plugin of class '%s' is unknown!", type.c_str());
+      return false;
+    }
+  }
+  catch(pluginlib::PluginlibException& e)
+  {
+    ROS_ERROR("[PluginManager] The plugin failed to load for some reason. Error: %s", e.what());
+    return false;
+  }
+
+  PluginManager::addPlugin(p);
+  return true;
 }
 
 bool PluginManager::getPluginByName(const std::string& name, Plugin::Ptr& plugin)
@@ -139,5 +173,26 @@ void PluginManager::loadParams(const ParameterSet& params)
 {
   for (std::map<std::string, Plugin::Ptr>::iterator itr = Instance()->plugins_by_name.begin(); itr != Instance()->plugins_by_name.end(); itr++)
     itr->second->loadParams(params);
+}
+
+bool PluginManager::initializePlugins(ros::NodeHandle& nh, const ParameterSet& params)
+{
+  bool result = true;
+
+  for (std::map<std::string, Plugin::Ptr>::iterator itr = Instance()->plugins_by_name.begin(); itr != Instance()->plugins_by_name.end(); itr++)
+  {
+    if (!itr->second->initialize(nh, params))
+    {
+      result = false;
+      ROS_ERROR("[PluginManager] Failed to initialize plugin '%s' with type_id '%s'", itr->second->getName().c_str(), itr->second->getTypeId().c_str());
+    }
+  }
+
+  return result;
+}
+
+bool PluginManager::initializePlugins(ros::NodeHandle& nh)
+{
+  return initializePlugins(nh, ParameterManager::getActive());
 }
 }

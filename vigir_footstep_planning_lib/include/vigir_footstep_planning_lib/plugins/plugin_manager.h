@@ -33,9 +33,16 @@
 
 #include <boost/noncopyable.hpp>
 
+#include <pluginlib/class_loader.h>
+
 #include <vigir_footstep_planning_msgs/ParameterSet.h>
+#include <vigir_footstep_planning_lib/parameter_manager.h>
 
 #include <vigir_footstep_planning_lib/plugins/plugin.h>
+#include <vigir_footstep_planning_lib/plugins/reachability_plugin.h>
+#include <vigir_footstep_planning_lib/plugins/step_cost_estimator_plugin.h>
+#include <vigir_footstep_planning_lib/plugins/heuristic_plugin.h>
+#include <vigir_footstep_planning_lib/plugins/post_process_plugin.h>
 
 
 
@@ -51,8 +58,9 @@ public:
     Plugin::Ptr plugin(new T());
     addPlugin(plugin);
   }
-  static void addPlugin(Plugin::Ptr& plugin);
+  static void addPlugin(Plugin::Ptr plugin);
   static void addPlugin(Plugin* plugin); // this function takes over pointer and will free memory automatically, when plugin is removed
+  static bool addPlugin(const std::string type);
 
   /**
    * Returns first found plugin matching typename T. If specific element should be returned, set name.
@@ -156,6 +164,9 @@ public:
 
   static void loadParams(const ParameterSet& params);
 
+  static bool initializePlugins(ros::NodeHandle& nh, const ParameterSet& params);
+  static bool initializePlugins(ros::NodeHandle& nh);
+
   // typedefs
   typedef boost::shared_ptr<PluginManager> Ptr;
   typedef boost::shared_ptr<const PluginManager> ConstPtr;
@@ -167,6 +178,14 @@ protected:
 
   static PluginManager::Ptr singelton;
 
+  // class loader
+  class_loader::ClassLoaderVector class_loader;
+  pluginlib::ClassLoader<vigir_footstep_planning::ReachabilityPlugin> reachability_loader;
+  pluginlib::ClassLoader<vigir_footstep_planning::StepCostEstimatorPlugin> step_cost_estimator_loader;
+  pluginlib::ClassLoader<vigir_footstep_planning::HeuristicPlugin> heuristic_loader;
+  pluginlib::ClassLoader<vigir_footstep_planning::PostProcessPlugin> post_process_loader;
+
+  // instantiated plugins
   std::map<std::string, Plugin::Ptr> plugins_by_name;
 };
 }

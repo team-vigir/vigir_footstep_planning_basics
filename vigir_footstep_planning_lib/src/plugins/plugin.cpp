@@ -18,6 +18,16 @@ Plugin::~Plugin()
 {
 }
 
+void Plugin::loadParams(const ParameterSet& /*params*/)
+{
+}
+
+bool Plugin::initialize(ros::NodeHandle& /*nh*/, const ParameterSet& params)
+{
+  loadParams(params);
+  return true;
+}
+
 const std::string& Plugin::getName() const
 {
   return name;

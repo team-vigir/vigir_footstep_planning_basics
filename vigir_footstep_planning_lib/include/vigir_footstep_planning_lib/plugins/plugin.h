@@ -44,6 +44,10 @@ public:
   Plugin(const std::string& name, const std::string& type_id);
   virtual ~Plugin();
 
+  virtual void loadParams(const ParameterSet& params);
+
+  virtual bool initialize(ros::NodeHandle& nh, const ParameterSet& params);
+
   const std::string& getName() const;
   const std::string& getTypeId() const;
 
@@ -54,8 +58,6 @@ public:
    * with the the same type_id, override this method to return false.
    **/
   virtual bool isUnique() const;
-
-  virtual void loadParams(const ParameterSet& params) {}
 
   // typedefs
   typedef boost::shared_ptr<Plugin> Ptr;
