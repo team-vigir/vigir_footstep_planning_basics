@@ -39,10 +39,6 @@
 #include <vigir_footstep_planning_lib/parameter_manager.h>
 
 #include <vigir_footstep_planning_lib/plugins/plugin.h>
-#include <vigir_footstep_planning_lib/plugins/reachability_plugin.h>
-#include <vigir_footstep_planning_lib/plugins/step_cost_estimator_plugin.h>
-#include <vigir_footstep_planning_lib/plugins/heuristic_plugin.h>
-#include <vigir_footstep_planning_lib/plugins/post_process_plugin.h>
 
 
 
@@ -52,18 +48,98 @@ class PluginManager
   : boost::noncopyable
 {
 public:
-  template<typename T>
+  ~PluginManager();
+
+  /**
+   * @brief Adds ClassLoader for a specific type of plugins
+   * @param base_class The type of the base class for classes to be loaded
+   * @param package The package containing the base class
+   * @param attrib_name The attribute to search for in manifext.xml files, defaults to "plugin"
+   * @param plugin_xml_paths The list of paths of plugin.xml files, defaults to be crawled via ros::package::getPlugins()
+   * @exception pluginlib::LibraryLoadException Thrown if package manifest cannot be found
+   */
+  template<typename PluginBaseClass>
+  static bool addPluginClassLoader(std::string base_class, std::string package = "vigir_footstep_planner", std::string attrib_name = std::string("plugin"), std::vector<std::string> plugin_xml_paths = std::vector<std::string>())
+  {
+    // check for duplicate
+    for (ClassLoaderVector::const_iterator itr = Instance()->class_loader.begin(); itr != Instance()->class_loader.end(); itr++)
+    {
+      if ((*itr)->getBaseClassType() == base_class)
+      {
+        ROS_WARN("[PluginManager] The ClassLoader for plugins of type '%s' has been already added!", base_class.c_str());
+        return false;
+      }
+    }
+
+    try
+    {
+      Instance()->class_loader.push_back(new pluginlib::ClassLoader<PluginBaseClass>(package, base_class, attrib_name, plugin_xml_paths));
+      ROS_INFO("[PluginManager] Added ClassLoader for plugins of type '%s'.", base_class.c_str());
+    }
+    catch (pluginlib::LibraryLoadException& e)
+    {
+      ROS_ERROR("[PluginManager] The ClassLoader for plugin '%s' of package '%s' failed to load for some reason. Error: %s", base_class.c_str(), package.c_str(), e.what());
+      return false;
+    }
+
+    return true;
+  }
+
+  /**
+   * @brief Instantiation of plugin using ClassLoader
+   * @param type The name of the class to load
+   * @return false, if instantiation has failed, otherwise true
+   */
+  template<typename PluginBaseClass>
+  static bool addPlugin(const std::string type)
+  {
+    boost::shared_ptr<vigir_footstep_planning::Plugin> p;
+
+    try
+    {
+      std::string base_class_type;
+
+      // search for appropriate ClassLoader
+      for (ClassLoaderVector::iterator itr = Instance()->class_loader.begin(); itr != Instance()->class_loader.end(); itr++)
+      {
+        pluginlib::ClassLoader<PluginBaseClass>* loader = dynamic_cast<pluginlib::ClassLoader<PluginBaseClass>*>(*itr);
+        if (loader != nullptr && loader->isClassAvailable(type))
+        {
+          if (!p)
+          {
+            base_class_type = loader->getBaseClassType().c_str();
+            p = loader->createInstance(type);
+          }
+          else
+            ROS_WARN("[PluginManager] Duplicate source for plugin '%s' found in ClassLoader '%s'!\nPlugin was already instanciated from ClassLoader '%s'", type.c_str(), loader->getBaseClassType().c_str(), base_class_type.c_str());
+        }
+      }
+      if (!p)
+      {
+        ROS_ERROR("[PluginManager] Plugin of type '%s' is unknown! Check if ClassLoader has been initialized!", type.c_str());
+        return false;
+      }
+    }
+    catch (pluginlib::PluginlibException& e)
+    {
+      ROS_ERROR("[PluginManager] Plugin of type '%s' failed to load for some reason. Error: %s", type.c_str(), e.what());
+      return false;
+    }
+
+    PluginManager::addPlugin(p);
+    return true;
+  }
+
+  template<typename PluginDerivedClass>
   static void addPlugin()
   {
-    Plugin::Ptr plugin(new T());
-    addPlugin(plugin);
+    addPlugin(new PluginDerivedClass());
   }
   static void addPlugin(Plugin::Ptr plugin);
   static void addPlugin(Plugin* plugin); // this function takes over pointer and will free memory automatically, when plugin is removed
-  static bool addPlugin(const std::string type);
 
   /**
-   * Returns first found plugin matching typename T. If specific element should be returned, set name.
+   * Returns first found plugin matching typename T. If specific element should be returned, do set name.
    */
   template<typename T>
   static bool getPlugin(boost::shared_ptr<T>& plugin, const std::string& name = std::string())
@@ -170,6 +246,7 @@ public:
   // typedefs
   typedef boost::shared_ptr<PluginManager> Ptr;
   typedef boost::shared_ptr<const PluginManager> ConstPtr;
+  typedef std::vector<pluginlib::ClassLoaderBase*> ClassLoaderVector;
 
 protected:
   PluginManager();
@@ -179,11 +256,7 @@ protected:
   static PluginManager::Ptr singelton;
 
   // class loader
-  class_loader::ClassLoaderVector class_loader;
-  pluginlib::ClassLoader<vigir_footstep_planning::ReachabilityPlugin> reachability_loader;
-  pluginlib::ClassLoader<vigir_footstep_planning::StepCostEstimatorPlugin> step_cost_estimator_loader;
-  pluginlib::ClassLoader<vigir_footstep_planning::HeuristicPlugin> heuristic_loader;
-  pluginlib::ClassLoader<vigir_footstep_planning::PostProcessPlugin> post_process_loader;
+  ClassLoaderVector class_loader;
 
   // instantiated plugins
   std::map<std::string, Plugin::Ptr> plugins_by_name;
