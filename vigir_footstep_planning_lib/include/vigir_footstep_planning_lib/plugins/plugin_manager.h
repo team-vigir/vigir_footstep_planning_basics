@@ -48,7 +48,15 @@ class PluginManager
   : boost::noncopyable
 {
 public:
+  typedef std::vector<pluginlib::ClassLoaderBase*> ClassLoaderVector;
+
   ~PluginManager();
+
+  /**
+   * @brief Initialize all rostopic/-services within the namespace of the given nodehandle
+   * @param nh The nodehandle which is used to setup all topics/services
+   */
+  static void initTopics(ros::NodeHandle& nh);
 
   /**
    * @brief Adds ClassLoader for a specific type of plugins
@@ -84,6 +92,12 @@ public:
 
     return true;
   }
+
+  /**
+   * @brief Returns reference to a list of added ClassLoader
+   * @return Const reference to ClassLoader
+   */
+  static const ClassLoaderVector& getPluginClassLoader();
 
   /**
    * @brief Instantiation of plugin using ClassLoader
@@ -246,7 +260,6 @@ public:
   // typedefs
   typedef boost::shared_ptr<PluginManager> Ptr;
   typedef boost::shared_ptr<const PluginManager> ConstPtr;
-  typedef std::vector<pluginlib::ClassLoaderBase*> ClassLoaderVector;
 
 protected:
   PluginManager();
@@ -254,6 +267,9 @@ protected:
   static PluginManager::Ptr& Instance();
 
   static PluginManager::Ptr singelton;
+
+  // nodehandle to be used
+  ros::NodeHandle nh;
 
   // class loader
   ClassLoaderVector class_loader;

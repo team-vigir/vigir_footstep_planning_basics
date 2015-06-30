@@ -25,6 +25,30 @@ PluginManager::Ptr& PluginManager::Instance()
    return singelton;
 }
 
+void PluginManager::initTopics(ros::NodeHandle& nh)
+{
+  Instance()->nh = nh;
+//  // subscribe topics
+//  Instance()->update_parameter_set_sub = nh.subscribe("params/update_parameter_set", 1, &ParameterManager::updateParameterSet, Instance().get());
+
+//  // start own services
+//  Instance()->set_parameter_set_srv = nh.advertiseService("params/set_parameter_set", &ParameterManager::setParameterSetService, Instance().get());
+//  Instance()->get_parameter_set_srv = nh.advertiseService("params/get_parameter_set", &ParameterManager::getParameterSetService, Instance().get());
+//  Instance()->get_all_parameter_sets_srv = nh.advertiseService("params/get_all_parameter_sets", &ParameterManager::getAllParameterSetsService, Instance().get());
+//  Instance()->get_parameter_set_names_srv = nh.advertiseService("params/get_parameter_set_names", &ParameterManager::getParameterSetNamesService, Instance().get());
+
+//  // init action servers
+//  Instance()->set_parameter_set_as = SimpleActionServer<msgs::SetParameterSetAction>::create(nh, "params/set_parameter_set", true, boost::bind(&ParameterManager::setParameterSetAction, Instance().get(), boost::ref(Instance()->set_parameter_set_as)));
+//  Instance()->get_parameter_set_as = SimpleActionServer<msgs::GetParameterSetAction>::create(nh, "params/get_parameter_set", true, boost::bind(&ParameterManager::getParameterSetAction, Instance().get(), boost::ref(Instance()->get_parameter_set_as)));
+//  Instance()->get_all_parameter_sets_as = SimpleActionServer<msgs::GetAllParameterSetsAction>::create(nh, "params/get_all_parameter_sets", true, boost::bind(&ParameterManager::getAllParameterSetsAction, Instance().get(), boost::ref(Instance()->get_all_parameter_sets_as)));
+//  Instance()->get_parameter_set_names_as = SimpleActionServer<msgs::GetParameterSetNamesAction>::create(nh, "params/get_parameter_set_names", true, boost::bind(&ParameterManager::getParameterSetNamesAction, Instance().get(), boost::ref(Instance()->get_parameter_set_names_as)));
+}
+
+const PluginManager::ClassLoaderVector& PluginManager::getPluginClassLoader()
+{
+  return Instance()->class_loader;
+}
+
 void PluginManager::addPlugin(Plugin::Ptr plugin)
 {
   if (!plugin)
