@@ -40,6 +40,8 @@
 
 #include <nav_msgs/OccupancyGrid.h>
 
+#include <vigir_generic_params/generic_params_msgs.h>
+
 #include <vigir_footstep_planning_msgs/footstep_planning_msgs.h>
 
 
@@ -145,6 +147,11 @@ bool getUpperBodyOriginShift(ros::NodeHandle& nh, geometry_msgs::Vector3& upper_
 
 bool getGridMapCoords(const nav_msgs::OccupancyGrid& map, double x, double y, int& map_x, int& map_y);
 bool getGridMapIndex(const nav_msgs::OccupancyGrid& map, double x, double y, int& idx);
+
+
+
+inline std::string& strip(std::string& s, const char c) { return vigir_generic_params::strip(s, c); }
+inline std::string strip_const(const std::string& s, const char c) { return vigir_generic_params::strip_const(s, c); }
 }
 
 #endif

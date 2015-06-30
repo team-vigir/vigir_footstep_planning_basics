@@ -29,19 +29,21 @@
 #ifndef VIGIR_FOOTSTEP_PLANNING_HEURISTIC_PLUGIN_H
 #define VIGIR_FOOTSTEP_PLANNING_HEURISTIC_PLUGIN_H
 
-#include <vigir_footstep_planning_lib/modeling/state.h>
+#include <ros/ros.h>
 
-#include <vigir_footstep_planning_lib/plugins/plugin.h>
+#include <vigir_pluginlib/plugin.h>
+
+#include <vigir_footstep_planning_lib/modeling/state.h>
 
 
 
 namespace vigir_footstep_planning
 {
 class HeuristicPlugin
-  : public Plugin
+  : public vigir_pluginlib::Plugin
 {
 public:
-  HeuristicPlugin(const std::string& name, const ParameterSet& params);
+  HeuristicPlugin(const std::string& name, const vigir_generic_params::ParameterSet& params);
   HeuristicPlugin(const std::string& name);
   virtual ~HeuristicPlugin();
 
@@ -49,7 +51,7 @@ public:
 
   bool isUnique() const final;
 
-  void loadParams(const ParameterSet& params) override;
+  void loadParams(const vigir_generic_params::ParameterSet& params) override;
 
   virtual double getHeuristicValue(const State& from, const State& to, const State& start, const State& goal) const = 0;
 

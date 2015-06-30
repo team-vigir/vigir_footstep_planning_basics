@@ -3,12 +3,12 @@
 namespace vigir_footstep_planning
 {
 StepPlanMsgPlugin::StepPlanMsgPlugin(const std::string& name)
-  : Plugin(name, "step_plan_msg_plugin")
+  : vigir_pluginlib::Plugin(name, "step_plan_msg_plugin")
 {
 }
 
 StepPlanMsgPlugin::StepPlanMsgPlugin()
-  : Plugin("default_step_plan_msg_plugin", "step_plan_msg_plugin")
+  : vigir_pluginlib::Plugin("default_step_plan_msg_plugin", "step_plan_msg_plugin")
 {
 }
 

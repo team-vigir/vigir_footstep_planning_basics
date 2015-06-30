@@ -3,7 +3,7 @@
 namespace vigir_footstep_planning
 {
 
-CollisionCheckGridMapPlugin::CollisionCheckGridMapPlugin(const std::string& name, const ParameterSet& params, unsigned int collision_check_flag, ros::NodeHandle& nh, const std::string& topic, unsigned char thresh)
+CollisionCheckGridMapPlugin::CollisionCheckGridMapPlugin(const std::string& name, const vigir_generic_params::ParameterSet& params, unsigned int collision_check_flag, ros::NodeHandle& nh, const std::string& topic, unsigned char thresh)
   : CollisionCheckPlugin(name, "collision_check_grid_map_plugin", params, collision_check_flag)
   , occ_thresh(static_cast<int8_t>(thresh))
 {

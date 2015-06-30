@@ -2,8 +2,10 @@
 
 namespace vigir_footstep_planning
 {
-RobotModelPlugin::RobotModelPlugin(const ParameterSet& params, ros::NodeHandle &nh)
-  : Plugin("robot_model", "robot_model_plugin", params)
+using namespace vigir_generic_params;
+
+RobotModelPlugin::RobotModelPlugin(const vigir_generic_params::ParameterSet& params, ros::NodeHandle &nh)
+  : vigir_pluginlib::Plugin("robot_model", "robot_model_plugin", params)
 {
   // get foot dimensions
   vigir_footstep_planning::getFootSize(nh, foot_size);
@@ -14,7 +16,7 @@ RobotModelPlugin::RobotModelPlugin(const ParameterSet& params, ros::NodeHandle &
 }
 
 RobotModelPlugin::RobotModelPlugin(ros::NodeHandle &nh)
-  : Plugin("robot_model", "robot_model_plugin")
+  : vigir_pluginlib::Plugin("robot_model", "robot_model_plugin")
 {
   // get foot dimensions
   vigir_footstep_planning::getFootSize(nh, foot_size);

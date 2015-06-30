@@ -29,19 +29,21 @@
 #ifndef VIGIR_FOOTSTEP_PLANNING_STEP_COST_ESTIMATOR_PLUGIN_H
 #define VIGIR_FOOTSTEP_PLANNING_STEP_COST_ESTIMATOR_PLUGIN_H
 
-#include <vigir_footstep_planning_lib/modeling/state.h>
+#include <ros/ros.h>
 
-#include <vigir_footstep_planning_lib/plugins/plugin.h>
+#include <vigir_pluginlib/plugin.h>
+
+#include <vigir_footstep_planning_lib/modeling/state.h>
 
 
 
 namespace vigir_footstep_planning
 {
 class StepCostEstimatorPlugin
-  : public Plugin
+  : public vigir_pluginlib::Plugin
 {
 public:
-  StepCostEstimatorPlugin(const std::string& name, const ParameterSet& params);
+  StepCostEstimatorPlugin(const std::string& name, const vigir_generic_params::ParameterSet& params);
   StepCostEstimatorPlugin(const std::string& name);
   virtual ~StepCostEstimatorPlugin();
 

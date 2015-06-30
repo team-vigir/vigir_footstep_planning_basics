@@ -2,13 +2,13 @@
 
 namespace vigir_footstep_planning
 {
-PostProcessPlugin::PostProcessPlugin(const std::string& name, const ParameterSet& params)
-  : Plugin(name, "post_process_plugin", params)
+PostProcessPlugin::PostProcessPlugin(const std::string& name, const vigir_generic_params::ParameterSet& params)
+  : vigir_pluginlib::Plugin(name, "post_process_plugin", params)
 {
 }
 
 PostProcessPlugin::PostProcessPlugin(const std::string& name)
-  : Plugin(name, "post_process_plugin")
+  : vigir_pluginlib::Plugin(name, "post_process_plugin")
 {
 }
 

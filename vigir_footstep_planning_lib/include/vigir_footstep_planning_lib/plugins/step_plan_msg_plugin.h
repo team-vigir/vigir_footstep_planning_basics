@@ -31,16 +31,16 @@
 
 #include <ros/ros.h>
 
-#include <vigir_footstep_planning_msgs/footstep_planning_msgs.h>
+#include <vigir_pluginlib/plugin.h>
 
-#include <vigir_footstep_planning_lib/plugins/plugin.h>
+#include <vigir_footstep_planning_msgs/footstep_planning_msgs.h>
 
 
 
 namespace vigir_footstep_planning
 {
 class StepPlanMsgPlugin
-  : public Plugin
+  : public vigir_pluginlib::Plugin
 {
 public:
   StepPlanMsgPlugin(const std::string& name);

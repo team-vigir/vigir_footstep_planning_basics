@@ -2,7 +2,7 @@
 
 namespace vigir_footstep_planning
 {
-TerrainModelPlugin::TerrainModelPlugin(const std::string& name, const ParameterSet& params, unsigned int collision_check_flag)
+TerrainModelPlugin::TerrainModelPlugin(const std::string& name, const vigir_generic_params::ParameterSet& params, unsigned int collision_check_flag)
   : CollisionCheckPlugin(name, "terrain_model_plugin", params, collision_check_flag)
 {
 }
