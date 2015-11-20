@@ -2,14 +2,21 @@
 
 namespace vigir_footstep_planning
 {
-CollisionCheckPlugin::CollisionCheckPlugin(const std::string& name, const std::string& type, const vigir_generic_params::ParameterSet& params)
-  : vigir_pluginlib::Plugin(name, type, params)
+
+CollisionCheckPlugin::CollisionCheckPlugin(const std::string& name, const std::string& type_class, const vigir_generic_params::ParameterSet& params)
+  : vigir_pluginlib::Plugin(name, type_class, params)
   , collision_check_flag(0)
+{
+
+}
+
+CollisionCheckPlugin::CollisionCheckPlugin(const std::string& name, const vigir_generic_params::ParameterSet& params)
+  : CollisionCheckPlugin(name, "vigir_footstep_planning::CollisionCheckPlugin", params)
 {
 }
 
-CollisionCheckPlugin::CollisionCheckPlugin(const std::string& name, const std::string& type)
-  : vigir_pluginlib::Plugin(name, type)
+CollisionCheckPlugin::CollisionCheckPlugin(const std::string& name, const std::string& type_class)
+  : vigir_pluginlib::Plugin(name, type_class)
   , collision_check_flag(0)
 {
 }

@@ -43,6 +43,7 @@ class StepPlanMsgPlugin
   : public vigir_pluginlib::Plugin
 {
 public:
+  StepPlanMsgPlugin(const std::string& name, const vigir_generic_params::ParameterSet& params);
   StepPlanMsgPlugin(const std::string& name);
   StepPlanMsgPlugin();
   virtual ~StepPlanMsgPlugin();

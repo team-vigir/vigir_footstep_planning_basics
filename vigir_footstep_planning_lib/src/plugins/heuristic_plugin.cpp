@@ -3,12 +3,12 @@
 namespace vigir_footstep_planning
 {
 HeuristicPlugin::HeuristicPlugin(const std::string& name, const vigir_generic_params::ParameterSet& params)
-  : vigir_pluginlib::Plugin(name, "heuristic_plugin", params)
+  : vigir_pluginlib::Plugin(name, "vigir_footstep_planning::HeuristicPlugin", params)
 {
 }
 
 HeuristicPlugin::HeuristicPlugin(const std::string& name)
-  : vigir_pluginlib::Plugin(name, "heuristic_plugin")
+  : vigir_pluginlib::Plugin(name, "vigir_footstep_planning::HeuristicPlugin")
 {
 }
 
