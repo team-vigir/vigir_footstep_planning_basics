@@ -1,3 +1,5 @@
+#include <pluginlib/class_list_macros.h>
+
 #include <vigir_footstep_planning_lib/plugins/step_plan_msg_plugin.h>
 
 namespace vigir_footstep_planning
@@ -16,3 +18,6 @@ StepPlanMsgPlugin::~StepPlanMsgPlugin()
 {
 }
 }
+
+PLUGINLIB_EXPORT_CLASS(vigir_footstep_planning::StepPlanMsgPlugin, vigir_footstep_planning::StepPlanMsgPlugin)
+

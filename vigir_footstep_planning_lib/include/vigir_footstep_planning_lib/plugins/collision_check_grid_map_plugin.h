@@ -47,10 +47,14 @@ class CollisionCheckGridMapPlugin
   : public CollisionCheckPlugin
 {
 public:
-  CollisionCheckGridMapPlugin(const std::string& name, const vigir_generic_params::ParameterSet& params, unsigned int collision_check_flag, ros::NodeHandle& nh, const std::string& topic, unsigned char thresh = 70);
-  CollisionCheckGridMapPlugin(const std::string& name, unsigned int collision_check_flag, ros::NodeHandle& nh, const std::string& topic, unsigned char thresh = 70);
+  CollisionCheckGridMapPlugin(const std::string& name, const vigir_generic_params::ParameterSet& params);
+  CollisionCheckGridMapPlugin(const std::string& name);
+  CollisionCheckGridMapPlugin();
+
+  bool initialize(ros::NodeHandle& nh, const vigir_generic_params::ParameterSet& params) override;
 
   void reset() override;
+
   bool isCollisionCheckAvailable() const override;
 
   bool isAccessible(const State& s) const override;

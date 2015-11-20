@@ -52,12 +52,14 @@ public:
     FOOT_CONTACT_SUPPORT  = 4
   };
 
-  CollisionCheckPlugin(const std::string& name, const std::string& type_id, const vigir_generic_params::ParameterSet& params, unsigned int collision_check_flag);
-  CollisionCheckPlugin(const std::string& name, const std::string& type_id, unsigned int collision_check_flag);
+  CollisionCheckPlugin(const std::string& name, const std::string& type_id, const vigir_generic_params::ParameterSet& params);
+  CollisionCheckPlugin(const std::string& name, const std::string& type_id);
 
-  virtual void reset();
+  bool initialize(ros::NodeHandle& nh, const vigir_generic_params::ParameterSet& params) override;
 
   void loadParams(const vigir_generic_params::ParameterSet& params) override;
+
+  virtual void reset();
 
   bool isUnique() const override;
   virtual bool isCollisionCheckAvailable() const;

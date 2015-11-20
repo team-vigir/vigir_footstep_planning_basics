@@ -1,20 +1,40 @@
+#include <pluginlib/class_list_macros.h>
+
 #include <vigir_footstep_planning_lib/plugins/collision_check_grid_map_plugin.h>
 
 namespace vigir_footstep_planning
 {
 
-CollisionCheckGridMapPlugin::CollisionCheckGridMapPlugin(const std::string& name, const vigir_generic_params::ParameterSet& params, unsigned int collision_check_flag, ros::NodeHandle& nh, const std::string& topic, unsigned char thresh)
-  : CollisionCheckPlugin(name, "collision_check_grid_map_plugin", params, collision_check_flag)
-  , occ_thresh(static_cast<int8_t>(thresh))
+CollisionCheckGridMapPlugin::CollisionCheckGridMapPlugin(const std::string& name, const vigir_generic_params::ParameterSet& params)
+  : CollisionCheckPlugin(name, "collision_check_grid_map_plugin", params)
+  , occ_thresh(70)
 {
-  occupancy_grid_map_sub = nh.subscribe<nav_msgs::OccupancyGrid>(topic, 1, &CollisionCheckGridMapPlugin::mapCallback, this);
 }
 
-CollisionCheckGridMapPlugin::CollisionCheckGridMapPlugin(const std::string& name, unsigned int collision_check_flag, ros::NodeHandle& nh, const std::string& topic, unsigned char thresh)
-  : CollisionCheckPlugin(name, "collision_check_grid_map_plugin", collision_check_flag)
-  , occ_thresh(static_cast<int8_t>(thresh))
+CollisionCheckGridMapPlugin::CollisionCheckGridMapPlugin(const std::string& name)
+  : CollisionCheckPlugin(name, "collision_check_grid_map_plugin")
+  , occ_thresh(70)
 {
+}
+
+CollisionCheckGridMapPlugin::CollisionCheckGridMapPlugin()
+  : CollisionCheckPlugin("collision_check_grid_map_plugin", "collision_check_grid_map_plugin")
+  , occ_thresh(70)
+{
+}
+
+bool CollisionCheckGridMapPlugin::initialize(ros::NodeHandle& nh, const vigir_generic_params::ParameterSet& params)
+{
+  if (!CollisionCheckPlugin::initialize(nh, params))
+    return false;
+
+  std::string topic;
+  getPluginParam("grid_map_topic", topic, std::string("grid_map"));
   occupancy_grid_map_sub = nh.subscribe<nav_msgs::OccupancyGrid>(topic, 1, &CollisionCheckGridMapPlugin::mapCallback, this);
+
+  getPluginParam("occupancy_threshold", (int&) occ_thresh, (int&) occ_thresh, true);
+
+  return true;
 }
 
 void CollisionCheckGridMapPlugin::reset()
@@ -66,3 +86,5 @@ void CollisionCheckGridMapPlugin::mapCallback(const nav_msgs::OccupancyGridConst
   this->occupancy_grid_map = occupancy_grid_map;
 }
 }
+
+PLUGINLIB_EXPORT_CLASS(vigir_footstep_planning::CollisionCheckGridMapPlugin, vigir_footstep_planning::CollisionCheckPlugin)
