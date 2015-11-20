@@ -29,7 +29,7 @@ bool CollisionCheckGridMapPlugin::initialize(ros::NodeHandle& nh, const vigir_ge
     return false;
 
   std::string topic;
-  getPluginParam("grid_map_topic", topic, std::string("grid_map"));
+  getPluginParam("grid_map_topic", topic, std::string("/grid_map"));
   occupancy_grid_map_sub = nh.subscribe<nav_msgs::OccupancyGrid>(topic, 1, &CollisionCheckGridMapPlugin::mapCallback, this);
 
   getPluginParam("occupancy_threshold", (int&) occ_thresh, (int&) occ_thresh, true);
