@@ -1,6 +1,8 @@
+#include <vigir_footstep_planning_lib/plugins/collision_check_grid_map_plugin.h>
+
 #include <pluginlib/class_list_macros.h>
 
-#include <vigir_footstep_planning_lib/plugins/collision_check_grid_map_plugin.h>
+
 
 namespace vigir_footstep_planning
 {
