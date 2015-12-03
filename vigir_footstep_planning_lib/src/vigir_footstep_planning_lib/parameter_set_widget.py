@@ -8,7 +8,7 @@ import vigir_footstep_planning_msgs.msg
 from python_qt_binding.QtCore import Qt, QSize, Signal, Slot
 from python_qt_binding.QtGui import QWidget, QVBoxLayout, QHBoxLayout, QPushButton, QComboBox, QIcon
 
-from vigir_footstep_planning_msgs.msg import GetParameterSetNamesAction, GetParameterSetNamesGoal, GetParameterSetNamesResult
+from vigir_generic_params.msg import GetParameterSetNamesAction, GetParameterSetNamesGoal, GetParameterSetNamesResult
 from vigir_footstep_planning_lib.logging import *
 from vigir_footstep_planning_lib.topic_widget import *
 
@@ -28,7 +28,7 @@ class QParameterSetWidget(QWidgetWithLogger):
         vbox.setContentsMargins(0, 0, 0, 0)
 
         # parameter action server topic selection
-        topic_widget = QTopicWidget(self, 'vigir_footstep_planning_msgs/GetParameterSetNamesAction', True)
+        topic_widget = QTopicWidget(self, 'vigir_generic_params/GetParameterSetNamesAction', True)
         vbox.addWidget(topic_widget)
 
         # parameter set selection
@@ -161,5 +161,5 @@ class QParameterSetSelectionWidget(QWidgetWithLogger):
                 self.reset_parameter_set_selection()
         else:
             self.logger.log_error("Can't connect to footstep planner parameter action server!")
-            self.reset_parameter_set_selection()        
+            self.reset_parameter_set_selection()
 
