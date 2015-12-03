@@ -2,26 +2,31 @@
 
 namespace vigir_footstep_planning
 {
-RobotModelPlugin::RobotModelPlugin(const ParameterSet& params, ros::NodeHandle &nh)
-  : Plugin("robot_model", "robot_model_plugin", params)
-{
-  // get foot dimensions
-  vigir_footstep_planning::getFootSize(nh, foot_size);
+using namespace vigir_generic_params;
 
-  // get upper body dimensions
-  vigir_footstep_planning::getUpperBodySize(nh, upper_body_size);
-  vigir_footstep_planning::getUpperBodyOriginShift(nh, upper_body_origin_shift);
+RobotModelPlugin::RobotModelPlugin(const vigir_generic_params::ParameterSet& params)
+  : vigir_pluginlib::Plugin("robot_model", "vigir_footstep_planning::RobotModelPlugin", params)
+{
 }
 
-RobotModelPlugin::RobotModelPlugin(ros::NodeHandle &nh)
-  : Plugin("robot_model", "robot_model_plugin")
+RobotModelPlugin::RobotModelPlugin()
+  : vigir_pluginlib::Plugin("robot_model", "vigir_footstep_planning::RobotModelPlugin")
 {
+}
+
+bool RobotModelPlugin::initialize(ros::NodeHandle& nh, const vigir_generic_params::ParameterSet& params)
+{
+  if (!vigir_pluginlib::Plugin::initialize(nh, params))
+    return false;
+
   // get foot dimensions
   vigir_footstep_planning::getFootSize(nh, foot_size);
 
   // get upper body dimensions
   vigir_footstep_planning::getUpperBodySize(nh, upper_body_size);
   vigir_footstep_planning::getUpperBodyOriginShift(nh, upper_body_origin_shift);
+
+  return true;
 }
 
 bool RobotModelPlugin::isUnique() const

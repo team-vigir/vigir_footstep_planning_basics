@@ -2,29 +2,47 @@
 
 namespace vigir_footstep_planning
 {
-CollisionCheckPlugin::CollisionCheckPlugin(const std::string& name, const std::string& type, const ParameterSet& params, unsigned int collision_check_flag)
-  : Plugin(name, type, params)
-  , collision_check_flag(collision_check_flag)
+
+CollisionCheckPlugin::CollisionCheckPlugin(const std::string& name, const std::string& type_class, const vigir_generic_params::ParameterSet& params)
+  : vigir_pluginlib::Plugin(name, type_class, params)
+  , collision_check_flag(0)
+{
+
+}
+
+CollisionCheckPlugin::CollisionCheckPlugin(const std::string& name, const vigir_generic_params::ParameterSet& params)
+  : CollisionCheckPlugin(name, "vigir_footstep_planning::CollisionCheckPlugin", params)
 {
 }
 
-CollisionCheckPlugin::CollisionCheckPlugin(const std::string& name, const std::string& type, unsigned int collision_check_flag)
-  : Plugin(name, type)
-  , collision_check_flag(collision_check_flag)
+CollisionCheckPlugin::CollisionCheckPlugin(const std::string& name, const std::string& type_class)
+  : vigir_pluginlib::Plugin(name, type_class)
+  , collision_check_flag(0)
 {
+}
+
+bool CollisionCheckPlugin::initialize(ros::NodeHandle& nh, const vigir_generic_params::ParameterSet& params)
+{
+  if (!vigir_pluginlib::Plugin::initialize(nh, params))
+    return false;
+
+  getPluginParam("collision_check_flag", (int&)collision_check_flag, -1, true);
+
+  return true;
+}
+
+void CollisionCheckPlugin::loadParams(const vigir_generic_params::ParameterSet& params)
+{
+  Plugin::loadParams(params);
+
+  // check if
+  unsigned int collision_check_mask;
+  params.getParam("collision_check/collision_check_mask", (int&)collision_check_mask);
+  collision_check_enabled = this->collision_check_flag & collision_check_mask;
 }
 
 void CollisionCheckPlugin::reset()
 {
-}
-
-void CollisionCheckPlugin::loadParams(const ParameterSet& params)
-{
-  Plugin::loadParams(params);
-
-  unsigned int collision_check_flag;
-  params.getParam("collision_check/collision_check_flag", (int&)collision_check_flag);
-  collision_check_enabled = collision_check_flag & this->collision_check_flag;
 }
 
 bool CollisionCheckPlugin::isUnique() const

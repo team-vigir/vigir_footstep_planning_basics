@@ -2,13 +2,13 @@
 
 namespace vigir_footstep_planning
 {
-StepCostEstimatorPlugin::StepCostEstimatorPlugin(const std::string& name, const ParameterSet& params)
-  : Plugin(name, "step_cost_estimator_plugin", params)
+StepCostEstimatorPlugin::StepCostEstimatorPlugin(const std::string& name, const vigir_generic_params::ParameterSet& params)
+  : vigir_pluginlib::Plugin(name, "vigir_footstep_planning::StepCostEstimatorPlugin", params)
 {
 }
 
 StepCostEstimatorPlugin::StepCostEstimatorPlugin(const std::string& name)
-  : Plugin(name, "step_cost_estimator_plugin")
+  : vigir_pluginlib::Plugin(name, "vigir_footstep_planning::StepCostEstimatorPlugin")
 {
 }
 

@@ -1,0 +1,13 @@
+<library path="lib/libvigir_footstep_planning_lib">
+  <class type="vigir_footstep_planning::StepPlanMsgPlugin" base_class_type="vigir_footstep_planning::StepPlanMsgPlugin">
+    <description>
+      StepPlanMsgPlugin: Plugin for (un-)packing robot specific messages
+    </description>
+  </class>
+
+  <class type="vigir_footstep_planning::CollisionCheckGridMapPlugin" base_class_type="vigir_footstep_planning::CollisionCheckPlugin">
+    <description>
+      CollisionCheckGridMapPlugin: Plugin for performing collision checking using occupancy grid maps.
+    </description>
+  </class>
+</library>

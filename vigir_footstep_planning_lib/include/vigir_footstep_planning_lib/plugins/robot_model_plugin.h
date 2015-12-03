@@ -31,20 +31,22 @@
 
 #include <ros/ros.h>
 
-#include <vigir_footstep_planning_lib/helper.h>
+#include <vigir_pluginlib/plugin.h>
 
-#include <vigir_footstep_planning_lib/plugins/plugin.h>
+#include <vigir_footstep_planning_lib/helper.h>
 
 
 
 namespace vigir_footstep_planning
 {
 class RobotModelPlugin
-  : public Plugin
+  : public vigir_pluginlib::Plugin
 {
 public:
-  RobotModelPlugin(const ParameterSet& params, ros::NodeHandle &nh);
-  RobotModelPlugin(ros::NodeHandle &nh);
+  RobotModelPlugin(const vigir_generic_params::ParameterSet& params);
+  RobotModelPlugin();
+
+  bool initialize(ros::NodeHandle& nh, const vigir_generic_params::ParameterSet& params) override;
 
   bool isUnique() const final;
 

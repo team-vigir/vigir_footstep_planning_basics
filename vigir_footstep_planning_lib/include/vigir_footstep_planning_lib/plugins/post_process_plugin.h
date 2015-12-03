@@ -31,18 +31,19 @@
 
 #include <ros/ros.h>
 
+#include <vigir_pluginlib/plugin.h>
+
 #include <vigir_footstep_planning_lib/modeling/state.h>
-#include <vigir_footstep_planning_lib/plugins/plugin.h>
 
 
 
 namespace vigir_footstep_planning
 {
 class PostProcessPlugin
-  : public Plugin
+  : public vigir_pluginlib::Plugin
 {
 public:
-  PostProcessPlugin(const std::string& name, const ParameterSet& params);
+  PostProcessPlugin(const std::string& name, const vigir_generic_params::ParameterSet& params);
   PostProcessPlugin(const std::string& name);
 
   bool isUnique() const final;

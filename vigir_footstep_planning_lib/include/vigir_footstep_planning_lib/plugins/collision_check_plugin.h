@@ -33,7 +33,8 @@
 
 #include <boost/thread/mutex.hpp>
 
-#include <vigir_footstep_planning_lib/plugins/plugin.h>
+#include <vigir_pluginlib/plugin.h>
+
 #include <vigir_footstep_planning_lib/modeling/state.h>
 
 
@@ -41,7 +42,7 @@
 namespace vigir_footstep_planning
 {
 class CollisionCheckPlugin
-  : public Plugin
+  : public vigir_pluginlib::Plugin
 {
 public:
   enum
@@ -51,12 +52,15 @@ public:
     FOOT_CONTACT_SUPPORT  = 4
   };
 
-  CollisionCheckPlugin(const std::string& name, const std::string& type_id, const ParameterSet& params, unsigned int collision_check_flag);
-  CollisionCheckPlugin(const std::string& name, const std::string& type_id, unsigned int collision_check_flag);
+  CollisionCheckPlugin(const std::string& name, const std::string& type_class, const vigir_generic_params::ParameterSet& params);
+  CollisionCheckPlugin(const std::string& name, const vigir_generic_params::ParameterSet& params);
+  CollisionCheckPlugin(const std::string& name, const std::string& type_class = "vigir_footstep_planning::CollisionCheckPlugin");
+
+  bool initialize(ros::NodeHandle& nh, const vigir_generic_params::ParameterSet& params) override;
+
+  void loadParams(const vigir_generic_params::ParameterSet& params) override;
 
   virtual void reset();
-
-  void loadParams(const ParameterSet& params) override;
 
   bool isUnique() const override;
   virtual bool isCollisionCheckAvailable() const;

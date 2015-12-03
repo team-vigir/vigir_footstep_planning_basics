@@ -7,7 +7,7 @@ project(vigir_footstep_planning_widgets)
 ## Find catkin macros and libraries
 ## if COMPONENTS list like find_package(catkin REQUIRED COMPONENTS xyz)
 ## is used, also find other catkin packages
-find_package(catkin REQUIRED COMPONENTS roscpp rospy rqt_gui rqt_gui_py actionlib_msgs actionlib std_msgs visualization_msgs vigir_footstep_planning_msgs vigir_footstep_planning_lib)
+find_package(catkin REQUIRED COMPONENTS rospy rqt_gui rqt_gui_py vigir_footstep_planning_msgs vigir_footstep_planning_lib)
 
 ## System dependencies are found with CMake's conventions
 # find_package(Boost REQUIRED COMPONENTS system)
@@ -80,7 +80,7 @@ catkin_python_setup()
 catkin_package(
 #  INCLUDE_DIRS include
 #  LIBRARIES
-  CATKIN_DEPENDS roscpp rospy rqt_gui rqt_gui_py actionlib_msgs actionlib std_msgs visualization_msgs vigir_footstep_planning_msgs vigir_footstep_planning_lib
+  CATKIN_DEPENDS rospy rqt_gui rqt_gui_py vigir_footstep_planning_msgs vigir_footstep_planning_lib
 #  DEPENDS system_widgets
 )
 

@@ -9,7 +9,7 @@ set(CMAKE_CXX_FLAGS "-std=c++11 ${CMAKE_CXX_FLAGS}")
 ## Find catkin macros and libraries
 ## if COMPONENTS list like find_package(catkin REQUIRED COMPONENTS xyz)
 ## is used, also find other catkin packages
-find_package(catkin REQUIRED COMPONENTS roscpp rospy rqt_gui rqt_gui_py actionlib_msgs actionlib std_msgs nav_msgs visualization_msgs tf pcl_conversions vigir_footstep_planning_msgs)
+find_package(catkin REQUIRED COMPONENTS roscpp rospy rqt_gui rqt_gui_py actionlib_msgs actionlib std_msgs nav_msgs visualization_msgs tf pcl_conversions vigir_generic_params vigir_pluginlib vigir_footstep_planning_msgs)
 
 ## System dependencies are found with CMake's conventions
 find_package(Boost REQUIRED COMPONENTS system)
@@ -84,7 +84,7 @@ catkin_python_setup()
 catkin_package(
   INCLUDE_DIRS include
   LIBRARIES vigir_footstep_planning_lib
-  CATKIN_DEPENDS roscpp rospy rqt_gui rqt_gui_py actionlib_msgs actionlib std_msgs nav_msgs visualization_msgs tf pcl_conversions vigir_footstep_planning_msgs
+  CATKIN_DEPENDS roscpp rospy rqt_gui rqt_gui_py actionlib_msgs actionlib std_msgs nav_msgs visualization_msgs tf pcl_conversions vigir_generic_params vigir_pluginlib vigir_footstep_planning_msgs
 #  DEPENDS system_lib
 )
 
@@ -100,13 +100,10 @@ include_directories(include ${catkin_INCLUDE_DIRS} ${boost_INCLUDE_DIRS})
 set(HEADERS
   include/${PROJECT_NAME}/helper.h
   include/${PROJECT_NAME}/math.h
-  include/${PROJECT_NAME}/parameter_manager.h
   include/${PROJECT_NAME}/modeling/state.h
   include/${PROJECT_NAME}/plugins/collision_check_plugin.h
   include/${PROJECT_NAME}/plugins/collision_check_grid_map_plugin.h
   include/${PROJECT_NAME}/plugins/heuristic_plugin.h
-  include/${PROJECT_NAME}/plugins/plugin_manager.h
-  include/${PROJECT_NAME}/plugins/plugin.h
   include/${PROJECT_NAME}/plugins/robot_model_plugin.h
   include/${PROJECT_NAME}/plugins/post_process_plugin.h
   include/${PROJECT_NAME}/plugins/reachability_plugin.h
@@ -124,13 +121,10 @@ set(HEADERS
 set(SOURCES
   src/helper.cpp
   src/math.cpp
-  src/parameter_manager.cpp
   src/modeling/state.cpp
   src/plugins/collision_check_plugin.cpp
   src/plugins/collision_check_grid_map_plugin.cpp
   src/plugins/heuristic_plugin.cpp
-  src/plugins/plugin_manager.cpp
-  src/plugins/plugin.cpp
   src/plugins/post_process_plugin.cpp
   src/plugins/reachability_plugin.cpp
   src/plugins/robot_model_plugin.cpp
