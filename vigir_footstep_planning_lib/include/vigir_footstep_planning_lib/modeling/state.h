@@ -141,10 +141,10 @@ private:
   /// percentage of ground contact support (0.0 - 1.0 = 100%)
   double ivGroundContactSupport;
 
+  geometry_msgs::Vector3 body_vel;
+
   double sway_distance;
   double swing_distance;
-
-  geometry_msgs::Vector3 body_vel;
 
   double cost;
   double risk;

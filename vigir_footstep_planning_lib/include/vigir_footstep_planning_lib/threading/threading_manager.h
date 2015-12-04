@@ -79,7 +79,7 @@ public:
 
   void deleteJobs() { queue.clear(); }
 
-  bool hasJobsFinished() { !queue.hasOpenJobs(); }
+  bool hasJobsFinished() { return !queue.hasOpenJobs(); }
   void waitUntilJobsFinished()
   {
     try
