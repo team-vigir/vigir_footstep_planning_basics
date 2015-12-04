@@ -37,7 +37,7 @@
 #include <nav_msgs/OccupancyGrid.h>
 
 #include <vigir_footstep_planning_lib/helper.h>
-#include <vigir_footstep_planning_lib/plugins/collision_check_plugin.h>
+#include <vigir_footstep_planning_basic_plugins/collision_check_plugin.h>
 
 
 

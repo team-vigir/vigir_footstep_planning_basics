@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 2.8.3)
-project(vigir_footstep_planning_lib)
+project(vigir_footstep_planning_basic_plugins)
 
 #set(CMAKE_BUILD_TYPE Debug)
 #set(CMAKE_BUILD_TYPE RelWithDebInfo)
@@ -9,17 +9,15 @@ set(CMAKE_CXX_FLAGS "-std=c++11 ${CMAKE_CXX_FLAGS}")
 ## Find catkin macros and libraries
 ## if COMPONENTS list like find_package(catkin REQUIRED COMPONENTS xyz)
 ## is used, also find other catkin packages
-find_package(catkin REQUIRED COMPONENTS roscpp rospy rqt_gui rqt_gui_py actionlib_msgs actionlib std_msgs nav_msgs visualization_msgs tf pcl_conversions vigir_generic_params vigir_footstep_planning_msgs)
+find_package(catkin REQUIRED COMPONENTS roscpp actionlib_msgs actionlib std_msgs nav_msgs vigir_generic_params vigir_pluginlib vigir_footstep_planning_msgs vigir_footstep_planning_lib)
 
 ## System dependencies are found with CMake's conventions
 find_package(Boost REQUIRED COMPONENTS system)
 
-find_package(PCL REQUIRED)
-
 ## Uncomment this if the package has a setup.py. This macro ensures
 ## modules and global scripts declared therein get installed
 ## See http://ros.org/doc/api/catkin/html/user_guide/setup_dot_py.html
-catkin_python_setup()
+# catkin_python_setup()
 
 ################################################
 ## Declare ROS messages, services and actions ##
@@ -83,8 +81,8 @@ catkin_python_setup()
 ## DEPENDS: system dependencies of this project that dependent projects also need
 catkin_package(
   INCLUDE_DIRS include
-  LIBRARIES vigir_footstep_planning_lib
-  CATKIN_DEPENDS roscpp rospy rqt_gui rqt_gui_py actionlib_msgs actionlib std_msgs nav_msgs visualization_msgs tf pcl_conversions vigir_generic_params vigir_footstep_planning_msgs
+  LIBRARIES vigir_footstep_planning_basic_plugins
+  CATKIN_DEPENDS roscpp actionlib_msgs actionlib std_msgs nav_msgs vigir_generic_params vigir_pluginlib vigir_footstep_planning_msgs vigir_footstep_planning_lib
 #  DEPENDS system_lib
 )
 
@@ -98,29 +96,35 @@ include_directories(include ${catkin_INCLUDE_DIRS} ${boost_INCLUDE_DIRS})
 
 ## Specify additional locations of header files
 set(HEADERS
-  include/${PROJECT_NAME}/helper.h
-  include/${PROJECT_NAME}/math.h
-  include/${PROJECT_NAME}/modeling/state.h
-  include/${PROJECT_NAME}/threading/job.h
-  include/${PROJECT_NAME}/threading/threading_manager.h
-  include/${PROJECT_NAME}/threading/queue.h
-  include/${PROJECT_NAME}/threading/worker.h
-  include/${PROJECT_NAME}/visualization/footstep_planning_vis_node.h
-  include/${PROJECT_NAME}/visualization/footstep_planning_vis.h
+  include/${PROJECT_NAME}/collision_check_plugin.h
+  include/${PROJECT_NAME}/collision_check_grid_map_plugin.h
+  include/${PROJECT_NAME}/heuristic_plugin.h
+  include/${PROJECT_NAME}/robot_model_plugin.h
+  include/${PROJECT_NAME}/post_process_plugin.h
+  include/${PROJECT_NAME}/reachability_plugin.h
+  include/${PROJECT_NAME}/step_cost_estimator_plugin.h
+  include/${PROJECT_NAME}/step_plan_msg_plugin.h
+  include/${PROJECT_NAME}/terrain_model_plugin.h
 )
 
 set(SOURCES
-  src/helper.cpp
-  src/math.cpp
-  src/modeling/state.cpp
-  src/visualization/footstep_planning_vis.cpp
+  src/collision_check_plugin.cpp
+  src/collision_check_grid_map_plugin.cpp
+  src/heuristic_plugin.cpp
+  src/post_process_plugin.cpp
+  src/reachability_plugin.cpp
+  src/robot_model_plugin.cpp
+  src/step_cost_estimator_plugin.cpp
+  src/step_plan_msg_plugin.cpp
+  src/terrain_model_plugin.cpp
 )
 
 ## Declare a cpp library
 add_library(${PROJECT_NAME} ${SOURCES} ${HEADERS})
+set_target_properties(${PROJECT_NAME} PROPERTIES LINKER_LANGUAGE CXX)
 
 ## Declare a cpp executable
-add_executable(footstep_planning_vis_node src/visualization/footstep_planning_vis_node.cpp)
+# add_executable(footstep_planning_basic_plugins_node src/visualization/footstep_planning_basic_plugins_node.cpp)
 
 ## Add cmake target dependencies of the executable/library
 ## as an example, message headers may need to be generated before nodes
@@ -128,7 +132,6 @@ add_dependencies(${PROJECT_NAME} ${catkin_EXPORTED_TARGETS})
 
 ## Specify libraries to link a library or executable target against
 target_link_libraries(${PROJECT_NAME} ${catkin_LIBRARIES} ${boost_LIBRARIES} ${PCL_LIBRARIES})
-target_link_libraries(footstep_planning_vis_node ${PROJECT_NAME})
 
 #############
 ## Install ##
@@ -138,7 +141,7 @@ target_link_libraries(footstep_planning_vis_node ${PROJECT_NAME})
 # See http://ros.org/doc/api/catkin/html/adv_user_guide/variables.html
 
 ## Mark executables and/or libraries for installation
-install(TARGETS ${PROJECT_NAME} footstep_planning_vis_node
+install(TARGETS ${PROJECT_NAME}
   ARCHIVE DESTINATION ${CATKIN_PACKAGE_LIB_DESTINATION}
   LIBRARY DESTINATION ${CATKIN_PACKAGE_LIB_DESTINATION}
   RUNTIME DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}

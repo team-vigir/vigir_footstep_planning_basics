@@ -1,4 +1,4 @@
-<library path="lib/libvigir_footstep_planning_lib">
+<library path="lib/libvigir_footstep_planning_basic_plugins">
   <class type="vigir_footstep_planning::StepPlanMsgPlugin" base_class_type="vigir_footstep_planning::StepPlanMsgPlugin">
     <description>
       StepPlanMsgPlugin: Plugin for (un-)packing robot specific messages

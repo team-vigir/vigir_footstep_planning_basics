@@ -1,14 +1,14 @@
 # StepPlanMsgPlugin
 step_plan_msg_plugin:
   type_class: vigir_footstep_planning::StepPlanMsgPlugin
-  type_class_package: vigir_footstep_planning_lib
+  type_class_package: vigir_footstep_planning_basic_plugins
   base_class: vigir_footstep_planning::StepPlanMsgPlugin
-  base_class_package: vigir_footstep_planning_lib
+  base_class_package: vigir_footstep_planning_basic_plugins
 
 # CollisionCheckPlugin
 collision_check_grid_map_plugin:
-  type_class_package: vigir_footstep_planning_lib
+  type_class_package: vigir_footstep_planning_basic_plugins
   type_class: vigir_footstep_planning::CollisionCheckGridMapPlugin
-  base_class_package: vigir_footstep_planning_lib
+  base_class_package: vigir_footstep_planning_basic_plugins
   base_class: vigir_footstep_planning::CollisionCheckPlugin
 

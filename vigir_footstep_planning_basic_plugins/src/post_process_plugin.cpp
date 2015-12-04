@@ -1,4 +1,4 @@
-#include <vigir_footstep_planning_lib/plugins/post_process_plugin.h>
+#include <vigir_footstep_planning_basic_plugins/post_process_plugin.h>
 
 namespace vigir_footstep_planning
 {

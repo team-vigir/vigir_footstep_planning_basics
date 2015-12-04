@@ -1,4 +1,4 @@
-#include <vigir_footstep_planning_lib/plugins/step_plan_msg_plugin.h>
+#include <vigir_footstep_planning_basic_plugins/step_plan_msg_plugin.h>
 
 #include <pluginlib/class_list_macros.h>
 

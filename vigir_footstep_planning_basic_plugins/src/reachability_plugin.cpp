@@ -1,4 +1,4 @@
-#include <vigir_footstep_planning_lib/plugins/reachability_plugin.h>
+#include <vigir_footstep_planning_basic_plugins/reachability_plugin.h>
 
 namespace vigir_footstep_planning
 {
