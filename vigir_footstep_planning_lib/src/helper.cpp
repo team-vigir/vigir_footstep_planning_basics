@@ -99,11 +99,11 @@ msgs::ErrorStatus transform(msgs::StepPlan& step_plan, ros::ServiceClient& trans
 
 
 
-bool getXYZ(ros::NodeHandle &nh, const std::string name, geometry_msgs::Vector3& val)
+bool getXYZ(ros::NodeHandle& nh, const std::string name, geometry_msgs::Vector3& val)
 {
   if (!nh.hasParam(name+"/x") || !nh.hasParam(name+"/y") || !nh.hasParam(name+"/z"))
   {
-    ROS_ERROR("Couldn't retrieve parameter '%s' as Vector3", (nh.getNamespace()+name).c_str());
+    ROS_ERROR("Couldn't retrieve parameter '%s' as Vector3", (nh.getNamespace()+"/"+name).c_str());
     return false;
   }
 
@@ -113,11 +113,11 @@ bool getXYZ(ros::NodeHandle &nh, const std::string name, geometry_msgs::Vector3&
   return true;
 }
 
-bool getRPY(ros::NodeHandle &nh, const std::string name, geometry_msgs::Vector3& val)
+bool getRPY(ros::NodeHandle& nh, const std::string name, geometry_msgs::Vector3& val)
 {
   if (!nh.hasParam(name+"/roll") || !nh.hasParam(name+"/pitch") || !nh.hasParam(name+"/yaw"))
   {
-    ROS_ERROR("Couldn't retrieve parameter '%s' as RPY orienation", (nh.getNamespace()+name).c_str());
+    ROS_ERROR("Couldn't retrieve parameter '%s' as RPY orienation", (nh.getNamespace()+"/"+name).c_str());
     return false;
   }
 
@@ -127,17 +127,17 @@ bool getRPY(ros::NodeHandle &nh, const std::string name, geometry_msgs::Vector3&
   return true;
 }
 
-bool getFootSize(ros::NodeHandle &nh, geometry_msgs::Vector3& foot_size)
+bool getFootSize(ros::NodeHandle& nh, geometry_msgs::Vector3& foot_size)
 {
   return getXYZ(nh, "foot/size", foot_size);
 }
 
-bool getUpperBodySize(ros::NodeHandle &nh, geometry_msgs::Vector3& upper_body_size)
+bool getUpperBodySize(ros::NodeHandle& nh, geometry_msgs::Vector3& upper_body_size)
 {
   return getXYZ(nh, "upper_body/size", upper_body_size);
 }
 
-bool getUpperBodyOriginShift(ros::NodeHandle &nh, geometry_msgs::Vector3& upper_body_origin_shift)
+bool getUpperBodyOriginShift(ros::NodeHandle& nh, geometry_msgs::Vector3& upper_body_origin_shift)
 {
   return getXYZ(nh, "upper_body/origin_shift", upper_body_origin_shift);
 }

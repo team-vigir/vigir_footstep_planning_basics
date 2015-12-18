@@ -1,5 +1,9 @@
 #include <vigir_footstep_planning_lib/visualization/footstep_planning_vis_node.h>
 
+#include <vigir_footstep_planning_lib/helper.h>
+
+
+
 namespace vigir_footstep_planning
 {
 FootstepPlanningVisNode::FootstepPlanningVisNode()
@@ -7,16 +11,9 @@ FootstepPlanningVisNode::FootstepPlanningVisNode()
   ros::NodeHandle nh;
 
   // load param
-  nh.getParam("foot/size/x", foot_size.x);
-  nh.getParam("foot/size/y", foot_size.y);
-  nh.getParam("foot/size/z", foot_size.z);
-
-  nh.getParam("upper_body/size/x", upper_body_size.x);
-  nh.getParam("upper_body/size/y", upper_body_size.y);
-  nh.getParam("upper_body/size/z", upper_body_size.z);
-  nh.getParam("upper_body/origin_shift/x", upper_body_origin_shift.x);
-  nh.getParam("upper_body/origin_shift/y", upper_body_origin_shift.y);
-  nh.getParam("upper_body/origin_shift/z", upper_body_origin_shift.z);
+  getFootSize(nh, foot_size);
+  getUpperBodySize(nh, upper_body_size);
+  getUpperBodyOriginShift(nh, upper_body_origin_shift);
 
   // subscribe topics
   step_plan_request_vis_sub = nh.subscribe<msgs::StepPlanRequest>("vis/step_plan_request", 1, &FootstepPlanningVisNode::stepPlanRequestVisCallback, this);

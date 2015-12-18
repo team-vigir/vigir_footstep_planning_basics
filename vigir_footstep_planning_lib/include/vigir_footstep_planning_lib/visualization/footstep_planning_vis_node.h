@@ -34,7 +34,6 @@
 #include <vigir_footstep_planning_msgs/footstep_planning_msgs.h>
 
 #include <vigir_footstep_planning_lib/visualization/footstep_planning_vis.h>
-#include <vigir_footstep_planning_lib/helper.h>
 
 
 

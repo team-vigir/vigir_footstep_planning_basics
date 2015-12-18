@@ -59,7 +59,7 @@ class QTopicWidget(QWidget):
         if self.topic_combo_box.isEnabled():
             return self.topic_combo_box.currentText()
         else:
-            return ""        
+            return str()
 
     @Slot(str)
     def topic_changed(self, topic_name):
@@ -92,5 +92,5 @@ class QTopicWidget(QWidget):
             self.topic_combo_box.blockSignals(False)
             self.topic_changed(self.topic_combo_box.currentText())
         else:
-            self.topic_combo_box.addItem('No topics available!')   
+            self.topic_combo_box.addItem('No topics available!')
 
