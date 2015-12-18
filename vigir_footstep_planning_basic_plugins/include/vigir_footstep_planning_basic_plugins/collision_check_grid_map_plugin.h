@@ -47,9 +47,7 @@ class CollisionCheckGridMapPlugin
   : public CollisionCheckPlugin
 {
 public:
-  CollisionCheckGridMapPlugin(const std::string& name, const vigir_generic_params::ParameterSet& params);
-  CollisionCheckGridMapPlugin(const std::string& name);
-  CollisionCheckGridMapPlugin();
+  CollisionCheckGridMapPlugin(const std::string& name = "collision_check_grid_map_plugin");
 
   bool initialize(ros::NodeHandle& nh, const vigir_generic_params::ParameterSet& params) override;
 

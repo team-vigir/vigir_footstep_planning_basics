@@ -2,11 +2,6 @@
 
 namespace vigir_footstep_planning
 {
-ReachabilityPlugin::ReachabilityPlugin(const std::string& name, const vigir_generic_params::ParameterSet& params)
-  : Plugin(name, "vigir_footstep_planning::ReachabilityPlugin", params)
-{
-}
-
 ReachabilityPlugin::ReachabilityPlugin(const std::string& name)
   : Plugin(name, "vigir_footstep_planning::ReachabilityPlugin")
 {

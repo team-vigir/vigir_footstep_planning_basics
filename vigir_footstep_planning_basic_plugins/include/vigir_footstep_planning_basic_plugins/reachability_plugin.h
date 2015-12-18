@@ -45,7 +45,6 @@ class ReachabilityPlugin
   : public vigir_pluginlib::Plugin
 {
 public:
-  ReachabilityPlugin(const std::string& name, const vigir_generic_params::ParameterSet& params);
   ReachabilityPlugin(const std::string& name);
   virtual ~ReachabilityPlugin();
 

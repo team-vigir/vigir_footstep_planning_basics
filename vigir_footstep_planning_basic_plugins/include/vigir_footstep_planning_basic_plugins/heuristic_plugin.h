@@ -43,7 +43,6 @@ class HeuristicPlugin
   : public vigir_pluginlib::Plugin
 {
 public:
-  HeuristicPlugin(const std::string& name, const vigir_generic_params::ParameterSet& params);
   HeuristicPlugin(const std::string& name);
   virtual ~HeuristicPlugin();
 

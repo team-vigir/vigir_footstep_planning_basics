@@ -43,7 +43,6 @@ class PostProcessPlugin
   : public vigir_pluginlib::Plugin
 {
 public:
-  PostProcessPlugin(const std::string& name, const vigir_generic_params::ParameterSet& params);
   PostProcessPlugin(const std::string& name);
 
   bool isUnique() const final;

@@ -43,7 +43,6 @@ class RobotModelPlugin
   : public vigir_pluginlib::Plugin
 {
 public:
-  RobotModelPlugin(const vigir_generic_params::ParameterSet& params);
   RobotModelPlugin();
 
   bool initialize(ros::NodeHandle& nh, const vigir_generic_params::ParameterSet& params) override;

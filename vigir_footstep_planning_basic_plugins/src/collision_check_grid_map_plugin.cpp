@@ -6,21 +6,9 @@
 
 namespace vigir_footstep_planning
 {
-
-CollisionCheckGridMapPlugin::CollisionCheckGridMapPlugin(const std::string& name, const vigir_generic_params::ParameterSet& params)
-  : CollisionCheckPlugin(name, params)
-  , occ_thresh(70)
-{
-}
-
 CollisionCheckGridMapPlugin::CollisionCheckGridMapPlugin(const std::string& name)
   : CollisionCheckPlugin(name)
   , occ_thresh(70)
-{
-}
-
-CollisionCheckGridMapPlugin::CollisionCheckGridMapPlugin()
-  : CollisionCheckGridMapPlugin("collision_check_grid_map_plugin")
 {
 }
 

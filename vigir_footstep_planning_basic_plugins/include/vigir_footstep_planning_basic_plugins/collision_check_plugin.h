@@ -52,8 +52,6 @@ public:
     FOOT_CONTACT_SUPPORT  = 4
   };
 
-  CollisionCheckPlugin(const std::string& name, const std::string& type_class, const vigir_generic_params::ParameterSet& params);
-  CollisionCheckPlugin(const std::string& name, const vigir_generic_params::ParameterSet& params);
   CollisionCheckPlugin(const std::string& name, const std::string& type_class = "vigir_footstep_planning::CollisionCheckPlugin");
 
   bool initialize(ros::NodeHandle& nh, const vigir_generic_params::ParameterSet& params) override;

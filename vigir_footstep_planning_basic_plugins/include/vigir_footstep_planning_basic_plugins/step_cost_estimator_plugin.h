@@ -43,7 +43,6 @@ class StepCostEstimatorPlugin
   : public vigir_pluginlib::Plugin
 {
 public:
-  StepCostEstimatorPlugin(const std::string& name, const vigir_generic_params::ParameterSet& params);
   StepCostEstimatorPlugin(const std::string& name);
   virtual ~StepCostEstimatorPlugin();
 

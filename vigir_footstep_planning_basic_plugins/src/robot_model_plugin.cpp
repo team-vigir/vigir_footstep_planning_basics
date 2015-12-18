@@ -4,11 +4,6 @@ namespace vigir_footstep_planning
 {
 using namespace vigir_generic_params;
 
-RobotModelPlugin::RobotModelPlugin(const vigir_generic_params::ParameterSet& params)
-  : vigir_pluginlib::Plugin("robot_model", "vigir_footstep_planning::RobotModelPlugin", params)
-{
-}
-
 RobotModelPlugin::RobotModelPlugin()
   : vigir_pluginlib::Plugin("robot_model", "vigir_footstep_planning::RobotModelPlugin")
 {

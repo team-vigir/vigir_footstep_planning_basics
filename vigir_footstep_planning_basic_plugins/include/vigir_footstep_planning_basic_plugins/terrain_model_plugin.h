@@ -46,7 +46,6 @@ class TerrainModelPlugin
   : public CollisionCheckPlugin
 {
 public:
-  TerrainModelPlugin(const std::string& name, const vigir_generic_params::ParameterSet& params);
   TerrainModelPlugin(const std::string& name);
 
   bool isUnique() const final;
