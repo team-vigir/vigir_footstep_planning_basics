@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 2.8.3)
-project(vigir_footstep_planning_basic_plugins)
+project(vigir_footstep_planning_plugins)
 
 #set(CMAKE_BUILD_TYPE Debug)
 #set(CMAKE_BUILD_TYPE RelWithDebInfo)
@@ -81,7 +81,7 @@ find_package(Boost REQUIRED COMPONENTS system)
 ## DEPENDS: system dependencies of this project that dependent projects also need
 catkin_package(
   INCLUDE_DIRS include
-  LIBRARIES vigir_footstep_planning_basic_plugins
+  LIBRARIES vigir_footstep_planning_plugins
   CATKIN_DEPENDS roscpp actionlib_msgs actionlib std_msgs nav_msgs vigir_generic_params vigir_pluginlib vigir_footstep_planning_msgs vigir_footstep_planning_lib
 #  DEPENDS system_lib
 )
@@ -124,7 +124,7 @@ add_library(${PROJECT_NAME} ${SOURCES} ${HEADERS})
 set_target_properties(${PROJECT_NAME} PROPERTIES LINKER_LANGUAGE CXX)
 
 ## Declare a cpp executable
-# add_executable(footstep_planning_basic_plugins_node src/visualization/footstep_planning_basic_plugins_node.cpp)
+# add_executable(footstep_planning_plugins_node src/visualization/footstep_planning_plugins_node.cpp)
 
 ## Add cmake target dependencies of the executable/library
 ## as an example, message headers may need to be generated before nodes
@@ -159,6 +159,10 @@ install(DIRECTORY launch
   DESTINATION ${CATKIN_PACKAGE_SHARE_DESTINATION}
   FILES_MATCHING PATTERN "*.launch"
   PATTERN "*~" EXCLUDE
+)
+
+install(FILES plugins.xml
+  DESTINATION ${CATKIN_PACKAGE_SHARE_DESTINATION}
 )
 
 #############

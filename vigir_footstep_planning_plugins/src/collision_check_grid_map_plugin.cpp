@@ -1,4 +1,4 @@
-#include <vigir_footstep_planning_basic_plugins/collision_check_grid_map_plugin.h>
+#include <vigir_footstep_planning_plugins/collision_check_grid_map_plugin.h>
 
 #include <pluginlib/class_list_macros.h>
 

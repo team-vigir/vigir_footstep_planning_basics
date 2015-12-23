@@ -36,7 +36,7 @@
 
 #include <geometry_msgs/Pose.h>
 
-#include <vigir_footstep_planning_basic_plugins/collision_check_plugin.h>
+#include <vigir_footstep_planning_plugins/collision_check_plugin.h>
 
 
 
