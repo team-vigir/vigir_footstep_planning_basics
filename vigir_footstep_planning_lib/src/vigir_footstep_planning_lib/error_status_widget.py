@@ -9,6 +9,7 @@ from python_qt_binding.QtGui import QWidget, QVBoxLayout, QHBoxLayout, QTextEdit
 from vigir_footstep_planning_msgs.msg import ErrorStatus
 from vigir_footstep_planning_lib.logging import *
 
+
 # widget for printing error status msgs to a text box
 class QErrorStatusTextBox(QTextEdit):
 
@@ -17,7 +18,7 @@ class QErrorStatusTextBox(QTextEdit):
         self.setReadOnly(True)
 
     @Slot(str, QColor)
-    def out_log(self, msg, color = Qt.black):
+    def out_log(self, msg, color=Qt.black):
         self.setTextColor(color)
         self.append(msg)
 
@@ -26,18 +27,19 @@ class QErrorStatusTextBox(QTextEdit):
         self.append_error_status(error_status)
 
     def append_error_status(self, error_status):
-        if (error_status.error != 0):
+        if error_status.error != 0:
             self.out_log(error_status.error_msg, Qt.red)
-    
-        if (error_status.warning != 0):
+
+        if error_status.warning != 0:
             self.out_log(error_status.warning_msg, QColor(255, 165, 0))
+
 
 # complex widget for printing error status msgs to a text box
 class QErrorStatusWidget(QWidget):
 
     error_status_signal = Signal(ErrorStatus)
 
-    def __init__(self, parent = None, subscribe = False):
+    def __init__(self, parent=None, subscribe=False):
         QWidget.__init__(self, parent)
 
         # start widget
@@ -74,7 +76,7 @@ class QErrorStatusWidget(QWidget):
         #self.setSizePolicy(QSizePolicy.Expanding, QSizePolicy.Minimum)
 
         # subscriber
-        if (subscribe):
+        if subscribe:
             self.error_status_sub = rospy.Subscriber("error_status", ErrorStatus, self.error_status_callback)
         self.subscribed = subscribe
 
@@ -110,10 +112,9 @@ class QErrorStatusWidget(QWidget):
 
     @Slot(int)
     def state_changed(self, state):
-        if (state == Qt.Unchecked):
+        if state == Qt.Unchecked:
             self.error_status_text_box_layout.addWidget(self.error_status_text_box)
             self.error_status_text_box.setVisible(True)
-        elif (state == Qt.Checked):
+        elif state == Qt.Checked:
             self.error_status_text_box_layout.removeWidget(self.error_status_text_box)
             self.error_status_text_box.setVisible(False)
-

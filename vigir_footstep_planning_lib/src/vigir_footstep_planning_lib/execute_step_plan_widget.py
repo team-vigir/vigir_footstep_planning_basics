@@ -14,6 +14,7 @@ from vigir_footstep_planning_lib.logging import *
 from vigir_footstep_planning_lib.topic_widget import *
 from vigir_footstep_planning_lib.qt_helper import *
 
+
 # widget for sending step plans to controller
 class QExecuteStepPlanWidget(QWidgetWithLogger):
 
@@ -21,7 +22,7 @@ class QExecuteStepPlanWidget(QWidgetWithLogger):
     execute_step_plan_client = None
     step_plan = None
 
-    def __init__(self, parent = None, logger = Logger(), step_plan_topic = str()):
+    def __init__(self, parent=None, logger=Logger(), step_plan_topic=str()):
         QWidgetWithLogger.__init__(self, parent, logger)
 
         # start widget
@@ -31,14 +32,14 @@ class QExecuteStepPlanWidget(QWidgetWithLogger):
 
         # step plan input topic selection
         if len(step_plan_topic) == 0:
-            step_plan_topic_widget = QTopicWidget(topic_type = 'vigir_footstep_planning_msgs/StepPlan')
+            step_plan_topic_widget = QTopicWidget(topic_type='vigir_footstep_planning_msgs/StepPlan')
             step_plan_topic_widget.topic_changed_signal.connect(self._init_step_plan_subscriber)
             vbox.addWidget(step_plan_topic_widget)
         else:
             self._init_step_plan_subscriber(step_plan_topic)
 
         # execute action server topic selection
-        execute_topic_widget = QTopicWidget(topic_type = 'vigir_footstep_planning_msgs/ExecuteStepPlanAction', is_action_topic = True)
+        execute_topic_widget = QTopicWidget(topic_type='vigir_footstep_planning_msgs/ExecuteStepPlanAction', is_action_topic=True)
         execute_topic_widget.topic_changed_signal.connect(self._init_execute_action_client)
         vbox.addWidget(execute_topic_widget)
 
@@ -104,7 +105,7 @@ class QExecuteStepPlanWidget(QWidgetWithLogger):
             self.repeat_command.setEnabled(False)
 
     def execute_command_callback(self):
-        if (self.execute_step_plan_client.wait_for_server(rospy.Duration(0.5))):
+        if self.execute_step_plan_client.wait_for_server(rospy.Duration(0.5)):
             self.execute_command.setEnabled(False)
             self.repeat_command.setEnabled(True)
             self.stop_command.setEnabled(True)
@@ -120,4 +121,3 @@ class QExecuteStepPlanWidget(QWidgetWithLogger):
         self.stop_command.setEnabled(False)
         self.execute_step_plan_client.cancel_goal()
         self.logger.log_info("Preempting step plan.")
-

@@ -8,7 +8,7 @@ import std_msgs.msg
 import vigir_footstep_planning_msgs.msg
 
 from rqt_gui_py.plugin import Plugin
-from python_qt_binding.QtCore import Qt, QObject, Slot, QSignalMapper  
+from python_qt_binding.QtCore import Qt, QObject, Slot, QSignalMapper
 from python_qt_binding.QtGui import QHBoxLayout, QVBoxLayout, QCheckBox, QLineEdit, QPushButton, QDoubleSpinBox
 
 from vigir_footstep_planning_msgs.msg import StepPlanRequest, StepPlanRequestAction, StepPlanRequestGoal, StepPlanRequestResult, PatternParameters, Feet
@@ -16,6 +16,7 @@ from vigir_footstep_planning_lib.execute_step_plan_widget import *
 from vigir_footstep_planning_lib.error_status_widget import *
 from vigir_footstep_planning_lib.parameter_set_widget import *
 from vigir_footstep_planning_lib.qt_helper import *
+
 
 class StepInterfaceDialog(Plugin):
 
@@ -25,18 +26,19 @@ class StepInterfaceDialog(Plugin):
 
         self._parent = QWidget()
         self._widget = StepInterfaceWidget(self._parent)
-        
+
         context.add_widget(self._parent)
 
     def shutdown_plugin(self):
         self._widget.shutdown_plugin()
+
 
 class StepInterfaceWidget(QObject):
 
     command_buttons = []
     start_feet = Feet()
 
-    def __init__(self, context, add_execute_widget = True):
+    def __init__(self, context, add_execute_widget=True):
         super(StepInterfaceWidget, self).__init__()
 
         # init signal mapper
@@ -48,8 +50,6 @@ class StepInterfaceWidget(QObject):
         error_status_widget = QErrorStatusWidget()
         self.logger = Logger(error_status_widget)
         vbox = QVBoxLayout()
-
-
 
         # start control box
         controls_hbox = QHBoxLayout()
@@ -94,12 +94,10 @@ class StepInterfaceWidget(QObject):
         # end control box
         add_layout_with_frame(vbox, controls_hbox, "Commands:")
 
-
-
         # start settings
         settings_hbox = QHBoxLayout()
         settings_hbox.setMargin(0)
-        
+
         # start left column
         left_settings_vbox = QVBoxLayout()
         left_settings_vbox.setMargin(0)
@@ -133,8 +131,6 @@ class StepInterfaceWidget(QObject):
         # end left column
         settings_hbox.addLayout(left_settings_vbox, 1)
 
-
-
         # start center column
         center_settings_vbox = QVBoxLayout()
         center_settings_vbox.setMargin(0)
@@ -162,8 +158,6 @@ class StepInterfaceWidget(QObject):
 
         # end center column
         settings_hbox.addLayout(center_settings_vbox, 1)
-
-
 
         # start right column
         right_settings_vbox = QVBoxLayout()
@@ -201,8 +195,6 @@ class StepInterfaceWidget(QObject):
 
         # end settings
         add_layout_with_frame(vbox, settings_hbox, "Settings:")
-
-
 
         # parameter set selection
         self.parameter_set_widget = QParameterSetWidget(logger = self.logger)
@@ -272,19 +264,19 @@ class StepInterfaceWidget(QObject):
         request.start = self.start_feet
         request.start_step_index = self.start_step_index.value()
 
-        if (self.start_foot_selection_combo_box.currentText() == "AUTO"):
+        if self.start_foot_selection_combo_box.currentText() == "AUTO":
             request.start_foot_selection = StepPlanRequest.AUTO
-        elif (self.start_foot_selection_combo_box.currentText() == "LEFT"):
+        elif self.start_foot_selection_combo_box.currentText() == "LEFT":
             request.start_foot_selection = StepPlanRequest.LEFT
-        elif (self.start_foot_selection_combo_box.currentText() == "RIGHT"):
+        elif self.start_foot_selection_combo_box.currentText() == "RIGHT":
             request.start_foot_selection = StepPlanRequest.RIGHT
         else:
             self.logger.log_error("Unknown start foot selection mode ('" + self.start_foot_selection_combo_box.currentText() + "')!")
             return;
 
-        if (walk_command == PatternParameters.FORWARD):
+        if walk_command == PatternParameters.FORWARD:
             params.mode = PatternParameters.SAMPLING
-        elif (walk_command == PatternParameters.BACKWARD):
+        elif walk_command == PatternParameters.BACKWARD:
             params.mode                      = PatternParameters.SAMPLING
             params.step_distance_forward    *= -1;
             params.step_distance_sideward   *= -1;
@@ -297,14 +289,14 @@ class StepInterfaceWidget(QObject):
         print "Send request = ", request
 
         # send request
-        if (self.step_plan_request_client.wait_for_server(rospy.Duration(0.5))):
+        if self.step_plan_request_client.wait_for_server(rospy.Duration(0.5)):
             self.logger.log_info("Sending footstep plan request...")
 
             goal = StepPlanRequestGoal()
             goal.plan_request = request;
             self.step_plan_request_client.send_goal(goal)
 
-            if (self.step_plan_request_client.wait_for_result(rospy.Duration(5.0))):
+            if self.step_plan_request_client.wait_for_result(rospy.Duration(5.0)):
                 self.logger.log_info("Received footstep plan!")
                 self.logger.log(self.step_plan_request_client.get_result().status)
                 self.step_plan_pub.publish(self.step_plan_request_client.get_result().step_plan)
@@ -315,7 +307,7 @@ class StepInterfaceWidget(QObject):
 
     def commands_set_enabled(self, enable):
         for button in self.command_buttons:
-            button.setEnabled(enable) 
+            button.setEnabled(enable)
 
     @Slot()
     def param_cleared(self):
@@ -334,4 +326,3 @@ class StepInterfaceWidget(QObject):
         self.pitch.setEnabled(enable_override)
         self.override_checkbox.setEnabled(enable_override)
         self.dz.setEnabled(enable_override)
-

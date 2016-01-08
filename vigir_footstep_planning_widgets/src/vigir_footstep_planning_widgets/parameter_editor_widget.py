@@ -18,6 +18,7 @@ from vigir_footstep_planning_lib.parameter_tree_widget import *
 from vigir_footstep_planning_lib.topic_widget import *
 from vigir_footstep_planning_lib.qt_helper import *
 
+
 class ParameterEditorDialog(Plugin):
 
     def __init__(self, context):
@@ -26,11 +27,12 @@ class ParameterEditorDialog(Plugin):
 
         self._parent = QWidget()
         self._widget = ParameterEditorWidget(self._parent)
-        
+
         context.add_widget(self._parent)
 
     def shutdown_plugin(self):
         self._widget.shutdown_plugin()
+
 
 class ParameterEditorWidget(QObject):
 
@@ -44,7 +46,7 @@ class ParameterEditorWidget(QObject):
         self.logger = Logger(error_status_widget)
 
         # parameter set selection
-        self.parameter_set_widget = QParameterSetWidget(logger = self.logger)
+        self.parameter_set_widget = QParameterSetWidget(logger=self.logger)
         add_widget_with_frame(vbox, self.parameter_set_widget, "Parameter Set:")
 
         # start horizontal splitter
@@ -53,7 +55,7 @@ class ParameterEditorWidget(QObject):
         vsplitter.setChildrenCollapsible(False)
 
         # parameter set editor
-        parameter_editor_widget = QParameterEditorWidget(logger = self.logger)
+        parameter_editor_widget = QParameterEditorWidget(logger=self.logger)
         add_widget_with_frame(vsplitter, parameter_editor_widget, "Editor:")
 
         # add error status widget
@@ -75,11 +77,12 @@ class ParameterEditorWidget(QObject):
         print "Shutting down ..."
         print "Done!"
 
+
 class QParameterEditorWidget(QWidgetWithLogger):
 
     parameter_set_name = str()
 
-    def __init__(self, parent = None, logger = Logger()):
+    def __init__(self, parent=None, logger=Logger()):
         QWidgetWithLogger.__init__(self, parent, logger)
 
         # start widget
@@ -88,11 +91,11 @@ class QParameterEditorWidget(QWidgetWithLogger):
         vbox.setContentsMargins(0, 0, 0, 0)
 
         # add layout which is dynamically filled
-        self.parameter_tree_widget = QParameterTreeWidget(logger = self.logger)
+        self.parameter_tree_widget = QParameterTreeWidget(logger=self.logger)
         vbox.addWidget(self.parameter_tree_widget)
 
         # button panel
-        vbox_commands = QVBoxLayout()  
+        vbox_commands = QVBoxLayout()
         hbox = QHBoxLayout()
 
         # upload topic
@@ -128,14 +131,14 @@ class QParameterEditorWidget(QWidgetWithLogger):
 
     @Slot(str)
     def _init_upload_paramater_set_client(self, topic_name):
-        if (len(topic_name) > 0):
+        if len(topic_name) > 0:
             print "Upload parameter set topic changed: " + topic_name
             self.upload_parameter_set_client = actionlib.SimpleActionClient(topic_name, SetParameterSetAction)
 
     @Slot(str)
     def set_get_parameter_set_topic_name(self, topic_name):
         # assume that there are no topic remaps
-        if (len(topic_name) > 0):
+        if len(topic_name) > 0:
             self._init_get_parameter_set_client(topic_name[:-6])
 
     # clear current vis
@@ -149,14 +152,14 @@ class QParameterEditorWidget(QWidgetWithLogger):
     def upload_parameters(self):
         param_set_msg = self.parameter_tree_widget.get_parameter_set()
 
-        if (self.upload_parameter_set_client.wait_for_server(rospy.Duration(0.5))):
+        if self.upload_parameter_set_client.wait_for_server(rospy.Duration(0.5)):
             self.logger.log_info("Sending parameter set '" + param_set_msg.name.data + "'...")
 
             goal = SetParameterSetGoal()
             goal.params = param_set_msg;
             self.upload_parameter_set_client.send_goal(goal)
 
-            if (self.upload_parameter_set_client.wait_for_result(rospy.Duration(0.5))):
+            if self.upload_parameter_set_client.wait_for_result(rospy.Duration(0.5)):
                 self.logger.log_info("Sent parameter set!")
                 result = self.upload_parameter_set_client.get_result()
                 self.logger.log(result.status)
@@ -169,14 +172,14 @@ class QParameterEditorWidget(QWidgetWithLogger):
     def load_parameters(self, name):
         self.clear()
 
-        if (self.get_parameter_set_client.wait_for_server(rospy.Duration(0.5))):
+        if self.get_parameter_set_client.wait_for_server(rospy.Duration(0.5)):
             self.logger.log_info("Requesting parameter set '" + name + "'...")
 
             goal = GetParameterSetGoal()
             goal.name.data = name;
             self.get_parameter_set_client.send_goal(goal)
 
-            if (self.get_parameter_set_client.wait_for_result(rospy.Duration(0.5))):
+            if self.get_parameter_set_client.wait_for_result(rospy.Duration(0.5)):
                 self.logger.log_info("Received parameter set!")
                 result = self.get_parameter_set_client.get_result()
                 self.logger.log(result.status)
@@ -197,4 +200,3 @@ class QParameterEditorWidget(QWidgetWithLogger):
         self.parameter_tree_widget.set_parameter_set(param_set_msg)
         self.upload_command.setEnabled(True)
         self.reload_command.setEnabled(True)
-

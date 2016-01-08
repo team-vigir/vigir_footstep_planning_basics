@@ -8,27 +8,28 @@ from python_qt_binding.QtGui import QWidget, QColor
 
 from vigir_footstep_planning_msgs.msg import ErrorStatus
 
+
 # Logging System
 class Logger(QObject):
 
     out_log_signal = Signal(str, QColor)
 
-    def __init__(self, error_status_text_box = None):
+    def __init__(self, error_status_text_box=None):
         super(Logger, self).__init__()
         self.connect(error_status_text_box)
 
     def connect(self, error_status_text_box):
-        if (type(error_status_text_box).__name__ == "QErrorStatusTextBox"):
+        if type(error_status_text_box).__name__ == "QErrorStatusTextBox":
             self.out_log_signal.connect(error_status_text_box.out_log)
-        elif (type(error_status_text_box).__name__ == "QErrorStatusWidget"):
+        elif type(error_status_text_box).__name__ == "QErrorStatusWidget":
             self.out_log_signal.connect(error_status_text_box.get_text_box().out_log)
 
     def log(self, error_status):
-        if (error_status.error != 0):
+        if error_status.error != 0:
             self.log_error(error_status.error_msg)
-        if (error_status.warning != 0):
+        if error_status.warning != 0:
             self.log_warn(error_status.warning_msg)
-    
+
     def log_info(self, msg):
         self.out_log_signal.emit("[ INFO] " + msg, Qt.black)
         rospy.loginfo(msg)
@@ -51,10 +52,9 @@ class QWidgetWithLogger(QWidget):
 
     logger = Logger()
 
-    def __init__(self, parent = None, logger = Logger()):
+    def __init__(self, parent=None, logger=Logger()):
         QWidget.__init__(self, parent)
         self.set_logger(logger)
 
     def set_logger(self, logger):
         self.logger = logger
-

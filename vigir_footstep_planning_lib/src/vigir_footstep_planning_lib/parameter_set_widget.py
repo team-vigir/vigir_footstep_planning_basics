@@ -12,6 +12,7 @@ from vigir_generic_params.msg import GetParameterSetNamesAction, GetParameterSet
 from vigir_footstep_planning_lib.logging import *
 from vigir_footstep_planning_lib.topic_widget import *
 
+
 # widget for parameter set selection
 class QParameterSetWidget(QWidgetWithLogger):
 
@@ -19,7 +20,7 @@ class QParameterSetWidget(QWidgetWithLogger):
     param_cleared_signal = Signal()
     param_changed_signal = Signal(str)
 
-    def __init__(self, parent = None, logger = Logger()):
+    def __init__(self, parent=None, logger=Logger()):
         QWidgetWithLogger.__init__(self, parent, logger)
 
         # start widget
@@ -60,6 +61,7 @@ class QParameterSetWidget(QWidgetWithLogger):
     def param_changed(self, name):
         self.param_changed_signal.emit(name)
 
+
 # widget for parameter set selection
 class QParameterSetSelectionWidget(QWidgetWithLogger):
 
@@ -69,7 +71,7 @@ class QParameterSetSelectionWidget(QWidgetWithLogger):
     param_cleared_signal = Signal()
     param_changed_signal = Signal(str)
 
-    def __init__(self, parent = None, logger = Logger()):
+    def __init__(self, parent=None, logger=Logger()):
         QWidgetWithLogger.__init__(self, parent, logger)
 
         # start widget
@@ -107,7 +109,7 @@ class QParameterSetSelectionWidget(QWidgetWithLogger):
 
     @Slot(str)
     def set_topic_name(self, topic_name):
-        if (len(topic_name) > 0):
+        if len(topic_name) > 0:
             self._init_action_client(topic_name)
             self._get_all_parameter_set_names()
         else:
@@ -133,13 +135,13 @@ class QParameterSetSelectionWidget(QWidgetWithLogger):
 
     # parameter set names handler
     def _get_all_parameter_set_names(self):
-        if (self.get_parameter_set_names_client.wait_for_server(rospy.Duration(0.5))):
+        if self.get_parameter_set_names_client.wait_for_server(rospy.Duration(0.5)):
             self.logger.log_info("Requesting current list of parameter set names.")
             goal = GetParameterSetNamesGoal()
             self.get_parameter_set_names_client.send_goal(goal)
 
             # waiting for getting list of parameter set names
-            if (self.get_parameter_set_names_client.wait_for_result(rospy.Duration(1.0))):
+            if self.get_parameter_set_names_client.wait_for_result(rospy.Duration(1.0)):
                 result = self.get_parameter_set_names_client.get_result()
 
                 self.logger.log_info("Received " + str(len(result.names)) + " parameter set names.")
@@ -162,4 +164,3 @@ class QParameterSetSelectionWidget(QWidgetWithLogger):
         else:
             self.logger.log_error("Can't connect to footstep planner parameter action server!")
             self.reset_parameter_set_selection()
-

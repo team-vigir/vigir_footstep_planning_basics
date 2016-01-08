@@ -14,6 +14,7 @@ from vigir_footstep_planning_lib.error_status_widget import *
 from vigir_footstep_planning_lib.logging import *
 from vigir_footstep_planning_lib.qt_helper import *
 
+
 class ExecuteStepPlanDialog(Plugin):
 
     def __init__(self, context):
@@ -22,11 +23,12 @@ class ExecuteStepPlanDialog(Plugin):
 
         self._parent = QWidget()
         self._widget = ExecuteStepPlanWidget(self._parent)
-        
+
         context.add_widget(self._parent)
 
     def shutdown_plugin(self):
         self._widget.shutdown_plugin()
+
 
 class ExecuteStepPlanWidget(QObject):
 
@@ -45,7 +47,7 @@ class ExecuteStepPlanWidget(QObject):
         vbox = QVBoxLayout()
 
         # add execute action server widget
-        add_widget_with_frame(vbox, QExecuteStepPlanWidget(logger = self.logger), "Step Plan Selection/Execution:")
+        add_widget_with_frame(vbox, QExecuteStepPlanWidget(logger=self.logger), "Step Plan Selection/Execution:")
 
         # add error status widget
         add_widget_with_frame(vbox, error_status_widget, "Status:")
@@ -57,4 +59,3 @@ class ExecuteStepPlanWidget(QObject):
     def shutdown_plugin(self):
         print "Shutting down ..."
         print "Done!"
-

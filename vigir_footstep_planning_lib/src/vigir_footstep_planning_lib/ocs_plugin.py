@@ -7,6 +7,7 @@ from python_qt_binding.QtGui import QWidget
 
 from std_msgs.msg import Int8
 
+
 class OCSPlugin(QWidget):
 
     def __init__(self, widget_class, name, window, *args):
@@ -22,7 +23,7 @@ class OCSPlugin(QWidget):
 
         self._window_control_sub = rospy.Subscriber("/flor/ocs/window_control", Int8, self.processWindowControl)
         self._window_control_pub = rospy.Publisher("/flor/ocs/window_control", Int8, queue_size=10)
-        
+
         # window visibility configuration variables
         self._last_window_control_data = -self._window
         self._set_window_visibility = True
@@ -30,9 +31,9 @@ class OCSPlugin(QWidget):
         # this is only used to make sure we close window if ros::shutdown has already been called
         self._timer = QBasicTimer()
         self._timer.start(33, self)
-        
+
         settings = QSettings("OCS", self._name)
-        if settings.value("mainWindowGeometry") != None:
+        if settings.value("mainWindowGeometry") is not None:
             self.restoreGeometry(settings.value("mainWindowGeometry"))
     	self.geometry_ = self.geometry()
 
@@ -43,8 +44,8 @@ class OCSPlugin(QWidget):
 
     def timerEvent(self, event):
         if rospy.is_shutdown():
-            QCoreApplication.instance().quit();
-            
+            QCoreApplication.instance().quit()
+
         # needed to move qt calls out of the ros callback, otherwise qt crashes because of inter-thread communication
         if self._set_window_visibility:
             self._set_window_visibility = False
@@ -54,7 +55,7 @@ class OCSPlugin(QWidget):
             elif self.isVisible() and (not self._last_window_control_data or self._last_window_control_data == -self._window):
                 self._geometry = self.geometry()
                 self.hide()
-                
+
     def closeEvent(self, event):
         settings = QSettings("OCS", self._name)
         settings.setValue("mainWindowGeometry", self.saveGeometry())
@@ -70,4 +71,3 @@ class OCSPlugin(QWidget):
     def moveEvent(self, event):
         settings = QSettings("OCS", self._name)
         settings.setValue("mainWindowGeometry", self.saveGeometry())
-

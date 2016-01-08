@@ -15,6 +15,7 @@ from vigir_footstep_planning_lib.parameter_set_widget import *
 from vigir_footstep_planning_lib.qt_helper import *
 from vigir_footstep_planning_lib.logging import *
 
+
 class PatternGeneratorDialog(Plugin):
 
     def __init__(self, context):
@@ -23,11 +24,12 @@ class PatternGeneratorDialog(Plugin):
 
         self._parent = QWidget()
         self._widget = PatternGeneratorWidget(self._parent)
-        
+
         context.add_widget(self._parent)
 
     def shutdown_plugin(self):
         self._widget.shutdown_plugin()
+
 
 class PatternGeneratorWidget(QObject):
 
@@ -106,8 +108,6 @@ class PatternGeneratorWidget(QObject):
         left_vbox.addStretch()
         hbox.addLayout(left_vbox, 1)
 
-
-
         # start right column
         right_vbox = QVBoxLayout()
 
@@ -131,7 +131,7 @@ class PatternGeneratorWidget(QObject):
         # end right coloumn
         right_vbox.addStretch()
         hbox.addLayout(right_vbox, 1)
-        
+
         # add upper part
         hbox.setMargin(0)
         vbox = QVBoxLayout()
@@ -181,10 +181,9 @@ class PatternGeneratorWidget(QObject):
         self._publish_parameters()
 
     def callback_spin_box(self, value_as_int):
-        if (self.realtime_mode_checkbox.isChecked()):
+        if self.realtime_mode_checkbox.isChecked():
             self._publish_parameters()
 
     def joystick_mode_check_callback(self):
         self.enable_pattern_generator = False
         self._publish_parameters()
-

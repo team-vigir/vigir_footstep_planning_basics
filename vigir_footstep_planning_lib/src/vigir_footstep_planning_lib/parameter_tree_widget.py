@@ -12,11 +12,12 @@ from vigir_footstep_planning_msgs.msg import ParameterSet
 from vigir_footstep_planning_msgs.parameter import *
 from vigir_footstep_planning_lib.logging import *
 
+
 class QParameterTreeWidget(QTreeWidget):
 
     logger = Logger()
 
-    def __init__(self, parent = None, logger = Logger()):
+    def __init__(self, parent=None, logger=Logger()):
         QTreeWidget.__init__(self, parent)
         self.set_logger(logger)
 
@@ -35,9 +36,9 @@ class QParameterTreeWidget(QTreeWidget):
         self._action_item_collapse = QAction(QIcon.fromTheme('zoom-out'), 'Collapse Selected', self)
         self._action_item_collapse.triggered.connect(self._handle_action_item_collapse)
         self._action_item_add = QAction(QIcon.fromTheme('list-add'), 'Add', self)
-        self._action_item_add.setEnabled(False) # TODO
+        self._action_item_add.setEnabled(False)  # TODO
         self._action_item_remove = QAction(QIcon.fromTheme('list-remove'), 'Remove', self)
-        self._action_item_remove.setEnabled(False) # TODO
+        self._action_item_remove.setEnabled(False)  # TODO
 
     def set_logger(self, logger):
         self.logger = logger
@@ -94,11 +95,11 @@ class QParameterTreeWidget(QTreeWidget):
     def set_parameter_set(self, param_set_msg):
         self.clear()
 
-        self.root = QParameterTreeWidgetItem(self, self.logger, name = param_set_msg.name.data)
+        self.root = QParameterTreeWidgetItem(self, self.logger, name=param_set_msg.name.data)
         self.root.setExpanded(True)
 
         for p in param_set_msg.parameters:
-            self.root.add_param(Parameter(msg = p))
+            self.root.add_param(Parameter(msg=p))
 
     # get parameter set as msg
     def get_parameter_set(self):
@@ -117,13 +118,14 @@ class QParameterTreeWidget(QTreeWidget):
 
         return param_set_msg
 
+
 class QParameterTreeWidgetItem(QTreeWidgetItem):
 
     logger = Logger()
     param = None
     namespace = str()
 
-    def __init__(self, parent = None, logger = Logger(), param = None, name = str(), namespace = str()):
+    def __init__(self, parent=None, logger=Logger(), param = None, name=str(), namespace=str()):
         QTreeWidgetItem.__init__(self, parent)
         self.set_logger(logger)
 
@@ -195,7 +197,7 @@ class QParameterTreeWidgetItem(QTreeWidgetItem):
         # finds branch matching the name
         def find_branch(name):
             for i in range(self.childCount()):
-                if (self.child(i).text(0) == name):
+                if self.child(i).text(0) == name:
                     return self.child(i)
             return None
 
@@ -215,11 +217,10 @@ class QParameterTreeWidgetItem(QTreeWidgetItem):
         i = param.get_name().find('/')
 
         # add as leaf
-        if (i == -1):
+        if i == -1:
             QParameterTreeWidgetItem(self, self.logger, param, namespace = self.get_namespace() + '/' + self.get_name())
         # add into branch
         else:
             branch_name = param.get_name()[:i]
             param.set_name(param.get_name()[i+1:])
             add_param_to_branch(param, branch_name)
-

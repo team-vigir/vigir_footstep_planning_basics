@@ -5,12 +5,13 @@ import rospy
 from python_qt_binding.QtCore import Qt, QSize, QRegExp, Signal, Slot
 from python_qt_binding.QtGui import QWidget, QRegExpValidator, QHBoxLayout, QPushButton, QComboBox, QIcon
 
+
 # widget for topic selection
 class QTopicWidget(QWidget):
 
     topic_changed_signal = Signal(str)
 
-    def __init__(self, parent = None, topic_type = str(), is_action_topic = False):
+    def __init__(self, parent=None, topic_type=str(), is_action_topic=False):
         QWidget.__init__(self, parent)
 
         if is_action_topic:
@@ -79,7 +80,7 @@ class QTopicWidget(QWidget):
         topic_dict_filtered = dict()
         for k, v in topic_dict.items():
             if (len(topic_type) == 0) or (v == self.topic_type):
-                if (self.is_action_topic):
+                if self.is_action_topic:
                     topic_dict_filtered[k[:-5]] = v
                 else:
                     topic_dict_filtered[k] = v
@@ -87,10 +88,9 @@ class QTopicWidget(QWidget):
         self.topic_combo_box.clear()
         self.topic_combo_box.addItems(sorted(topic_dict_filtered.keys()))
 
-        if (self.topic_combo_box.count() > 0):
+        if self.topic_combo_box.count() > 0:
             self.topic_combo_box.setEnabled(True)
             self.topic_combo_box.blockSignals(False)
             self.topic_changed(self.topic_combo_box.currentText())
         else:
             self.topic_combo_box.addItem('No topics available!')
-
