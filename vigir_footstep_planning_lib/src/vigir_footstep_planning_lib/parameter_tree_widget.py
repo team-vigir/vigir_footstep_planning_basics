@@ -8,7 +8,7 @@ import vigir_footstep_planning_msgs.msg
 from python_qt_binding.QtCore import Qt, QPoint, QModelIndex, Slot
 from python_qt_binding.QtGui import QWidget, QTreeWidget, QTreeWidgetItem, QMenu, QAction, QAbstractItemView, QColor, QIcon
 
-from vigir_footstep_planning_msgs.msg import ParameterSet
+from vigir_generic_params.msg import ParameterSetMsg
 from vigir_footstep_planning_msgs.parameter import *
 from vigir_footstep_planning_lib.logging import *
 
@@ -98,7 +98,7 @@ class QParameterTreeWidget(QTreeWidget):
         self.root = QParameterTreeWidgetItem(self, self.logger, name=param_set_msg.name.data)
         self.root.setExpanded(True)
 
-        for p in param_set_msg.parameters:
+        for p in param_set_msg.params:
             self.root.add_param(Parameter(msg=p))
 
     # get parameter set as msg

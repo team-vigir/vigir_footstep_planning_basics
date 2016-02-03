@@ -9,7 +9,8 @@ from rqt_gui_py.plugin import Plugin
 from python_qt_binding.QtCore import Qt
 from python_qt_binding.QtGui import QWidget, QSplitter, QVBoxLayout, QPushButton
 
-from vigir_footstep_planning_msgs.msg import SetParameterSetAction, SetParameterSetGoal, GetParameterSetAction, GetParameterSetGoal, GetParameterSetResult, ErrorStatus
+from vigir_generic_params.msg import SetParameterSetAction, SetParameterSetGoal, GetParameterSetAction, GetParameterSetGoal, GetParameterSetResult
+from vigir_footstep_planning_msgs.msg import ErrorStatus
 from vigir_footstep_planning_msgs.parameter import *
 from vigir_footstep_planning_lib.error_status_widget import *
 from vigir_footstep_planning_lib.logging import *
@@ -182,7 +183,6 @@ class QParameterEditorWidget(QWidgetWithLogger):
             if self.get_parameter_set_client.wait_for_result(rospy.Duration(0.5)):
                 self.logger.log_info("Received parameter set!")
                 result = self.get_parameter_set_client.get_result()
-                self.logger.log(result.status)
                 self.current_parameter_set_name = name
                 self._visualize_parameters(result.params)
             else:
@@ -196,7 +196,7 @@ class QParameterEditorWidget(QWidgetWithLogger):
 
     # get parameter set as msg
     def _visualize_parameters(self, param_set_msg):
-        self.logger.log_info("Visualize parameter set with " + str(len(param_set_msg.parameters)) + " parameters.")
+        self.logger.log_info("Visualize parameter set with " + str(len(param_set_msg.params)) + " parameters.")
         self.parameter_tree_widget.set_parameter_set(param_set_msg)
         self.upload_command.setEnabled(True)
         self.reload_command.setEnabled(True)
