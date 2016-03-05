@@ -43,6 +43,10 @@ class PostProcessPlugin
   : public vigir_pluginlib::Plugin
 {
 public:
+  // typedefs
+  typedef boost::shared_ptr<PostProcessPlugin> Ptr;
+  typedef boost::shared_ptr<const PostProcessPlugin> ConstPtr;
+
   PostProcessPlugin(const std::string& name);
 
   bool isUnique() const final;
@@ -54,10 +58,6 @@ public:
   /// Post-Processing after footstep planning was done
   virtual void postProcessStep(const msgs::Step& left, const msgs::Step& right, msgs::Step& swing, msgs::StepPlan& step_plan) const;
   virtual void postProcess(msgs::StepPlan step_plan) const;
-
-  // typedefs
-  typedef boost::shared_ptr<PostProcessPlugin> Ptr;
-  typedef boost::shared_ptr<const PostProcessPlugin> ConstPtr;
 };
 }
 

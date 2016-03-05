@@ -46,6 +46,10 @@ class TerrainModelPlugin
   : public CollisionCheckPlugin
 {
 public:
+  // typedefs
+  typedef boost::shared_ptr<TerrainModelPlugin> Ptr;
+  typedef boost::shared_ptr<const TerrainModelPlugin> ConstPtr;
+
   TerrainModelPlugin(const std::string& name);
 
   bool isUnique() const final;
@@ -60,10 +64,6 @@ public:
 
   virtual bool update3DData(geometry_msgs::Pose& p) const = 0;
   virtual bool update3DData(State& s) const = 0;
-
-  // typedefs
-  typedef boost::shared_ptr<TerrainModelPlugin> Ptr;
-  typedef boost::shared_ptr<const TerrainModelPlugin> ConstPtr;
 };
 }
 

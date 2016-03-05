@@ -43,6 +43,10 @@ class StepPlanMsgPlugin
   : public vigir_pluginlib::Plugin
 {
 public:
+  // typedefs
+  typedef boost::shared_ptr<StepPlanMsgPlugin> Ptr;
+  typedef boost::shared_ptr<const StepPlanMsgPlugin> ConstPtr;
+
   StepPlanMsgPlugin(const std::string& name = "default_step_plan_msg_plugin");
   virtual ~StepPlanMsgPlugin();
 
@@ -51,10 +55,6 @@ public:
   virtual void initMsg(msgs::StepPlanRequest& step_plan_request) const {}
   virtual void initMsg(msgs::PatternParameters& pattern_parameter) const {}
   virtual void initMsg(msgs::StepPlanFeedback& step_plan_feedback) const {}
-
-  // typedefs
-  typedef boost::shared_ptr<StepPlanMsgPlugin> Ptr;
-  typedef boost::shared_ptr<const StepPlanMsgPlugin> ConstPtr;
 };
 }
 

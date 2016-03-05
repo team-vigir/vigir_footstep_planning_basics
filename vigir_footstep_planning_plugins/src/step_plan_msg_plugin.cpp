@@ -7,7 +7,7 @@
 namespace vigir_footstep_planning
 {
 StepPlanMsgPlugin::StepPlanMsgPlugin(const std::string& name)
-  : vigir_pluginlib::Plugin(name, "vigir_footstep_planning::StepPlanMsgPlugin")
+  : vigir_pluginlib::Plugin(name)
 {
 }
 

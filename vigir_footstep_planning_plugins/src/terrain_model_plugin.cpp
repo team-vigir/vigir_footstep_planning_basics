@@ -3,7 +3,7 @@
 namespace vigir_footstep_planning
 {
 TerrainModelPlugin::TerrainModelPlugin(const std::string& name)
-  : CollisionCheckPlugin(name, "vigir_footstep_planning::TerrainModelPlugin")
+  : CollisionCheckPlugin(name)
 {
 }
 

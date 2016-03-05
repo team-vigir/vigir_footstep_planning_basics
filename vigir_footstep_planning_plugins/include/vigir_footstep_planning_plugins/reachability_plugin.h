@@ -45,6 +45,10 @@ class ReachabilityPlugin
   : public vigir_pluginlib::Plugin
 {
 public:
+  // typedefs
+  typedef boost::shared_ptr<ReachabilityPlugin> Ptr;
+  typedef boost::shared_ptr<const ReachabilityPlugin> ConstPtr;
+
   ReachabilityPlugin(const std::string& name);
   virtual ~ReachabilityPlugin();
 
@@ -52,10 +56,6 @@ public:
 
   virtual bool isReachable(const State& current, const State& next) const = 0;
   virtual bool isReachable(const State& left_foot, const State& right_foot, const State& swing_foot) const;
-
-  // typedefs
-  typedef boost::shared_ptr<ReachabilityPlugin> Ptr;
-  typedef boost::shared_ptr<const ReachabilityPlugin> ConstPtr;
 };
 }
 

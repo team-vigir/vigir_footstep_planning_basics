@@ -8,7 +8,7 @@ namespace vigir_footstep_planning
 {
 CollisionCheckGridMapPlugin::CollisionCheckGridMapPlugin(const std::string& name)
   : CollisionCheckPlugin(name)
-  , occ_thresh(70)
+  , occ_thresh_(70)
 {
 }
 
@@ -19,9 +19,9 @@ bool CollisionCheckGridMapPlugin::initialize(ros::NodeHandle& nh, const vigir_ge
 
   std::string topic;
   getPluginParam("grid_map_topic", topic, std::string("/grid_map"));
-  occupancy_grid_map_sub = nh.subscribe<nav_msgs::OccupancyGrid>(topic, 1, &CollisionCheckGridMapPlugin::mapCallback, this);
+  occupancy_grid_map_sub_ = nh.subscribe<nav_msgs::OccupancyGrid>(topic, 1, &CollisionCheckGridMapPlugin::mapCallback, this);
 
-  getPluginParam("occupancy_threshold", (int&) occ_thresh, (int&) occ_thresh, true);
+  getPluginParam("occupancy_threshold", (int&) occ_thresh_, (int&) occ_thresh_, true);
 
   return true;
 }
@@ -30,20 +30,20 @@ void CollisionCheckGridMapPlugin::reset()
 {
   CollisionCheckPlugin::reset();
 
-  boost::unique_lock<boost::shared_mutex> lock(grid_map_shared_mutex);
-  occupancy_grid_map.reset();
+  boost::unique_lock<boost::shared_mutex> lock(grid_map_shared_mutex_);
+  occupancy_grid_map_.reset();
 }
 
 bool CollisionCheckGridMapPlugin::isCollisionCheckAvailable() const
 {
-  return CollisionCheckPlugin::isCollisionCheckAvailable() && occupancy_grid_map != nullptr;
+  return CollisionCheckPlugin::isCollisionCheckAvailable() && occupancy_grid_map_ != nullptr;
 }
 
 bool CollisionCheckGridMapPlugin::isAccessible(const State& s) const
 {
-  boost::shared_lock<boost::shared_mutex> lock(grid_map_shared_mutex);
+  boost::shared_lock<boost::shared_mutex> lock(grid_map_shared_mutex_);
 
-  if (!occupancy_grid_map)
+  if (!occupancy_grid_map_)
   {
     ROS_ERROR_THROTTLE(10, "[CollisionCheckGridMapPlugin] No grid map available yet.");
     return true;
@@ -53,8 +53,8 @@ bool CollisionCheckGridMapPlugin::isAccessible(const State& s) const
   double y = s.getY();
   int idx = 0;
 
-  if (getGridMapIndex(*occupancy_grid_map, x, y, idx))
-    return occupancy_grid_map->data.at(idx) <= occ_thresh;
+  if (getGridMapIndex(*occupancy_grid_map_, x, y, idx))
+    return occupancy_grid_map_->data.at(idx) <= occ_thresh_;
 
   return false;
 }
@@ -66,13 +66,13 @@ bool CollisionCheckGridMapPlugin::isAccessible(const State& next, const State& /
 
 void CollisionCheckGridMapPlugin::setOccupancyThreshold(unsigned char thresh)
 {
-  occ_thresh = static_cast<int8_t>(thresh);
+  occ_thresh_ = static_cast<int8_t>(thresh);
 }
 
 void CollisionCheckGridMapPlugin::mapCallback(const nav_msgs::OccupancyGridConstPtr& occupancy_grid_map)
 {
-  boost::unique_lock<boost::shared_mutex> lock(grid_map_shared_mutex);
-  this->occupancy_grid_map = occupancy_grid_map;
+  boost::unique_lock<boost::shared_mutex> lock(grid_map_shared_mutex_);
+  this->occupancy_grid_map_ = occupancy_grid_map;
 }
 }
 

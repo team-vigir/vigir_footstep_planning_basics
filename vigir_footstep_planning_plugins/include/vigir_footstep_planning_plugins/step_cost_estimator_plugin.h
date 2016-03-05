@@ -43,16 +43,16 @@ class StepCostEstimatorPlugin
   : public vigir_pluginlib::Plugin
 {
 public:
+  // typedefs
+  typedef boost::shared_ptr<StepCostEstimatorPlugin> Ptr;
+  typedef boost::shared_ptr<const StepCostEstimatorPlugin> ConstPtr;
+
   StepCostEstimatorPlugin(const std::string& name);
   virtual ~StepCostEstimatorPlugin();
 
   bool isUnique() const final;
 
   virtual bool getCost(const State& left_foot, const State& right_foot, const State& swing_foot, double& cost, double& cost_multiplier, double& risk, double& risk_multiplier) const = 0;
-
-  // typedefs
-  typedef boost::shared_ptr<StepCostEstimatorPlugin> Ptr;
-  typedef boost::shared_ptr<const StepCostEstimatorPlugin> ConstPtr;
 };
 }
 

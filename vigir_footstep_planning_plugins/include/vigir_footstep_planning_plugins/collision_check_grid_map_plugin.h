@@ -65,16 +65,16 @@ protected:
   virtual void mapCallback(const nav_msgs::OccupancyGridConstPtr& occupancy_grid_map);
 
   // subscribers
-  ros::Subscriber occupancy_grid_map_sub;
+  ros::Subscriber occupancy_grid_map_sub_;
 
   // mutex
-  mutable boost::shared_mutex grid_map_shared_mutex;
+  mutable boost::shared_mutex grid_map_shared_mutex_;
 
   // pointer to last received grid map
-  nav_msgs::OccupancyGridConstPtr occupancy_grid_map;
+  nav_msgs::OccupancyGridConstPtr occupancy_grid_map_;
 
   // occupancy threshold
-  int8_t occ_thresh;
+  int8_t occ_thresh_;
 };
 }
 

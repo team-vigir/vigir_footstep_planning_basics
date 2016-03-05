@@ -3,7 +3,7 @@
 namespace vigir_footstep_planning
 {
 HeuristicPlugin::HeuristicPlugin(const std::string& name)
-  : vigir_pluginlib::Plugin(name, "vigir_footstep_planning::HeuristicPlugin")
+  : vigir_pluginlib::Plugin(name)
 {
 }
 
@@ -22,6 +22,6 @@ bool HeuristicPlugin::isUnique() const
 
 void HeuristicPlugin::loadParams(const vigir_generic_params::ParameterSet& params)
 {
-  params.getParam("max_heuristic_value", max_heuristic_value);
+  params.getParam("max_heuristic_value", max_heuristic_value_);
 }
 }

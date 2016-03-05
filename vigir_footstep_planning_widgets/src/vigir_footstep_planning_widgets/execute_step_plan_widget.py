@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 
 import rospy
+
 import std_msgs.msg
 import vigir_footstep_planning_msgs.msg
 

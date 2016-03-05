@@ -3,7 +3,7 @@
 namespace vigir_footstep_planning
 {
 ReachabilityPlugin::ReachabilityPlugin(const std::string& name)
-  : Plugin(name, "vigir_footstep_planning::ReachabilityPlugin")
+  : Plugin(name)
 {
 }
 

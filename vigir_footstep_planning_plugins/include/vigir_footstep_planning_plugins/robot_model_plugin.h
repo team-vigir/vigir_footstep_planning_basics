@@ -43,6 +43,10 @@ class RobotModelPlugin
   : public vigir_pluginlib::Plugin
 {
 public:
+  // typedefs
+  typedef boost::shared_ptr<RobotModelPlugin> Ptr;
+  typedef boost::shared_ptr<const RobotModelPlugin> ConstPtr;
+
   RobotModelPlugin();
 
   bool initialize(ros::NodeHandle& nh, const vigir_generic_params::ParameterSet& params) override;
@@ -53,17 +57,13 @@ public:
   const geometry_msgs::Vector3& getUpperBodySize() const;
   const geometry_msgs::Vector3& getUpperBodyOriginShift() const;
 
-  // typedefs
-  typedef boost::shared_ptr<RobotModelPlugin> Ptr;
-  typedef boost::shared_ptr<const RobotModelPlugin> ConstPtr;
-
 protected:
   // foot paramaters
-  geometry_msgs::Vector3 foot_size;
+  geometry_msgs::Vector3 foot_size_;
 
   // upper body parameters
-  geometry_msgs::Vector3 upper_body_size;
-  geometry_msgs::Vector3 upper_body_origin_shift;
+  geometry_msgs::Vector3 upper_body_size_;
+  geometry_msgs::Vector3 upper_body_origin_shift_;
 };
 }
 

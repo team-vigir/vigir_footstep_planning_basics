@@ -52,7 +52,11 @@ public:
     FOOT_CONTACT_SUPPORT  = 4
   };
 
-  CollisionCheckPlugin(const std::string& name, const std::string& type_class = "vigir_footstep_planning::CollisionCheckPlugin");
+  // typedefs
+  typedef boost::shared_ptr<CollisionCheckPlugin> Ptr;
+  typedef boost::shared_ptr<const CollisionCheckPlugin> ConstPtr;
+
+  CollisionCheckPlugin(const std::string& name);
 
   bool initialize(ros::NodeHandle& nh, const vigir_generic_params::ParameterSet& params) override;
 
@@ -66,13 +70,9 @@ public:
   virtual bool isAccessible(const State& s) const = 0;
   virtual bool isAccessible(const State& next, const State& current) const = 0;
 
-  // typedefs
-  typedef boost::shared_ptr<CollisionCheckPlugin> Ptr;
-  typedef boost::shared_ptr<const CollisionCheckPlugin> ConstPtr;
-
 private:
-  bool collision_check_enabled;
-  unsigned int collision_check_flag;
+  bool collision_check_enabled_;
+  unsigned int collision_check_flag_;
 };
 }
 

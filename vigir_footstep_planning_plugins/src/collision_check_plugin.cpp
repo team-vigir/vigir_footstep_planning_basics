@@ -2,9 +2,9 @@
 
 namespace vigir_footstep_planning
 {
-CollisionCheckPlugin::CollisionCheckPlugin(const std::string& name, const std::string& type_class)
-  : vigir_pluginlib::Plugin(name, type_class)
-  , collision_check_flag(0)
+CollisionCheckPlugin::CollisionCheckPlugin(const std::string& name)
+  : vigir_pluginlib::Plugin(name)
+  , collision_check_flag_(0)
 {
 }
 
@@ -13,7 +13,7 @@ bool CollisionCheckPlugin::initialize(ros::NodeHandle& nh, const vigir_generic_p
   if (!vigir_pluginlib::Plugin::initialize(nh, params))
     return false;
 
-  getPluginParam("collision_check_flag", (int&)collision_check_flag, -1, true);
+  getPluginParam("collision_check_flag", (int&)collision_check_flag_, -1, true);
 
   return true;
 }
@@ -25,7 +25,7 @@ void CollisionCheckPlugin::loadParams(const vigir_generic_params::ParameterSet& 
   // check if
   unsigned int collision_check_mask;
   params.getParam("collision_check/collision_check_mask", (int&)collision_check_mask);
-  collision_check_enabled = this->collision_check_flag & collision_check_mask;
+  collision_check_enabled_ = this->collision_check_flag_ & collision_check_mask;
 }
 
 void CollisionCheckPlugin::reset()
@@ -39,6 +39,6 @@ bool CollisionCheckPlugin::isUnique() const
 
 bool CollisionCheckPlugin::isCollisionCheckAvailable() const
 {
-  return collision_check_enabled;
+  return collision_check_enabled_;
 }
 }

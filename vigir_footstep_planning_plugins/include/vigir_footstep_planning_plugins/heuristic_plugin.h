@@ -43,6 +43,10 @@ class HeuristicPlugin
   : public vigir_pluginlib::Plugin
 {
 public:
+  // typedefs
+  typedef boost::shared_ptr<HeuristicPlugin> Ptr;
+  typedef boost::shared_ptr<const HeuristicPlugin> ConstPtr;
+
   HeuristicPlugin(const std::string& name);
   virtual ~HeuristicPlugin();
 
@@ -54,12 +58,8 @@ public:
 
   virtual double getHeuristicValue(const State& from, const State& to, const State& start, const State& goal) const = 0;
 
-  // typedefs
-  typedef boost::shared_ptr<HeuristicPlugin> Ptr;
-  typedef boost::shared_ptr<const HeuristicPlugin> ConstPtr;
-
 protected:
-  double max_heuristic_value;
+  double max_heuristic_value_;
 };
 }
 
