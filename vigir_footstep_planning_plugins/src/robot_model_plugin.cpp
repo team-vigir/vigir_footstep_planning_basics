@@ -5,13 +5,13 @@ namespace vigir_footstep_planning
 using namespace vigir_generic_params;
 
 RobotModelPlugin::RobotModelPlugin()
-  : vigir_pluginlib::Plugin("robot_model")
+  : Plugin("robot_model")
 {
 }
 
 bool RobotModelPlugin::initialize(ros::NodeHandle& nh, const vigir_generic_params::ParameterSet& params)
 {
-  if (!vigir_pluginlib::Plugin::initialize(nh, params))
+  if (!Plugin::initialize(nh, params))
     return false;
 
   // get foot dimensions

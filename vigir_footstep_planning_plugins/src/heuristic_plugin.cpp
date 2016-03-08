@@ -3,7 +3,7 @@
 namespace vigir_footstep_planning
 {
 HeuristicPlugin::HeuristicPlugin(const std::string& name)
-  : vigir_pluginlib::Plugin(name)
+  : Plugin(name)
 {
 }
 
@@ -20,8 +20,12 @@ bool HeuristicPlugin::isUnique() const
   return false;
 }
 
-void HeuristicPlugin::loadParams(const vigir_generic_params::ParameterSet& params)
+bool HeuristicPlugin::loadParams(const vigir_generic_params::ParameterSet& params)
 {
+  if (!Plugin::loadParams(params))
+    return false;
+
   params.getParam("max_heuristic_value", max_heuristic_value_);
+  return true;
 }
 }

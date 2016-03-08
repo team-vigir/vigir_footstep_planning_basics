@@ -3,7 +3,7 @@
 namespace vigir_footstep_planning
 {
 PostProcessPlugin::PostProcessPlugin(const std::string& name)
-  : vigir_pluginlib::Plugin(name)
+  : Plugin(name)
 {
 }
 

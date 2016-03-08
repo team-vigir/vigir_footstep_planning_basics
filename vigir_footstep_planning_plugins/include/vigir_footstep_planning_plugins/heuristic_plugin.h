@@ -54,7 +54,7 @@ public:
 
   bool isUnique() const final;
 
-  void loadParams(const vigir_generic_params::ParameterSet& params) override;
+  bool loadParams(const vigir_generic_params::ParameterSet& params) override;
 
   virtual double getHeuristicValue(const State& from, const State& to, const State& start, const State& goal) const = 0;
 
