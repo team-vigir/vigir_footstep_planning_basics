@@ -58,9 +58,9 @@ public:
 
   CollisionCheckPlugin(const std::string& name);
 
-  bool initialize(ros::NodeHandle& nh, const vigir_generic_params::ParameterSet& params) override;
+  bool initialize(const vigir_generic_params::ParameterSet& global_params = vigir_generic_params::ParameterSet()) override;
 
-  bool loadParams(const vigir_generic_params::ParameterSet& params) override;
+  bool loadParams(const vigir_generic_params::ParameterSet& global_params = vigir_generic_params::ParameterSet()) override;
 
   virtual void reset();
 

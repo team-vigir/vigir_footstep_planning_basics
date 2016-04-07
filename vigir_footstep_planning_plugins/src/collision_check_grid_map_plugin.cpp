@@ -12,16 +12,16 @@ CollisionCheckGridMapPlugin::CollisionCheckGridMapPlugin(const std::string& name
 {
 }
 
-bool CollisionCheckGridMapPlugin::initialize(ros::NodeHandle& nh, const vigir_generic_params::ParameterSet& params)
+bool CollisionCheckGridMapPlugin::initialize(const vigir_generic_params::ParameterSet& global_params)
 {
-  if (!CollisionCheckPlugin::initialize(nh, params))
+  if (!CollisionCheckPlugin::initialize(global_params))
     return false;
 
   std::string topic;
-  getPluginParam("grid_map_topic", topic, std::string("/grid_map"));
-  occupancy_grid_map_sub_ = nh.subscribe<nav_msgs::OccupancyGrid>(topic, 1, &CollisionCheckGridMapPlugin::mapCallback, this);
+  getParam("grid_map_topic", topic, std::string("/grid_map"));
+  occupancy_grid_map_sub_ = nh_.subscribe<nav_msgs::OccupancyGrid>(topic, 1, &CollisionCheckGridMapPlugin::mapCallback, this);
 
-  getPluginParam("occupancy_threshold", (int&) occ_thresh_, (int&) occ_thresh_, true);
+  getParam("occupancy_threshold", (int&) occ_thresh_, (int&) occ_thresh_, true);
 
   return true;
 }

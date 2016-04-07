@@ -1,5 +1,7 @@
 #include <vigir_footstep_planning_plugins/reachability_plugin.h>
 
+
+
 namespace vigir_footstep_planning
 {
 ReachabilityPlugin::ReachabilityPlugin(const std::string& name)

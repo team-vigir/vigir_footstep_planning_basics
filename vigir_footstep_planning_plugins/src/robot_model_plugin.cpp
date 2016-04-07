@@ -1,5 +1,7 @@
 #include <vigir_footstep_planning_plugins/robot_model_plugin.h>
 
+
+
 namespace vigir_footstep_planning
 {
 using namespace vigir_generic_params;
@@ -9,17 +11,17 @@ RobotModelPlugin::RobotModelPlugin()
 {
 }
 
-bool RobotModelPlugin::initialize(ros::NodeHandle& nh, const vigir_generic_params::ParameterSet& params)
+bool RobotModelPlugin::initialize(const vigir_generic_params::ParameterSet& global_params)
 {
-  if (!Plugin::initialize(nh, params))
+  if (!Plugin::initialize(global_params))
     return false;
 
   // get foot dimensions
-  vigir_footstep_planning::getFootSize(nh, foot_size_);
+  vigir_footstep_planning::getFootSize(nh_, foot_size_);
 
   // get upper body dimensions
-  vigir_footstep_planning::getUpperBodySize(nh, upper_body_size_);
-  vigir_footstep_planning::getUpperBodyOriginShift(nh, upper_body_origin_shift_);
+  vigir_footstep_planning::getUpperBodySize(nh_, upper_body_size_);
+  vigir_footstep_planning::getUpperBodyOriginShift(nh_, upper_body_origin_shift_);
 
   return true;
 }

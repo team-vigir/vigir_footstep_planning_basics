@@ -1,5 +1,7 @@
 #include <vigir_footstep_planning_plugins/post_process_plugin.h>
 
+
+
 namespace vigir_footstep_planning
 {
 PostProcessPlugin::PostProcessPlugin(const std::string& name)

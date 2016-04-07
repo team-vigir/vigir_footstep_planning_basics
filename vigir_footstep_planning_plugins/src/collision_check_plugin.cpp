@@ -8,24 +8,24 @@ CollisionCheckPlugin::CollisionCheckPlugin(const std::string& name)
 {
 }
 
-bool CollisionCheckPlugin::initialize(ros::NodeHandle& nh, const vigir_generic_params::ParameterSet& params)
+bool CollisionCheckPlugin::initialize(const vigir_generic_params::ParameterSet& global_params)
 {
-  if (!Plugin::initialize(nh, params))
+  if (!Plugin::initialize(global_params))
     return false;
 
-  getPluginParam("collision_check_flag", (int&)collision_check_flag_, -1, true);
+  getParam("collision_check_flag", (int&)collision_check_flag_, -1, true);
 
   return true;
 }
 
-bool CollisionCheckPlugin::loadParams(const vigir_generic_params::ParameterSet& params)
+bool CollisionCheckPlugin::loadParams(const vigir_generic_params::ParameterSet& global_params)
 {
-  if (!Plugin::loadParams(params))
+  if (!Plugin::loadParams(global_params))
     return false;
 
   // check if
   unsigned int collision_check_mask;
-  params.getParam("collision_check/collision_check_mask", (int&)collision_check_mask);
+  global_params.getParam("collision_check/collision_check_mask", (int&)collision_check_mask);
   collision_check_enabled_ = this->collision_check_flag_ & collision_check_mask;
 
   return true;
