@@ -47,7 +47,7 @@
      <item>
       <widget class="QLabel" name="progressLabel">
        <property name="text">
-        <string>Progress</string>
+        <string>Progress:</string>
        </property>
       </widget>
      </item>
@@ -65,7 +65,7 @@
      <item>
       <widget class="QLabel" name="statusLabel">
        <property name="text">
-        <string>Status</string>
+        <string>Status:</string>
        </property>
       </widget>
      </item>
@@ -88,7 +88,7 @@
      <item>
       <widget class="QLabel" name="stepQueueLabel">
        <property name="text">
-        <string>Step Queue</string>
+        <string>Step Queue:</string>
        </property>
       </widget>
      </item>
