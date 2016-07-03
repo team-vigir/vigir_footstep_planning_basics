@@ -145,7 +145,7 @@ class StepInterfaceWidget(QObject):
         center_settings_vbox.addStretch()
 
         # step Distance
-        self.step_distance = generate_q_double_spin_box(0.20, 0.0, 0.5, 2, 0.01)
+        self.step_distance = generate_q_double_spin_box(0.0, 0.0, 0.5, 2, 0.01)
         add_widget_with_frame(center_settings_vbox, self.step_distance, "Step Distance (m):")
 
         # side step distance
