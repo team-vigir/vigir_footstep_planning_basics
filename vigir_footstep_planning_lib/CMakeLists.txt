@@ -100,6 +100,7 @@ include_directories(include ${catkin_INCLUDE_DIRS} ${boost_INCLUDE_DIRS})
 set(HEADERS
   include/${PROJECT_NAME}/helper.h
   include/${PROJECT_NAME}/math.h
+  include/${PROJECT_NAME}/modeling/planning_state.h
   include/${PROJECT_NAME}/modeling/state.h
   include/${PROJECT_NAME}/threading/job.h
   include/${PROJECT_NAME}/threading/threading_manager.h
@@ -112,6 +113,7 @@ set(HEADERS
 set(SOURCES
   src/helper.cpp
   src/math.cpp
+  src/modeling/planning_state.cpp
   src/modeling/state.cpp
   src/visualization/footstep_planning_vis.cpp
 )
