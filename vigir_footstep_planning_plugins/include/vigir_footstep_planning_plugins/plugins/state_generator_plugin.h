@@ -26,35 +26,38 @@
 // SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 //=================================================================================================
 
-#ifndef VIGIR_FOOTSTEP_PLANNING_LIB_STEP_PLAN_MSG_PLUGIN_H__
-#define VIGIR_FOOTSTEP_PLANNING_LIB_STEP_PLAN_MSG_PLUGIN_H__
+#ifndef VIGIR_FOOTSTEP_PLANNING_STATE_GENERATOR_PLUGIN_H
+#define VIGIR_FOOTSTEP_PLANNING_STATE_GENERATOR_PLUGIN_H
 
 #include <ros/ros.h>
 
 #include <vigir_pluginlib/plugin.h>
 
-#include <vigir_footstep_planning_msgs/footstep_planning_msgs.h>
+#include <vigir_footstep_planning_lib/modeling/planning_state.h>
 
 
 
 namespace vigir_footstep_planning
 {
-class StepPlanMsgPlugin
+using namespace vigir_generic_params;
+
+class StateGeneratorPlugin
   : public vigir_pluginlib::Plugin
 {
 public:
   // typedefs
-  typedef boost::shared_ptr<StepPlanMsgPlugin> Ptr;
-  typedef boost::shared_ptr<const StepPlanMsgPlugin> ConstPtr;
+  typedef boost::shared_ptr<StateGeneratorPlugin> Ptr;
+  typedef boost::shared_ptr<const StateGeneratorPlugin> ConstPtr;
 
-  StepPlanMsgPlugin(const std::string& name = "default_step_plan_msg_plugin");
-  virtual ~StepPlanMsgPlugin();
+  StateGeneratorPlugin(const std::string& name);
+  virtual ~StateGeneratorPlugin();
 
-  virtual void initMsg(msgs::Step& step) const {}
-  virtual void initMsg(msgs::StepPlan& step_plan) const {}
-  virtual void initMsg(msgs::StepPlanRequest& step_plan_request) const {}
-  virtual void initMsg(msgs::PatternParameters& pattern_parameter) const {}
-  virtual void initMsg(msgs::StepPlanFeedback& step_plan_feedback) const {}
+  virtual void reset() {}
+
+  bool isUnique() const final;
+
+  virtual std::list<PlanningState::Ptr> generatePredecessor(const PlanningState& state) const = 0;
+  virtual std::list<PlanningState::Ptr> generateSuccessor(const PlanningState& state) const = 0;
 };
 }
 

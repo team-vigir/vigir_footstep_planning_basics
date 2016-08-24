@@ -1,6 +1,4 @@
-#include <vigir_footstep_planning_plugins/collision_check_grid_map_plugin.h>
-
-#include <pluginlib/class_list_macros.h>
+#include <vigir_footstep_planning_plugins/plugins/collision_check_grid_map_plugin.h>
 
 
 
@@ -76,4 +74,5 @@ void CollisionCheckGridMapPlugin::mapCallback(const nav_msgs::OccupancyGridConst
 }
 }
 
+#include <pluginlib/class_list_macros.h>
 PLUGINLIB_EXPORT_CLASS(vigir_footstep_planning::CollisionCheckGridMapPlugin, vigir_footstep_planning::CollisionCheckPlugin)

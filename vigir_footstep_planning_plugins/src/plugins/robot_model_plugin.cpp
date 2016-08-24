@@ -1,4 +1,4 @@
-#include <vigir_footstep_planning_plugins/robot_model_plugin.h>
+#include <vigir_footstep_planning_plugins/plugins/robot_model_plugin.h>
 
 
 

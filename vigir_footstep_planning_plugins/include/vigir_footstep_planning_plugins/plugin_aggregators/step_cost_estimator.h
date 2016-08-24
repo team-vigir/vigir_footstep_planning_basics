@@ -26,53 +26,26 @@
 // SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 //=================================================================================================
 
-#ifndef VIGIR_FOOTSTEP_PLANNING_LIB_COLLISION_CHECK_PLUGIN_H__
-#define VIGIR_FOOTSTEP_PLANNING_LIB_COLLISION_CHECK_PLUGIN_H__
+#ifndef VIGIR_FOOTSTEP_PLANNING_PLUGINS_STEP_COST_ESTIMATOR_H__
+#define VIGIR_FOOTSTEP_PLANNING_PLUGINS_STEP_COST_ESTIMATOR_H__
 
 #include <ros/ros.h>
 
-#include <boost/thread/mutex.hpp>
-
-#include <vigir_pluginlib/plugin.h>
-
-#include <vigir_footstep_planning_lib/modeling/state.h>
+#include <vigir_footstep_planning_plugins/plugin_aggregators/extended_plugin_aggregator.h>
+#include <vigir_footstep_planning_plugins/plugins/step_cost_estimator_plugin.h>
 
 
 
 namespace vigir_footstep_planning
 {
-class CollisionCheckPlugin
-  : public vigir_pluginlib::Plugin
+class StepCostEstimator
+  : public ExtendedPluginAggregator<StepCostEstimator, StepCostEstimatorPlugin>
 {
 public:
-  enum
-  {
-    FOOT                  = 1,
-    UPPER_BODY            = 2,
-    FOOT_CONTACT_SUPPORT  = 4
-  };
+  StepCostEstimator();
 
-  // typedefs
-  typedef boost::shared_ptr<CollisionCheckPlugin> Ptr;
-  typedef boost::shared_ptr<const CollisionCheckPlugin> ConstPtr;
-
-  CollisionCheckPlugin(const std::string& name);
-
-  bool initialize(const vigir_generic_params::ParameterSet& global_params = vigir_generic_params::ParameterSet()) override;
-
-  bool loadParams(const vigir_generic_params::ParameterSet& global_params = vigir_generic_params::ParameterSet()) override;
-
-  virtual void reset();
-
-  bool isUnique() const override;
-  virtual bool isCollisionCheckAvailable() const;
-
-  virtual bool isAccessible(const State& s) const = 0;
-  virtual bool isAccessible(const State& next, const State& current) const = 0;
-
-private:
-  bool collision_check_enabled_;
-  unsigned int collision_check_flag_;
+  bool getCost(const State& left_foot, const State& right_foot, const State& swing_foot, double& cost, double& risk) const;
+  bool getCost(const State& left_foot, const State& right_foot, const State& swing_foot, float& cost, float& risk) const;
 };
 }
 

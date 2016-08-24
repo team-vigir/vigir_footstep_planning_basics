@@ -26,36 +26,36 @@
 // SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 //=================================================================================================
 
-#ifndef VIGIR_FOOTSTEP_PLANNING_REACHABILITY_PLUGIN_H
-#define VIGIR_FOOTSTEP_PLANNING_REACHABILITY_PLUGIN_H
+#ifndef VIGIR_FOOTSTEP_PLANNING_LIB_SINGLETON_H__
+#define VIGIR_FOOTSTEP_PLANNING_LIB_SINGLETON_H__
 
 #include <ros/ros.h>
 
-#include <vigir_pluginlib/plugin.h>
-
-#include <vigir_footstep_planning_lib/modeling/state.h>
+#include <boost/serialization/singleton.hpp>
 
 
 
 namespace vigir_footstep_planning
 {
-using namespace vigir_generic_params;
-
-class ReachabilityPlugin
-  : public vigir_pluginlib::Plugin
+template<class T>
+class Singleton
+  : protected boost::serialization::singleton<T>
 {
 public:
-  // typedefs
-  typedef boost::shared_ptr<ReachabilityPlugin> Ptr;
-  typedef boost::shared_ptr<const ReachabilityPlugin> ConstPtr;
+  static const T& instance()
+  {
+    return boost::serialization::singleton<T>::get_const_instance();
+  }
 
-  ReachabilityPlugin(const std::string& name);
-  virtual ~ReachabilityPlugin();
+  static const T& const2Instance()
+  {
+    return boost::serialization::singleton<T>::get_const_instance();
+  }
 
-  bool isUnique() const final;
-
-  virtual bool isReachable(const State& current, const State& next) const = 0;
-  virtual bool isReachable(const State& left_foot, const State& right_foot, const State& swing_foot) const;
+  static T& mutableInstance()
+  {
+    return boost::serialization::singleton<T>::get_mutable_instance();
+  }
 };
 }
 

@@ -26,40 +26,44 @@
 // SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 //=================================================================================================
 
-#ifndef VIGIR_FOOTSTEP_PLANNING_HEURISTIC_PLUGIN_H
-#define VIGIR_FOOTSTEP_PLANNING_HEURISTIC_PLUGIN_H
+#ifndef VIGIR_FOOTSTEP_PLANNING_PLUGINS_TERRAIN_MODEL_PLUGIN_H__
+#define VIGIR_FOOTSTEP_PLANNING_PLUGINS_TERRAIN_MODEL_PLUGIN_H__
 
 #include <ros/ros.h>
 
-#include <vigir_pluginlib/plugin.h>
+#include <pcl/io/pcd_io.h>
+#include <pcl/point_cloud.h>
 
-#include <vigir_footstep_planning_lib/modeling/state.h>
+#include <geometry_msgs/Pose.h>
+
+#include <vigir_footstep_planning_plugins/plugins/collision_check_plugin.h>
 
 
 
 namespace vigir_footstep_planning
 {
-class HeuristicPlugin
-  : public vigir_pluginlib::Plugin
+class TerrainModelPlugin
+  : public CollisionCheckPlugin
 {
 public:
   // typedefs
-  typedef boost::shared_ptr<HeuristicPlugin> Ptr;
-  typedef boost::shared_ptr<const HeuristicPlugin> ConstPtr;
+  typedef boost::shared_ptr<TerrainModelPlugin> Ptr;
+  typedef boost::shared_ptr<const TerrainModelPlugin> ConstPtr;
 
-  HeuristicPlugin(const std::string& name);
-  virtual ~HeuristicPlugin();
-
-  virtual void reset();
+  TerrainModelPlugin(const std::string& name);
 
   bool isUnique() const final;
 
-  bool loadParams(const vigir_generic_params::ParameterSet& global_params = vigir_generic_params::ParameterSet()) override;
+  virtual bool isTerrainModelAvailable() const = 0;
 
-  virtual double getHeuristicValue(const State& from, const State& to, const State& start, const State& goal) const = 0;
+  virtual double getResolution() const = 0;
 
-protected:
-  double max_heuristic_value_;
+  virtual bool getPointWithNormal(const pcl::PointNormal& p_search, pcl::PointNormal& p_result) const;
+  virtual bool getHeight(double x, double y, double& height) const;
+  virtual bool getFootContactSupport(const geometry_msgs::Pose& p, double& support, pcl::PointCloud<pcl::PointXYZI>::Ptr checked_positions = pcl::PointCloud<pcl::PointXYZI>::Ptr()) const;
+
+  virtual bool update3DData(geometry_msgs::Pose& p) const = 0;
+  virtual bool update3DData(State& s) const = 0;
 };
 }
 

@@ -1,4 +1,4 @@
-#include <vigir_footstep_planning_plugins/post_process_plugin.h>
+#include <vigir_footstep_planning_plugins/plugins/post_process_plugin.h>
 
 
 

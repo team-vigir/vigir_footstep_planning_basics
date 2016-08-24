@@ -9,7 +9,7 @@ set(CMAKE_CXX_FLAGS "-std=c++11 ${CMAKE_CXX_FLAGS}")
 ## Find catkin macros and libraries
 ## if COMPONENTS list like find_package(catkin REQUIRED COMPONENTS xyz)
 ## is used, also find other catkin packages
-find_package(catkin REQUIRED COMPONENTS roscpp rospy rqt_gui rqt_gui_py actionlib_msgs actionlib std_msgs nav_msgs visualization_msgs tf pcl_conversions vigir_generic_params vigir_footstep_planning_msgs)
+find_package(catkin REQUIRED COMPONENTS roscpp rospy rqt_gui rqt_gui_py actionlib_msgs actionlib std_msgs nav_msgs visualization_msgs tf pcl_conversions vigir_generic_params vigir_pluginlib vigir_footstep_planning_msgs)
 
 ## System dependencies are found with CMake's conventions
 find_package(Boost REQUIRED COMPONENTS system)
@@ -84,7 +84,7 @@ catkin_python_setup()
 catkin_package(
   INCLUDE_DIRS include
   LIBRARIES vigir_footstep_planning_lib
-  CATKIN_DEPENDS roscpp rospy rqt_gui rqt_gui_py actionlib_msgs actionlib std_msgs nav_msgs visualization_msgs tf pcl_conversions vigir_generic_params vigir_footstep_planning_msgs
+  CATKIN_DEPENDS roscpp rospy rqt_gui rqt_gui_py actionlib_msgs actionlib std_msgs nav_msgs visualization_msgs tf pcl_conversions vigir_generic_params vigir_pluginlib vigir_footstep_planning_msgs
 #  DEPENDS system_lib
 )
 
@@ -98,8 +98,7 @@ include_directories(include ${catkin_INCLUDE_DIRS} ${boost_INCLUDE_DIRS})
 
 ## Specify additional locations of header files
 set(HEADERS
-  include/${PROJECT_NAME}/helper.h
-  include/${PROJECT_NAME}/math.h
+  include/${PROJECT_NAME}/modeling/footstep.h
   include/${PROJECT_NAME}/modeling/planning_state.h
   include/${PROJECT_NAME}/modeling/state.h
   include/${PROJECT_NAME}/threading/job.h
@@ -108,14 +107,18 @@ set(HEADERS
   include/${PROJECT_NAME}/threading/worker.h
   include/${PROJECT_NAME}/visualization/footstep_planning_vis_node.h
   include/${PROJECT_NAME}/visualization/footstep_planning_vis.h
+  include/${PROJECT_NAME}/helper.h
+  include/${PROJECT_NAME}/math.h
+  include/${PROJECT_NAME}/singleton.h
 )
 
 set(SOURCES
-  src/helper.cpp
-  src/math.cpp
+  src/modeling/footstep.cpp
   src/modeling/planning_state.cpp
   src/modeling/state.cpp
   src/visualization/footstep_planning_vis.cpp
+  src/helper.cpp
+  src/math.cpp
 )
 
 ## Declare a cpp library

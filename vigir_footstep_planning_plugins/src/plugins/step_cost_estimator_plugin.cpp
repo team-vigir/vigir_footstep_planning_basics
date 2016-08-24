@@ -1,4 +1,6 @@
-#include <vigir_footstep_planning_plugins/step_cost_estimator_plugin.h>
+#include <vigir_footstep_planning_plugins/plugins/step_cost_estimator_plugin.h>
+
+
 
 namespace vigir_footstep_planning
 {

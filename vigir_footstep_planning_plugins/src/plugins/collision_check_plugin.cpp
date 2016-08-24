@@ -1,4 +1,6 @@
-#include <vigir_footstep_planning_plugins/collision_check_plugin.h>
+#include <vigir_footstep_planning_plugins/plugins/collision_check_plugin.h>
+
+
 
 namespace vigir_footstep_planning
 {

@@ -26,8 +26,8 @@
 // SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 //=================================================================================================
 
-#ifndef VIGIR_FOOTSTEP_PLANNING_LIB_POST_PROCESS_PLUGIN_H__
-#define VIGIR_FOOTSTEP_PLANNING_LIB_POST_PROCESS_PLUGIN_H__
+#ifndef VIGIR_FOOTSTEP_PLANNING_REACHABILITY_PLUGIN_H
+#define VIGIR_FOOTSTEP_PLANNING_REACHABILITY_PLUGIN_H
 
 #include <ros/ros.h>
 
@@ -39,25 +39,25 @@
 
 namespace vigir_footstep_planning
 {
-class PostProcessPlugin
+using namespace vigir_generic_params;
+
+class ReachabilityPlugin
   : public vigir_pluginlib::Plugin
 {
 public:
   // typedefs
-  typedef boost::shared_ptr<PostProcessPlugin> Ptr;
-  typedef boost::shared_ptr<const PostProcessPlugin> ConstPtr;
+  typedef boost::shared_ptr<ReachabilityPlugin> Ptr;
+  typedef boost::shared_ptr<const ReachabilityPlugin> ConstPtr;
 
-  PostProcessPlugin(const std::string& name);
+  ReachabilityPlugin(const std::string& name);
+  virtual ~ReachabilityPlugin();
+
+  virtual void reset() {}
 
   bool isUnique() const final;
 
-  /// Post-Processing directly after state generation
-  virtual void postProcessStepForward(const State& left, const State& right, State& swing) const;
-  virtual void postProcessStepBackward(const State& left, const State& right, State& swing) const;
-
-  /// Post-Processing after footstep planning was done
-  virtual void postProcessStep(const msgs::Step& left, const msgs::Step& right, msgs::Step& swing, msgs::StepPlan& step_plan) const;
-  virtual void postProcess(msgs::StepPlan step_plan) const;
+  virtual bool isReachable(const State& current, const State& next) const = 0;
+  virtual bool isReachable(const State& left_foot, const State& right_foot, const State& swing_foot) const;
 };
 }
 

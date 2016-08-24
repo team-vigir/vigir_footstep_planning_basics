@@ -26,44 +26,53 @@
 // SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 //=================================================================================================
 
-#ifndef VIGIR_FOOTSTEP_PLANNING_LIB_TERRAIN_MODEL_PLUGIN_H__
-#define VIGIR_FOOTSTEP_PLANNING_LIB_TERRAIN_MODEL_PLUGIN_H__
+#ifndef VIGIR_FOOTSTEP_PLANNING_PLUGINS_COLLISION_CHECK_PLUGIN_H__
+#define VIGIR_FOOTSTEP_PLANNING_PLUGINS_COLLISION_CHECK_PLUGIN_H__
 
 #include <ros/ros.h>
 
-#include <pcl/io/pcd_io.h>
-#include <pcl/point_cloud.h>
+#include <boost/thread/mutex.hpp>
 
-#include <geometry_msgs/Pose.h>
+#include <vigir_pluginlib/plugin.h>
 
-#include <vigir_footstep_planning_plugins/collision_check_plugin.h>
+#include <vigir_footstep_planning_lib/modeling/state.h>
 
 
 
 namespace vigir_footstep_planning
 {
-class TerrainModelPlugin
-  : public CollisionCheckPlugin
+class CollisionCheckPlugin
+  : public vigir_pluginlib::Plugin
 {
 public:
+  enum
+  {
+    FOOT                  = 1,
+    UPPER_BODY            = 2,
+    FOOT_CONTACT_SUPPORT  = 4
+  };
+
   // typedefs
-  typedef boost::shared_ptr<TerrainModelPlugin> Ptr;
-  typedef boost::shared_ptr<const TerrainModelPlugin> ConstPtr;
+  typedef boost::shared_ptr<CollisionCheckPlugin> Ptr;
+  typedef boost::shared_ptr<const CollisionCheckPlugin> ConstPtr;
 
-  TerrainModelPlugin(const std::string& name);
+  CollisionCheckPlugin(const std::string& name);
 
-  bool isUnique() const final;
+  bool initialize(const vigir_generic_params::ParameterSet& global_params = vigir_generic_params::ParameterSet()) override;
 
-  virtual bool isTerrainModelAvailable() const = 0;
+  bool loadParams(const vigir_generic_params::ParameterSet& global_params = vigir_generic_params::ParameterSet()) override;
 
-  virtual double getResolution() const = 0;
+  virtual void reset();
 
-  virtual bool getPointWithNormal(const pcl::PointNormal& p_search, pcl::PointNormal& p_result) const;
-  virtual bool getHeight(double x, double y, double& height) const;
-  virtual bool getFootContactSupport(const geometry_msgs::Pose& p, double& support, pcl::PointCloud<pcl::PointXYZI>::Ptr checked_positions = pcl::PointCloud<pcl::PointXYZI>::Ptr()) const;
+  bool isUnique() const override;
+  virtual bool isCollisionCheckAvailable() const;
 
-  virtual bool update3DData(geometry_msgs::Pose& p) const = 0;
-  virtual bool update3DData(State& s) const = 0;
+  virtual bool isAccessible(const State& s) const = 0;
+  virtual bool isAccessible(const State& next, const State& current) const = 0;
+
+private:
+  bool collision_check_enabled_;
+  unsigned int collision_check_flag_;
 };
 }
 

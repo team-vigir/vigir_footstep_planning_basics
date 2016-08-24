@@ -1,6 +1,5 @@
 //=================================================================================================
 // Copyright (c) 2016, Alexander Stumpf, TU Darmstadt
-// Based on http://wiki.ros.org/footstep_planner by Johannes Garimort and Armin Hornung
 // All rights reserved.
 
 // Redistribution and use in source and binary forms, with or without
@@ -27,54 +26,40 @@
 // SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 //=================================================================================================
 
-#ifndef VIGIR_FOOTSTEP_PLANNING_LIB_COLLISION_CHECK_GRID_MAP_PLUGIN_H__
-#define VIGIR_FOOTSTEP_PLANNING_LIB_COLLISION_CHECK_GRID_MAP_PLUGIN_H__
+#ifndef VIGIR_FOOTSTEP_PLANNING_PLUGINS_POST_PROCESS_PLUGIN_H__
+#define VIGIR_FOOTSTEP_PLANNING_PLUGINS_POST_PROCESS_PLUGIN_H__
 
 #include <ros/ros.h>
 
-#include <boost/thread/shared_mutex.hpp>
+#include <vigir_pluginlib/plugin.h>
 
-#include <nav_msgs/OccupancyGrid.h>
-
-#include <vigir_footstep_planning_lib/helper.h>
-
-#include <vigir_footstep_planning_plugins/collision_check_plugin.h>
+#include <vigir_footstep_planning_lib/modeling/state.h>
 
 
 
 namespace vigir_footstep_planning
 {
-class CollisionCheckGridMapPlugin
-  : public CollisionCheckPlugin
+class PostProcessPlugin
+  : public vigir_pluginlib::Plugin
 {
 public:
-  CollisionCheckGridMapPlugin(const std::string& name = "collision_check_grid_map_plugin");
+  // typedefs
+  typedef boost::shared_ptr<PostProcessPlugin> Ptr;
+  typedef boost::shared_ptr<const PostProcessPlugin> ConstPtr;
 
-  bool initialize(const vigir_generic_params::ParameterSet& global_params = vigir_generic_params::ParameterSet()) override;
+  PostProcessPlugin(const std::string& name);
 
-  void reset() override;
+  virtual void reset() {}
 
-  bool isCollisionCheckAvailable() const override;
+  bool isUnique() const final;
 
-  bool isAccessible(const State& s) const override;
-  bool isAccessible(const State& next, const State& current) const override;
+  /// Post-Processing directly after state generation
+  virtual void postProcessStepForward(const State& left, const State& right, State& swing) const;
+  virtual void postProcessStepBackward(const State& left, const State& right, State& swing) const;
 
-  void setOccupancyThreshold(unsigned char thresh);
-
-protected:
-  virtual void mapCallback(const nav_msgs::OccupancyGridConstPtr& occupancy_grid_map);
-
-  // subscribers
-  ros::Subscriber occupancy_grid_map_sub_;
-
-  // mutex
-  mutable boost::shared_mutex grid_map_shared_mutex_;
-
-  // pointer to last received grid map
-  nav_msgs::OccupancyGridConstPtr occupancy_grid_map_;
-
-  // occupancy threshold
-  int8_t occ_thresh_;
+  /// Post-Processing after footstep planning was done
+  virtual void postProcessStep(const msgs::Step& left, const msgs::Step& right, msgs::Step& swing, msgs::StepPlan& step_plan) const;
+  virtual void postProcess(msgs::StepPlan step_plan) const;
 };
 }
 

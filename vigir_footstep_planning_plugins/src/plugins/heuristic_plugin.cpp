@@ -1,4 +1,4 @@
-#include <vigir_footstep_planning_plugins/heuristic_plugin.h>
+#include <vigir_footstep_planning_plugins/plugins/heuristic_plugin.h>
 
 
 
@@ -10,10 +10,6 @@ HeuristicPlugin::HeuristicPlugin(const std::string& name)
 }
 
 HeuristicPlugin::~HeuristicPlugin()
-{
-}
-
-void HeuristicPlugin::reset()
 {
 }
 

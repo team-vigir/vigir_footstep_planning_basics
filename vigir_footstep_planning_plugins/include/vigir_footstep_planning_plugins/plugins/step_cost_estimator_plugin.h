@@ -26,44 +26,35 @@
 // SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 //=================================================================================================
 
-#ifndef VIGIR_FOOTSTEP_PLANNING_LIB_ROBOT_MODEL_PLUGIN_H__
-#define VIGIR_FOOTSTEP_PLANNING_LIB_ROBOT_MODEL_PLUGIN_H__
+#ifndef VIGIR_FOOTSTEP_PLANNING_STEP_COST_ESTIMATOR_PLUGIN_H
+#define VIGIR_FOOTSTEP_PLANNING_STEP_COST_ESTIMATOR_PLUGIN_H
 
 #include <ros/ros.h>
 
 #include <vigir_pluginlib/plugin.h>
 
-#include <vigir_footstep_planning_lib/helper.h>
+#include <vigir_footstep_planning_lib/modeling/state.h>
 
 
 
 namespace vigir_footstep_planning
 {
-class RobotModelPlugin
+class StepCostEstimatorPlugin
   : public vigir_pluginlib::Plugin
 {
 public:
   // typedefs
-  typedef boost::shared_ptr<RobotModelPlugin> Ptr;
-  typedef boost::shared_ptr<const RobotModelPlugin> ConstPtr;
+  typedef boost::shared_ptr<StepCostEstimatorPlugin> Ptr;
+  typedef boost::shared_ptr<const StepCostEstimatorPlugin> ConstPtr;
 
-  RobotModelPlugin();
+  StepCostEstimatorPlugin(const std::string& name);
+  virtual ~StepCostEstimatorPlugin();
 
-  bool initialize(const vigir_generic_params::ParameterSet& global_params = vigir_generic_params::ParameterSet()) override;
+  virtual void reset() {}
 
   bool isUnique() const final;
 
-  const geometry_msgs::Vector3& getFootSize() const;
-  const geometry_msgs::Vector3& getUpperBodySize() const;
-  const geometry_msgs::Vector3& getUpperBodyOriginShift() const;
-
-protected:
-  // foot paramaters
-  geometry_msgs::Vector3 foot_size_;
-
-  // upper body parameters
-  geometry_msgs::Vector3 upper_body_size_;
-  geometry_msgs::Vector3 upper_body_origin_shift_;
+  virtual bool getCost(const State& left_foot, const State& right_foot, const State& swing_foot, double& cost, double& cost_multiplier, double& risk, double& risk_multiplier) const = 0;
 };
 }
 

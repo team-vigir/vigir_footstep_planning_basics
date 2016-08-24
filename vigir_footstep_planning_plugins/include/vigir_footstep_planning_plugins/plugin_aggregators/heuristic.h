@@ -26,33 +26,25 @@
 // SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 //=================================================================================================
 
-#ifndef VIGIR_FOOTSTEP_PLANNING_STEP_COST_ESTIMATOR_PLUGIN_H
-#define VIGIR_FOOTSTEP_PLANNING_STEP_COST_ESTIMATOR_PLUGIN_H
+#ifndef VIGIR_FOOTSTEP_PLANNING_PLUGINS_HEURISTIC_H__
+#define VIGIR_FOOTSTEP_PLANNING_PLUGINS_HEURISTIC_H__
 
 #include <ros/ros.h>
 
-#include <vigir_pluginlib/plugin.h>
-
-#include <vigir_footstep_planning_lib/modeling/state.h>
+#include <vigir_footstep_planning_plugins/plugin_aggregators/extended_plugin_aggregator.h>
+#include <vigir_footstep_planning_plugins/plugins/heuristic_plugin.h>
 
 
 
 namespace vigir_footstep_planning
 {
-class StepCostEstimatorPlugin
-  : public vigir_pluginlib::Plugin
+class Heuristic
+  : public ExtendedPluginAggregator<Heuristic, HeuristicPlugin>
 {
 public:
-  // typedefs
-  typedef boost::shared_ptr<StepCostEstimatorPlugin> Ptr;
-  typedef boost::shared_ptr<const StepCostEstimatorPlugin> ConstPtr;
+  Heuristic();
 
-  StepCostEstimatorPlugin(const std::string& name);
-  virtual ~StepCostEstimatorPlugin();
-
-  bool isUnique() const final;
-
-  virtual bool getCost(const State& left_foot, const State& right_foot, const State& swing_foot, double& cost, double& cost_multiplier, double& risk, double& risk_multiplier) const = 0;
+  double getHeuristicValue(const State& from, const State& to, const State& start, const State& goal) const;
 };
 }
 

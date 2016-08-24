@@ -96,27 +96,42 @@ include_directories(include ${catkin_INCLUDE_DIRS} ${boost_INCLUDE_DIRS})
 
 ## Specify additional locations of header files
 set(HEADERS
-  include/${PROJECT_NAME}/collision_check_plugin.h
-  include/${PROJECT_NAME}/collision_check_grid_map_plugin.h
-  include/${PROJECT_NAME}/heuristic_plugin.h
-  include/${PROJECT_NAME}/robot_model_plugin.h
-  include/${PROJECT_NAME}/post_process_plugin.h
-  include/${PROJECT_NAME}/reachability_plugin.h
-  include/${PROJECT_NAME}/step_cost_estimator_plugin.h
-  include/${PROJECT_NAME}/step_plan_msg_plugin.h
-  include/${PROJECT_NAME}/terrain_model_plugin.h
+  include/${PROJECT_NAME}/plugin_aggregators/extended_plugin_aggregator.h
+  include/${PROJECT_NAME}/plugin_aggregators/heuristic.h
+  include/${PROJECT_NAME}/plugin_aggregators/post_processor.h
+  include/${PROJECT_NAME}/plugin_aggregators/robot_model.h
+  include/${PROJECT_NAME}/plugin_aggregators/state_generator.h
+  include/${PROJECT_NAME}/plugin_aggregators/step_cost_estimator.h
+  include/${PROJECT_NAME}/plugin_aggregators/world_model.h
+  include/${PROJECT_NAME}/plugins/collision_check_plugin.h
+  include/${PROJECT_NAME}/plugins/collision_check_grid_map_plugin.h
+  include/${PROJECT_NAME}/plugins/heuristic_plugin.h
+  include/${PROJECT_NAME}/plugins/robot_model_plugin.h
+  include/${PROJECT_NAME}/plugins/state_generator_plugin.h
+  include/${PROJECT_NAME}/plugins/post_process_plugin.h
+  include/${PROJECT_NAME}/plugins/reachability_plugin.h
+  include/${PROJECT_NAME}/plugins/step_cost_estimator_plugin.h
+  include/${PROJECT_NAME}/plugins/step_plan_msg_plugin.h
+  include/${PROJECT_NAME}/plugins/terrain_model_plugin.h
 )
 
 set(SOURCES
-  src/collision_check_plugin.cpp
-  src/collision_check_grid_map_plugin.cpp
-  src/heuristic_plugin.cpp
-  src/post_process_plugin.cpp
-  src/reachability_plugin.cpp
-  src/robot_model_plugin.cpp
-  src/step_cost_estimator_plugin.cpp
-  src/step_plan_msg_plugin.cpp
-  src/terrain_model_plugin.cpp
+  src/plugin_aggregators/heuristic.cpp
+  src/plugin_aggregators/post_processor.cpp
+  src/plugin_aggregators/robot_model.cpp
+  src/plugin_aggregators/state_generator.cpp
+  src/plugin_aggregators/step_cost_estimator.cpp
+  src/plugin_aggregators/world_model.cpp
+  src/plugins/collision_check_plugin.cpp
+  src/plugins/collision_check_grid_map_plugin.cpp
+  src/plugins/heuristic_plugin.cpp
+  src/plugins/post_process_plugin.cpp
+  src/plugins/reachability_plugin.cpp
+  src/plugins/robot_model_plugin.cpp
+  src/plugins/state_generator_plugin.cpp
+  src/plugins/step_cost_estimator_plugin.cpp
+  src/plugins/step_plan_msg_plugin.cpp
+  src/plugins/terrain_model_plugin.cpp
 )
 
 ## Declare a cpp library
