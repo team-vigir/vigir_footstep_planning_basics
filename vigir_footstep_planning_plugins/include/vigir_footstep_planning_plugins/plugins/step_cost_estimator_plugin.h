@@ -50,6 +50,9 @@ public:
   StepCostEstimatorPlugin(const std::string& name);
   virtual ~StepCostEstimatorPlugin();
 
+  /**
+   * @brief Resets the plugin to initial state.
+   */
   virtual void reset() {}
 
   bool isUnique() const final;

@@ -50,6 +50,9 @@ public:
   HeuristicPlugin(const std::string& name);
   virtual ~HeuristicPlugin();
 
+  /**
+   * @brief Resets the plugin to initial state.
+   */
   virtual void reset() {}
 
   bool isUnique() const final;

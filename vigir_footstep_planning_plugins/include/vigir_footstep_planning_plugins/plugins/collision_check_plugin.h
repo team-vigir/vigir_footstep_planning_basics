@@ -62,6 +62,9 @@ public:
 
   bool loadParams(const vigir_generic_params::ParameterSet& global_params = vigir_generic_params::ParameterSet()) override;
 
+  /**
+   * @brief Resets the plugin to initial state.
+   */
   virtual void reset();
 
   bool isUnique() const override;

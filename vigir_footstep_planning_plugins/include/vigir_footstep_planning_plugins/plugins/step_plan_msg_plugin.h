@@ -50,6 +50,9 @@ public:
   StepPlanMsgPlugin(const std::string& name = "default_step_plan_msg_plugin");
   virtual ~StepPlanMsgPlugin();
 
+  /**
+   * @brief Resets the plugin to initial state.
+   */
   virtual void reset() {}
 
   virtual void initMsg(msgs::Step& step) const {}

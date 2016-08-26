@@ -52,6 +52,9 @@ public:
   ReachabilityPlugin(const std::string& name);
   virtual ~ReachabilityPlugin();
 
+  /**
+   * @brief Resets the plugin to initial state.
+   */
   virtual void reset() {}
 
   bool isUnique() const final;
