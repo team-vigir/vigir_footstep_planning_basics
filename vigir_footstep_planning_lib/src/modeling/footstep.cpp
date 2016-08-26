@@ -107,10 +107,6 @@ PlanningState Footstep::performMeOnThisState(const PlanningState& current) const
   double yaw_d = angles::normalize_angle(angle_cell_2_state(yaw, ivAngleBinSize));
   swing.setYaw(yaw_d);
 
-  //WorldModel::update3DData(swing);
-
-  //PostProcessor::postProcessForward(left, right, swing);
-
   return PlanningState(swing, ivCellSize, ivAngleBinSize, ivMaxHashSize, &current, nullptr);
 }
 
@@ -155,10 +151,6 @@ PlanningState Footstep::reverseMeOnThisState(const PlanningState& current) const
 
   double yaw_d = angles::normalize_angle(angle_cell_2_state(yaw, ivAngleBinSize));
   swing.setYaw(yaw_d);
-
-  //WorldModel::update3DData(swing);
-
-  //PostProcessor::postProcessBackward(left, right, swing);
 
   return PlanningState(swing, ivCellSize, ivAngleBinSize, ivMaxHashSize, nullptr, &current);
 }

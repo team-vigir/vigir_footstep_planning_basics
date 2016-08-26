@@ -17,5 +17,4 @@ bool StateGeneratorPlugin::isUnique() const
 {
   return false;
 }
-
 }

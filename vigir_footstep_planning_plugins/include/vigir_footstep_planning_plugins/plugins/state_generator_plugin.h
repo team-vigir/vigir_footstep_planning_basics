@@ -56,7 +56,30 @@ public:
 
   bool isUnique() const final;
 
+  /**
+   * @brief Generates list of valid adjacent predecessor states. The returned states will be pushed back to the ARA* open list.
+   * Therefore all states must be completely derived and cross-checked including:
+   * - cost and risk (StepCostEstimator)
+   * - 3D pose (WorldModel)
+   * - post processing (PostProcessor)
+   * - collision checks (WorldModel)
+   * - reachability (RobotModel)
+   * @param state Current state from which all valid adjacent states should be determined.
+   * @return List of all valid adjacent states
+   */
   virtual std::list<PlanningState::Ptr> generatePredecessor(const PlanningState& state) const = 0;
+
+  /**
+   * @brief Generates list of valid adjacent successor states. The returned states will be pushed back to the ARA* open list.
+   * Therefore all states must be completely defined and checked including:
+   * - cost and risk (StepCostEstimator)
+   * - 3D pose (WorldModel)
+   * - post processing (PostProcessor)
+   * - collision checks (WorldModel)
+   * - reachability (RobotModel)
+   * @param state Current state from which all valid adjacent states should be determined.
+   * @return List of all valid adjacent states
+   */
   virtual std::list<PlanningState::Ptr> generateSuccessor(const PlanningState& state) const = 0;
 };
 }
