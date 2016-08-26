@@ -44,8 +44,13 @@ class StepCostEstimator
 public:
   StepCostEstimator();
 
+  bool loadParams(const vigir_generic_params::ParameterSet& params) override;
+
   bool getCost(const State& left_foot, const State& right_foot, const State& swing_foot, double& cost, double& risk) const;
   bool getCost(const State& left_foot, const State& right_foot, const State& swing_foot, float& cost, float& risk) const;
+
+protected:
+  double max_risk_;
 };
 }
 

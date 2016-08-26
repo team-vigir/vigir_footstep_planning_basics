@@ -9,6 +9,16 @@ StepCostEstimator::StepCostEstimator()
 {
 }
 
+bool StepCostEstimator::loadParams(const vigir_generic_params::ParameterSet& params)
+{
+  if (!ExtendedPluginAggregator<StepCostEstimator, StepCostEstimatorPlugin>::loadParams(params))
+    return false;
+
+  params.getParam("max_risk", max_risk_, 1.0);
+
+  return true;
+}
+
 bool StepCostEstimator::getCost(const State& left_foot, const State& right_foot, const State& swing_foot, double& cost, double& risk) const
 {
   cost = 0.0;
@@ -38,7 +48,7 @@ bool StepCostEstimator::getCost(const State& left_foot, const State& right_foot,
   cost *= cost_multiplier;
   risk *= risk_multiplier;
 
-  return true;
+  return risk < max_risk_;
 }
 
 bool StepCostEstimator::getCost(const State& left_foot, const State& right_foot, const State& swing_foot, float& cost, float& risk) const
