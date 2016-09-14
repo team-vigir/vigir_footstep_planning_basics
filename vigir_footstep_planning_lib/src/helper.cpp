@@ -12,20 +12,20 @@ msgs::ErrorStatus determineStartFeetPose(msgs::Feet& start_feet, ros::ServiceCli
   feet_pose_service.request.request.flags = msgs::FeetPoseRequest::FLAG_CURRENT | msgs::FeetPoseRequest::FLAG_3D;
 
   if (!generate_feet_pose_client.call(feet_pose_service.request, feet_pose_service.response))
-    return ErrorStatusError(msgs::ErrorStatus::ERR_UNKNOWN, "determineStartFeetPose", "Can't call 'FeetPoseGenerator'!");
+    return ErrorStatusError(msgs::ErrorStatus::ERR_UNKNOWN, "determineStartFeetPose", "Can't call 'FeetPoseGenerator'!", true, 1.0);
 
   // check result
   if (hasError(feet_pose_service.response.status))
   {
     //status += feet_pose_service.response.status;
-    status += ErrorStatusWarning(msgs::ErrorStatus::WARN_UNKNOWN, "determineStartFeetPose", "Can't obtain start feet pose; defaulting to origin.");
+    status += ErrorStatusWarning(msgs::ErrorStatus::WARN_UNKNOWN, "determineStartFeetPose", "Can't obtain start feet pose; defaulting to origin.", true, 1.0);
 
     feet_pose_service.request.request.pose = geometry_msgs::Pose();
     feet_pose_service.request.request.pose.orientation = tf::createQuaternionMsgFromYaw(0.0);
     feet_pose_service.request.request.flags = msgs::FeetPoseRequest::FLAG_3D;
 
     if (!generate_feet_pose_client.call(feet_pose_service.request, feet_pose_service.response))
-      return ErrorStatusError(msgs::ErrorStatus::ERR_UNKNOWN, "determineStartFeetPose", "Can't call 'FeetPoseGenerator'!");
+      return ErrorStatusError(msgs::ErrorStatus::ERR_UNKNOWN, "determineStartFeetPose", "Can't call 'FeetPoseGenerator'!", true, 1.0);
 
     if (hasError(feet_pose_service.response.status))
     {
