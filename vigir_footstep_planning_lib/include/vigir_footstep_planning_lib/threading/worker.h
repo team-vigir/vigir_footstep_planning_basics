@@ -76,8 +76,7 @@ public:
     exit = true;
 
     // hard stop
-    if (thread.joinable())
-      thread.interrupt();
+    thread.interrupt();
 
     thread.join();
   }

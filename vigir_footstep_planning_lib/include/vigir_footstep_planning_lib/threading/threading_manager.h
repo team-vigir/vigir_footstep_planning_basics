@@ -54,6 +54,7 @@ public:
   virtual ~ThreadingManager()
   {
     ROS_INFO("[Manager] Destruct");
+    stopJobs();
   }
 
   void addJob(boost::shared_ptr<T>& job) { queue.queueJob(job); }
