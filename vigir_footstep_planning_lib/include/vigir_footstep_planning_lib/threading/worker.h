@@ -77,10 +77,9 @@ public:
 
     // hard stop
     if (thread.joinable())
-    {
       thread.interrupt();
-      thread.join();
-    }
+
+    thread.join();
   }
 
   void interruptJobs()
