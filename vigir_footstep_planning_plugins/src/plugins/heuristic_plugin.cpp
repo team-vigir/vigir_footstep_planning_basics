@@ -18,12 +18,12 @@ bool HeuristicPlugin::isUnique() const
   return false;
 }
 
-bool HeuristicPlugin::loadParams(const vigir_generic_params::ParameterSet& global_params)
+bool HeuristicPlugin::loadParams(const vigir_generic_params::ParameterSet& params)
 {
-  if (!Plugin::loadParams(global_params))
+  if (!Plugin::loadParams(params))
     return false;
 
-  global_params.getParam("max_heuristic_value", max_heuristic_value_);
+  params.getParam("max_heuristic_value", max_heuristic_value_);
   return true;
 }
 }

@@ -10,9 +10,9 @@ CollisionCheckGridMapPlugin::CollisionCheckGridMapPlugin(const std::string& name
 {
 }
 
-bool CollisionCheckGridMapPlugin::initialize(const vigir_generic_params::ParameterSet& global_params)
+bool CollisionCheckGridMapPlugin::initialize(const vigir_generic_params::ParameterSet& params)
 {
-  if (!CollisionCheckPlugin::initialize(global_params))
+  if (!CollisionCheckPlugin::initialize(params))
     return false;
 
   std::string topic;

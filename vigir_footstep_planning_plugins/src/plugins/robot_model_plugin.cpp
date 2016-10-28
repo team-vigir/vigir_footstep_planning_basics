@@ -11,9 +11,9 @@ RobotModelPlugin::RobotModelPlugin()
 {
 }
 
-bool RobotModelPlugin::initialize(const vigir_generic_params::ParameterSet& global_params)
+bool RobotModelPlugin::initialize(const vigir_generic_params::ParameterSet& params)
 {
-  if (!Plugin::initialize(global_params))
+  if (!Plugin::initialize(params))
     return false;
 
   // get foot dimensions

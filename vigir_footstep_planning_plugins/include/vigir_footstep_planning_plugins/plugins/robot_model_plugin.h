@@ -49,7 +49,7 @@ public:
 
   RobotModelPlugin();
 
-  bool initialize(const vigir_generic_params::ParameterSet& global_params = vigir_generic_params::ParameterSet()) override;
+  bool initialize(const vigir_generic_params::ParameterSet& params = vigir_generic_params::ParameterSet()) override;
 
   /**
    * @brief Resets the plugin to initial state.
