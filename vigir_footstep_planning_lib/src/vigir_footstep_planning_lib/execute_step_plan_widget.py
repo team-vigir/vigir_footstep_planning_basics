@@ -167,6 +167,9 @@ class QExecuteStepPlanWidget(QWidgetWithLogger):
         if goal_status == 3:
             self.logger.log_info("Execution of step plan finished.")
         else:
+            self.stop_button.setEnabled(False)
+            self.step_queue_size_signal.emit(len(self.step_plan.steps))
+            self.status_line_edit.setText("FAILED")
             self.logger.log_error("Execution of step plan failed!")
 
     # called by action client
