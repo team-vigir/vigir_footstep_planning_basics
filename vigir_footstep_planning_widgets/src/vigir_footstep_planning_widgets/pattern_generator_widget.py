@@ -52,7 +52,6 @@ class PatternGeneratorWidget(QObject):
 
         # start button
         start_command = QPushButton("Start")
-        start_command.clicked.connect(self.start_command_callback)
         left_vbox.addWidget(start_command)
 
         # simulation checkbox
@@ -71,8 +70,13 @@ class PatternGeneratorWidget(QObject):
         self.joystick_mode_checkbox = QCheckBox()
         self.joystick_mode_checkbox.setText("Joystick Mode")
         self.joystick_mode_checkbox.setChecked(False)
-        self.joystick_mode_checkbox.clicked.connect(self.joystick_mode_check_callback)
         left_vbox.addWidget(self.joystick_mode_checkbox)
+
+        # ignore invalid steps checkbox
+        self.ignore_invalid_steps_checkbox = QCheckBox()
+        self.ignore_invalid_steps_checkbox.setText("Ignore Invalid Steps")
+        self.ignore_invalid_steps_checkbox.setChecked(False)
+        left_vbox.addWidget(self.ignore_invalid_steps_checkbox)
 
         # foot seperation
         self.foot_seperation = generate_q_double_spin_box(0.2, 0.15, 0.3, 2, 0.01)
@@ -113,7 +117,6 @@ class PatternGeneratorWidget(QObject):
 
         # stop button
         stop_command = QPushButton("Stop")
-        stop_command.clicked.connect(self.stop_command_callback)
         right_vbox.addWidget(stop_command)
 
         # ignore collision
@@ -145,6 +148,12 @@ class PatternGeneratorWidget(QObject):
         widget.setLayout(vbox)
         #context.add_widget(widget)
 
+        # signal connections
+        start_command.clicked.connect(self.start_command_callback)
+        stop_command.clicked.connect(self.stop_command_callback)
+        self.joystick_mode_checkbox.clicked.connect(self.joystick_mode_check_callback)
+        self.ignore_invalid_steps_checkbox.clicked.connect(self._publish_parameters)
+
     def shutdown_plugin(self):
         print "Shutting down ..."
         self.pattern_generator_params_pub.unregister()
@@ -157,6 +166,7 @@ class PatternGeneratorWidget(QObject):
         params.enable = self.enable_pattern_generator
         params.simulation_mode = self.simulation_mode_checkbox.isChecked()
         params.joystick_mode = self.joystick_mode_checkbox.isChecked()
+        params.ignore_invalid_steps = self.ignore_invalid_steps_checkbox.isChecked()
         params.d_step.position.x = self.delta_x.value()
         params.d_step.position.y = self.delta_y.value()
         params.d_step.position.z = 0
@@ -187,3 +197,4 @@ class PatternGeneratorWidget(QObject):
     def joystick_mode_check_callback(self):
         self.enable_pattern_generator = False
         self._publish_parameters()
+
