@@ -3,7 +3,8 @@
 import rospy
 
 from python_qt_binding.QtCore import Qt, QSize, QRegExp, Signal, Slot
-from python_qt_binding.QtGui import QWidget, QRegExpValidator, QHBoxLayout, QPushButton, QComboBox, QIcon
+from python_qt_binding.QtGui import QRegExpValidator, QIcon
+from python_qt_binding.QtWidgets import QWidget, QHBoxLayout, QPushButton, QComboBox
 
 
 # widget for topic selection
@@ -22,7 +23,6 @@ class QTopicWidget(QWidget):
 
         # start widget
         hbox = QHBoxLayout()
-        hbox.setMargin(0)
         hbox.setContentsMargins(0, 0, 0, 0)
 
         # topic combo box

@@ -6,7 +6,8 @@ import std_msgs.msg
 import vigir_footstep_planning_msgs.msg
 
 from python_qt_binding.QtCore import Qt, QPoint, QModelIndex, Slot
-from python_qt_binding.QtGui import QWidget, QTreeWidget, QTreeWidgetItem, QMenu, QAction, QAbstractItemView, QColor, QIcon
+from python_qt_binding.QtGui import QColor, QIcon
+from python_qt_binding.QtWidgets import QWidget, QTreeWidget, QTreeWidgetItem, QMenu, QAction, QAbstractItemView
 
 from vigir_generic_params.msg import ParameterSetMsg
 from vigir_footstep_planning_msgs.parameter import *

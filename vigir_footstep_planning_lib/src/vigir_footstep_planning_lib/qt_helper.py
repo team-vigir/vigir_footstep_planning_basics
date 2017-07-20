@@ -3,7 +3,8 @@
 import rospy
 
 from python_qt_binding.QtCore import Qt
-from python_qt_binding.QtGui import QHBoxLayout, QGroupBox, QTextEdit, QDoubleSpinBox, QColor
+from python_qt_binding.QtGui import QColor
+from python_qt_binding.QtWidgets import QHBoxLayout, QGroupBox, QTextEdit, QDoubleSpinBox
 
 
 # generic helper to generate quickly QDoubleSpinBox

@@ -7,7 +7,7 @@ import vigir_footstep_planning_msgs.msg
 
 from rqt_gui_py.plugin import Plugin
 from python_qt_binding.QtCore import Qt
-from python_qt_binding.QtGui import QWidget, QSplitter, QVBoxLayout, QPushButton
+from python_qt_binding.QtWidgets import QWidget, QSplitter, QVBoxLayout, QPushButton
 
 from vigir_generic_params.msg import SetParameterSetAction, SetParameterSetGoal, GetParameterSetAction, GetParameterSetGoal, GetParameterSetResult
 from vigir_footstep_planning_msgs.msg import ErrorStatus
@@ -88,7 +88,6 @@ class QParameterEditorWidget(QWidgetWithLogger):
 
         # start widget
         vbox = QVBoxLayout()
-        vbox.setMargin(0)
         vbox.setContentsMargins(0, 0, 0, 0)
 
         # add layout which is dynamically filled

@@ -4,7 +4,8 @@ import rospy
 import vigir_footstep_planning_msgs.msg
 
 from python_qt_binding.QtCore import Qt, QObject, Signal, Slot
-from python_qt_binding.QtGui import QWidget, QColor
+from python_qt_binding.QtGui import QColor
+from python_qt_binding.QtWidgets import QWidget
 
 from vigir_footstep_planning_msgs.msg import ErrorStatus
 

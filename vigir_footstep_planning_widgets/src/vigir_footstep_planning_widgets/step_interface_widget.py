@@ -9,7 +9,7 @@ import vigir_footstep_planning_msgs.msg
 
 from rqt_gui_py.plugin import Plugin
 from python_qt_binding.QtCore import Qt, QObject, Slot, QSignalMapper
-from python_qt_binding.QtGui import QHBoxLayout, QVBoxLayout, QCheckBox, QLineEdit, QPushButton, QDoubleSpinBox
+from python_qt_binding.QtWidgets import QHBoxLayout, QVBoxLayout, QCheckBox, QLineEdit, QPushButton, QDoubleSpinBox
 
 from vigir_footstep_planning_msgs.msg import StepPlanRequest, StepPlanRequestAction, StepPlanRequestGoal, StepPlanRequestResult, PatternParameters, Feet
 from vigir_footstep_planning_lib.execute_step_plan_widget import *
@@ -56,7 +56,7 @@ class StepInterfaceWidget(QObject):
 
         # left coloumn
         left_controls_vbox = QVBoxLayout()
-        left_controls_vbox.setMargin(0)
+        left_controls_vbox.setContentsMargins(0,0,0,0)
 
         self.add_command_button(left_controls_vbox, "Rotate Left", PatternParameters.ROTATE_LEFT)
         self.add_command_button(left_controls_vbox, "Strafe Left", PatternParameters.STRAFE_LEFT)
@@ -68,7 +68,7 @@ class StepInterfaceWidget(QObject):
 
         # center coloumn
         center_controls_vbox = QVBoxLayout()
-        center_controls_vbox.setMargin(0)
+        center_controls_vbox.setContentsMargins(0,0,0,0)
 
         self.add_command_button(center_controls_vbox, "Forward", PatternParameters.FORWARD)
         self.add_command_button(center_controls_vbox, "Backward", PatternParameters.BACKWARD)
@@ -81,7 +81,7 @@ class StepInterfaceWidget(QObject):
 
         # right coloumn
         right_controls_vbox = QVBoxLayout()
-        right_controls_vbox.setMargin(0)
+        right_controls_vbox.setContentsMargins(0,0,0,0)
 
         self.add_command_button(right_controls_vbox, "Rotate Right", PatternParameters.ROTATE_RIGHT)
         self.add_command_button(right_controls_vbox, "Strafe Right", PatternParameters.STRAFE_RIGHT)
@@ -96,11 +96,11 @@ class StepInterfaceWidget(QObject):
 
         # start settings
         settings_hbox = QHBoxLayout()
-        settings_hbox.setMargin(0)
+        settings_hbox.setContentsMargins(0,0,0,0)
 
         # start left column
         left_settings_vbox = QVBoxLayout()
-        left_settings_vbox.setMargin(0)
+        left_settings_vbox.setContentsMargins(0,0,0,0)
 
         # frame id
         self.frame_id_line_edit = QLineEdit("/world")
@@ -133,7 +133,7 @@ class StepInterfaceWidget(QObject):
 
         # start center column
         center_settings_vbox = QVBoxLayout()
-        center_settings_vbox.setMargin(0)
+        center_settings_vbox.setContentsMargins(0,0,0,0)
 
         # start foot selection
         self.start_foot_selection_combo_box = QComboBox()
@@ -161,7 +161,7 @@ class StepInterfaceWidget(QObject):
 
         # start right column
         right_settings_vbox = QVBoxLayout()
-        right_settings_vbox.setMargin(0)
+        right_settings_vbox.setContentsMargins(0,0,0,0)
 
         # roll
         self.roll = generate_q_double_spin_box(0.0, -30.0, 30.0, 0, 1.0)

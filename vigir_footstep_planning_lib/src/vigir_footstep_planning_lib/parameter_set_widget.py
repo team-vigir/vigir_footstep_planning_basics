@@ -6,7 +6,8 @@ import std_msgs.msg
 import vigir_footstep_planning_msgs.msg
 
 from python_qt_binding.QtCore import Qt, QSize, Signal, Slot
-from python_qt_binding.QtGui import QWidget, QVBoxLayout, QHBoxLayout, QPushButton, QComboBox, QIcon
+from python_qt_binding.QtGui import QIcon
+from python_qt_binding.QtWidgets import QWidget, QVBoxLayout, QHBoxLayout, QPushButton, QComboBox
 
 from vigir_generic_params.msg import GetParameterSetNamesAction, GetParameterSetNamesGoal, GetParameterSetNamesResult
 from vigir_footstep_planning_lib.logging import *
@@ -25,7 +26,6 @@ class QParameterSetWidget(QWidgetWithLogger):
 
         # start widget
         vbox = QVBoxLayout()
-        vbox.setMargin(0)
         vbox.setContentsMargins(0, 0, 0, 0)
 
         # parameter action server topic selection
@@ -76,7 +76,6 @@ class QParameterSetSelectionWidget(QWidgetWithLogger):
 
         # start widget
         hbox = QHBoxLayout()
-        hbox.setMargin(0)
         hbox.setContentsMargins(0, 0, 0, 0)
 
         # get system icon

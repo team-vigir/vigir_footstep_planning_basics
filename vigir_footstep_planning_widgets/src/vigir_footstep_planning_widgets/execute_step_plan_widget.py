@@ -7,7 +7,7 @@ import vigir_footstep_planning_msgs.msg
 
 from rqt_gui_py.plugin import Plugin
 from python_qt_binding.QtCore import Qt
-from python_qt_binding.QtGui import QWidget, QHBoxLayout, QVBoxLayout, QPushButton, QComboBox
+from python_qt_binding.QtWidgets import QWidget, QHBoxLayout, QVBoxLayout
 
 from vigir_footstep_planning_msgs.msg import StepPlan, ExecuteStepPlanAction, ExecuteStepPlanGoal, ErrorStatus
 from vigir_footstep_planning_lib.execute_step_plan_widget import *

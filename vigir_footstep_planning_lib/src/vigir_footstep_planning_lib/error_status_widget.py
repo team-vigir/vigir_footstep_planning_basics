@@ -4,7 +4,8 @@ import rospy
 import vigir_footstep_planning_msgs.msg
 
 from python_qt_binding.QtCore import Qt, Signal, Slot
-from python_qt_binding.QtGui import QWidget, QVBoxLayout, QHBoxLayout, QTextEdit, QPushButton, QCheckBox, QSizePolicy, QColor
+from python_qt_binding.QtGui import QColor
+from python_qt_binding.QtWidgets import QWidget, QVBoxLayout, QHBoxLayout, QTextEdit, QPushButton, QCheckBox, QSizePolicy
 
 from vigir_footstep_planning_msgs.msg import ErrorStatus
 from vigir_footstep_planning_lib.logging import *
@@ -44,7 +45,6 @@ class QErrorStatusWidget(QWidget):
 
         # start widget
         vbox = QVBoxLayout()
-        vbox.setMargin(0)
         vbox.setContentsMargins(0, 0, 0, 0)
 
         # add error status text edit

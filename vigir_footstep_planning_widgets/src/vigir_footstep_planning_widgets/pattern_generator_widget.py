@@ -8,7 +8,7 @@ import std_msgs.msg
 
 from rqt_gui_py.plugin import Plugin
 from python_qt_binding.QtCore import Qt, Slot, QAbstractListModel
-from python_qt_binding.QtGui import QWidget, QHBoxLayout, QVBoxLayout, QCheckBox, QLabel, QListWidget, QPushButton, QDoubleSpinBox, QFrame
+from python_qt_binding.QtWidgets import QWidget, QHBoxLayout, QVBoxLayout, QCheckBox, QLabel, QListWidget, QPushButton, QDoubleSpinBox, QFrame
 
 from vigir_footstep_planning_msgs.msg import PatternGeneratorParameters
 from vigir_footstep_planning_lib.parameter_set_widget import *
@@ -136,7 +136,7 @@ class PatternGeneratorWidget(QObject):
         hbox.addLayout(right_vbox, 1)
 
         # add upper part
-        hbox.setMargin(0)
+        hbox.setContentsMargins(0,0,0,0)
         vbox = QVBoxLayout()
         vbox.addLayout(hbox)
 

@@ -8,7 +8,7 @@ import actionlib
 
 from python_qt_binding import loadUi
 from python_qt_binding.QtCore import Signal
-from python_qt_binding.QtGui import QWidget, QHBoxLayout, QVBoxLayout, QPushButton, QComboBox
+from python_qt_binding.QtWidgets import QWidget, QHBoxLayout, QVBoxLayout, QPushButton, QComboBox
 
 from vigir_footstep_planning_msgs.footstep_planning_msgs import *
 from vigir_footstep_planning_msgs.msg import StepPlan, ExecuteStepPlanAction, ExecuteStepPlanGoal
@@ -32,7 +32,6 @@ class QExecuteStepPlanWidget(QWidgetWithLogger):
 
         # start widget
         vbox = QVBoxLayout()
-        vbox.setMargin(0)
         vbox.setContentsMargins(0, 0, 0, 0)
 
         # step plan input topic selection
