@@ -75,7 +75,7 @@ class PatternGeneratorWidget(QObject):
         # ignore invalid steps checkbox
         self.ignore_invalid_steps_checkbox = QCheckBox()
         self.ignore_invalid_steps_checkbox.setText("Ignore Invalid Steps")
-        self.ignore_invalid_steps_checkbox.setChecked(False)
+        self.ignore_invalid_steps_checkbox.setChecked(True)
         left_vbox.addWidget(self.ignore_invalid_steps_checkbox)
 
         # foot seperation
@@ -167,14 +167,12 @@ class PatternGeneratorWidget(QObject):
         params.simulation_mode = self.simulation_mode_checkbox.isChecked()
         params.joystick_mode = self.joystick_mode_checkbox.isChecked()
         params.ignore_invalid_steps = self.ignore_invalid_steps_checkbox.isChecked()
-        params.d_step.position.x = self.delta_x.value()
-        params.d_step.position.y = self.delta_y.value()
-        params.d_step.position.z = 0
-        q = tf.transformations.quaternion_from_euler(math.radians(self.roll.value()), math.radians(self.pitch.value()), math.radians(self.delta_yaw.value()))
-        params.d_step.orientation.x = q[0]
-        params.d_step.orientation.y = q[1]
-        params.d_step.orientation.z = q[2]
-        params.d_step.orientation.w = q[3]
+        params.cmd.linear.x = self.delta_x.value()
+        params.cmd.linear.y = self.delta_y.value()
+        params.cmd.linear.z = 0
+        params.cmd.angular.x = math.radians(self.roll.value())
+        params.cmd.angular.y = math.radians(self.pitch.value())
+        params.cmd.angular.z = math.radians(self.delta_yaw.value())
         params.foot_seperation = self.foot_seperation.value()
         params.parameter_set_name.data = self.parameter_set_widget.current_parameter_set_name()
 
