@@ -9,7 +9,7 @@ import vigir_footstep_planning_msgs.msg
 
 from rqt_gui_py.plugin import Plugin
 from python_qt_binding.QtCore import Qt, QObject, Slot, QSignalMapper
-from python_qt_binding.QtWidgets import QHBoxLayout, QVBoxLayout, QCheckBox, QLineEdit, QPushButton, QDoubleSpinBox
+from python_qt_binding.QtWidgets import QWidget, QHBoxLayout, QVBoxLayout, QCheckBox, QLineEdit, QPushButton, QDoubleSpinBox
 
 from vigir_footstep_planning_msgs.msg import StepPlanRequest, StepPlanRequestAction, StepPlanRequestGoal, StepPlanRequestResult, PatternParameters, Feet
 from vigir_footstep_planning_lib.execute_step_plan_widget import *
@@ -25,9 +25,7 @@ class StepInterfaceDialog(Plugin):
         self.setObjectName('StepInterfaceDialog')
 
         self._parent = QWidget()
-        self._widget = StepInterfaceWidget(self._parent)
-
-        context.add_widget(self._parent)
+        self._widget = StepInterfaceWidget(context)
 
     def shutdown_plugin(self):
         self._widget.shutdown_plugin()
@@ -39,14 +37,15 @@ class StepInterfaceWidget(QObject):
     start_feet = Feet()
 
     def __init__(self, context, add_execute_widget=True):
-        super(StepInterfaceWidget, self).__init__()
+        super(StepInterfaceWidget, self).__init__(context)
+        self.setObjectName('StepInterface')
 
         # init signal mapper
         self.command_mapper = QSignalMapper(self)
         self.command_mapper.mapped.connect(self._publish_step_plan_request)
 
         # start widget
-        widget = context
+        self._widget = QWidget()
         error_status_widget = QErrorStatusWidget()
         self.logger = Logger(error_status_widget)
         vbox = QVBoxLayout()
@@ -208,8 +207,15 @@ class StepInterfaceWidget(QObject):
         add_widget_with_frame(vbox, error_status_widget, "Status:")
 
         # end widget
-        widget.setLayout(vbox)
-        #context.add_widget(widget)
+        self._widget.setLayout(vbox)
+        self._widget.setObjectName('StepInterfaceUi')
+
+        # set window title
+        if context.serial_number() > 1:
+            self._widget.setWindowTitle(self._widget.windowTitle() + (' (%d)' % context.serial_number()))
+
+        # add widget to the user interface
+        context.add_widget(self._widget)
 
         # init widget
         self.parameter_set_widget.param_cleared_signal.connect(self.param_cleared)
