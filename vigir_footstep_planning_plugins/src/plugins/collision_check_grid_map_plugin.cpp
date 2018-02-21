@@ -16,7 +16,7 @@ bool CollisionCheckGridMapPlugin::initialize(const vigir_generic_params::Paramet
     return false;
 
   std::string topic;
-  getParam("grid_map_topic", topic, std::string("/grid_map"));
+  getParam("grid_map_topic", topic, std::string("grid_map"), true);
   occupancy_grid_map_sub_ = nh_.subscribe<nav_msgs::OccupancyGrid>(topic, 1, &CollisionCheckGridMapPlugin::mapCallback, this);
 
   getParam("occupancy_threshold", (int&) occ_thresh_, (int&) occ_thresh_, true);
