@@ -44,8 +44,8 @@ class StateGenerator
 public:
   StateGenerator();
 
-  std::list<PlanningState::Ptr> generatePredecessor(const PlanningState& state) const;
-  std::list<PlanningState::Ptr> generateSuccessor(const PlanningState& state) const;
+  std::list<PlanningState::Ptr> generatePredecessors(const PlanningState& state) const;
+  std::list<PlanningState::Ptr> generateSuccessors(const PlanningState& state) const;
 };
 }
 

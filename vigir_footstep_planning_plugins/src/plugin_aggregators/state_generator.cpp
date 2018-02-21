@@ -9,27 +9,27 @@ StateGenerator::StateGenerator()
 {
 }
 
-std::list<PlanningState::Ptr> StateGenerator::generatePredecessor(const PlanningState& state) const
+std::list<PlanningState::Ptr> StateGenerator::generatePredecessors(const PlanningState& state) const
 {
   std::list<PlanningState::Ptr> result;
 
   for (StateGeneratorPlugin::Ptr plugin : getPlugins())
   {
     if (plugin)
-      result.splice(result.end(), plugin->generatePredecessor(state));
+      result.splice(result.end(), plugin->generatePredecessors(state));
   }
 
   return result;
 }
 
-std::list<PlanningState::Ptr> StateGenerator::generateSuccessor(const PlanningState& state) const
+std::list<PlanningState::Ptr> StateGenerator::generateSuccessors(const PlanningState& state) const
 {
   std::list<PlanningState::Ptr> result;
 
   for (StateGeneratorPlugin::Ptr plugin : getPlugins())
   {
     if (plugin)
-      result.splice(result.end(), plugin->generateSuccessor(state));
+      result.splice(result.end(), plugin->generateSuccessors(state));
   }
 
   return result;

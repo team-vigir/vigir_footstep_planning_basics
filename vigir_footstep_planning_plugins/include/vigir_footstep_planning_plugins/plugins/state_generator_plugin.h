@@ -70,7 +70,7 @@ public:
    * @param state Current state from which all valid adjacent states should be determined.
    * @return List of all valid adjacent states
    */
-  virtual std::list<PlanningState::Ptr> generatePredecessor(const PlanningState& state) const = 0;
+  virtual std::list<PlanningState::Ptr> generatePredecessors(const PlanningState& state) const = 0;
 
   /**
    * @brief Generates list of valid adjacent successor states. The returned states will be pushed back to the ARA* open list.
@@ -83,7 +83,7 @@ public:
    * @param state Current state from which all valid adjacent states should be determined.
    * @return List of all valid adjacent states
    */
-  virtual std::list<PlanningState::Ptr> generateSuccessor(const PlanningState& state) const = 0;
+  virtual std::list<PlanningState::Ptr> generateSuccessors(const PlanningState& state) const = 0;
 };
 }
 
