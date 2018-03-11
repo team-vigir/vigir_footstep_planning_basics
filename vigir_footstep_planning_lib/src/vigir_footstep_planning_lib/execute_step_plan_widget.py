@@ -171,6 +171,9 @@ class QExecuteStepPlanWidget(QWidgetWithLogger):
             self.status_line_edit.setText("FAILED")
             self.logger.log_error("Execution of step plan failed!")
 
+        # update info field
+        self.status_line_edit.setText(walk_controller_state_to_string(result.controller_state))
+
     # called by action client
     def execute_step_plan_feedback_cb(self, feedback):
         # update progress bar
