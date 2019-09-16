@@ -7,9 +7,9 @@ WorldModel::WorldModel()
 {
 }
 
-void WorldModel::loadPlugins()
+void WorldModel::loadPlugins(bool print_warning)
 {
-  ExtendedPluginAggregator<WorldModel, CollisionCheckPlugin>::loadPlugins();
+  ExtendedPluginAggregator<WorldModel, CollisionCheckPlugin>::loadPlugins(print_warning);
 
   // get terrain model
   vigir_pluginlib::PluginManager::getPlugin(terrain_model_);
